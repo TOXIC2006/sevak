@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Chatbot Interface - Disaster Prep
+  </title>
+  <!-- Brand Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- SweetAlert2 -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+   </script>
+   <!-- Site Theme -->
+   <link href="style.css" rel="stylesheet">
+    <!-- Page-specific CSS -->
+    <link href="chatbot_interface.css" rel="stylesheet"/>
+   </link>
+  </link>
+ </head>
+ <body>
+  <!-- Header (Common Learner Header) -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarLearner" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./user_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/80/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Disaster Prep
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search help topics or locations..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./safety_status.html">
+      <i class="fa-solid fa-siren-on me-1 text-danger">
+      </i>
+      SOS
+     </a>
+     <button class="btn btn-link text-white me-2" id="btnNotifications" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuLearner">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar/28/28'" src="https://via.placeholder.com/28"/>
+       <span>
+        Alex Rivera
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuLearner" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         Student
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./profile_setup.html">
+         <i class="fa-solid fa-user me-2">
+         </i>
+         Profile
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid">
+   <div class="d-flex">
+    <!-- Sidebar (Common Learner Sidebar) -->
+    <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarLearner" style="width:260px;">
+     <style>
+      #sidebarLearner .list-group-item { border: 0; border-radius: 0; }
+          #sidebarLearner .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+          #sidebarLearner .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+          #sidebarLearner .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+     </style>
+     <div class="p-3 text-center border-bottom">
+      <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo2/160/38'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+     </div>
+     <div class="p-3">
+      <div class="profile-box rounded p-3 mb-3">
+       <div class="d-flex align-items-center">
+        <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/user/40/40'" src="https://via.placeholder.com/40"/>
+        <div>
+         <div class="fw-semibold">
+          Alex Rivera
+         </div>
+         <small class="text-muted">
+          Student
+         </small>
+        </div>
+       </div>
+      </div>
+      <div class="list-group list-group-flush">
+       <a class="list-group-item list-group-item-action" href="./user_dashboard.html">
+        <i class="fa-solid fa-house me-2">
+        </i>
+        Dashboard
+       </a>
+       <a aria-controls="learnCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#learnCollapse" role="button">
+        <i class="fa-solid fa-book me-2">
+        </i>
+        Learn
+       </a>
+       <div class="collapse show ps-3" id="learnCollapse">
+        <a class="list-group-item list-group-item-action active" href="./chatbot_interface.html">
+         <i class="fa-solid fa-robot me-2">
+         </i>
+         AI Chatbot
+        </a>
+        <a class="list-group-item list-group-item-action" href="./disaster_map.html">
+         <i class="fa-solid fa-map me-2">
+         </i>
+         Disaster Map
+        </a>
+       </div>
+       <a aria-controls="emergencyCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#emergencyCollapse" role="button">
+        <i class="fa-solid fa-siren-on me-2">
+        </i>
+        Emergency
+       </a>
+       <div class="collapse show ps-3" id="emergencyCollapse">
+        <a class="list-group-item list-group-item-action" href="./safety_status.html">
+         <i class="fa-solid fa-person-circle-check me-2">
+         </i>
+         My Safety Status
+        </a>
+        <a class="list-group-item list-group-item-action" href="./alerts.html">
+         <i class="fa-solid fa-bullhorn me-2">
+         </i>
+         Broadcasts
+        </a>
+       </div>
+      </div>
+     </div>
+    </nav>
+    <!-- Mobile Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start" id="mobileSidebarLearner" tabindex="-1">
+     <div class="offcanvas-header">
+      <h5 class="offcanvas-title">
+       Menu
+      </h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+      </button>
+     </div>
+     <div class="offcanvas-body">
+      <a class="d-block mb-3" href="./user_dashboard.html">
+       <i class="fa-solid fa-house me-2">
+       </i>
+       Dashboard
+      </a>
+      <p class="text-uppercase small text-muted mb-2">
+       Learn
+      </p>
+      <a class="d-block mb-2" href="./chatbot_interface.html">
+       <i class="fa-solid fa-robot me-2">
+       </i>
+       AI Chatbot
+      </a>
+      <a class="d-block mb-3" href="./disaster_map.html">
+       <i class="fa-solid fa-map me-2">
+       </i>
+       Disaster Map
+      </a>
+      <p class="text-uppercase small text-muted mb-2">
+       Emergency
+      </p>
+      <a class="d-block mb-2" href="./safety_status.html">
+       <i class="fa-solid fa-person-circle-check me-2">
+       </i>
+       My Safety Status
+      </a>
+      <a class="d-block" href="./alerts.html">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Broadcasts
+      </a>
+     </div>
+    </div>
+    <!-- Main Panel -->
+    <main class="main-panel flex-grow-1">
+     <!-- Breadcrumb -->
+     <nav aria-label="breadcrumb" class="breadcrumb">
+      <ol class="breadcrumb mb-2">
+       <li class="breadcrumb-item">
+        <a href="./user_dashboard.html">
+         Home
+        </a>
+       </li>
+       <li class="breadcrumb-item">
+        Learn
+       </li>
+       <li aria-current="page" class="breadcrumb-item active">
+        AI Chatbot
+       </li>
+      </ol>
+     </nav>
+     <!-- Page Header -->
+     <div class="page-header">
+      <div class="d-flex align-items-center gap-2">
+       <button class="btn btn-light btn-sm" id="backToDashboard" title="Back to Dashboard">
+        <i class="fa-solid fa-arrow-left">
+        </i>
+       </button>
+       <h1 class="page-title mb-0">
+        AI Safety Assistant
+       </h1>
+       <span class="badge-soft info ms-2">
+        <i class="fa-solid fa-shield-heart me-1">
+        </i>
+        Disaster Education
+       </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <button class="btn btn-outline-primary btn-sm" id="btnOpenResources">
+        <i class="fa-solid fa-book-open me-1">
+        </i>
+        Resources
+       </button>
+       <button class="btn btn-outline-primary btn-sm" id="btnStartScenario">
+        <i class="fa-solid fa-clipboard-question me-1">
+        </i>
+        Start Scenario
+       </button>
+      </div>
+     </div>
+     <!-- Chat Shell -->
+     <section class="chat-shell">
+      <div class="card h-100 chat-container">
+       <!-- In-chat Header -->
+       <div class="chat-header">
+        <div class="d-flex align-items-center gap-2">
+         <div class="status-dot info">
+         </div>
+         <div class="widget-title">
+          AI Safety Assistant
+         </div>
+         <small class="text-muted">
+          Online
+         </small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+         <button class="btn btn-light btn-sm" id="btnClearChat">
+          <i class="fa-solid fa-trash-can me-1">
+          </i>
+          Clear
+         </button>
+        </div>
+       </div>
+       <!-- Message List -->
+       <div aria-live="polite" aria-relevant="additions" class="message-list flex-grow-1 p-3 overflow-auto" id="messageList">
+        <!-- Messages will render here via JS. Preload a few samples -->
+       </div>
+       <!-- Input Bar -->
+       <div class="message-input-bar">
+        <form autocomplete="off" class="d-flex w-100 align-items-center gap-2" id="chatForm">
+         <div class="input-group">
+          <span class="input-group-text bg-white">
+           <i class="fa-solid fa-message text-muted">
+           </i>
+          </span>
+          <input aria-label="Type your message" class="form-control" id="messageInput" placeholder="Ask about safety procedures..." type="text">
+          </input>
+         </div>
+         <button class="btn btn-primary" disabled="" id="sendBtn" type="submit">
+          <i class="fa-solid fa-paper-plane">
+          </i>
+         </button>
+        </form>
+       </div>
+      </div>
+     </section>
+    </main>
+   </div>
+  </div>
+  <!-- Footer (Common Learner Footer) -->
+  <footer class="border-top py-2 bg-white">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo3/80/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      © 2025 Disaster Prep
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast Container -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-bg-dark border-0" id="liveToast" role="status">
+    <div class="d-flex">
+     <div class="toast-body">
+      <i class="fa-solid fa-signal me-2">
+      </i>
+      Connected to AI service.
+     </div>
+     <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Resources Modal (Table, sorting/filtering) -->
+  <div aria-hidden="true" aria-labelledby="resourcesModalLabel" class="modal fade" id="resourcesModal" tabindex="-1">
+   <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h5 class="modal-title" id="resourcesModalLabel">
+       <i class="fa-solid fa-book-open me-2 text-info">
+       </i>
+       Quick Guides &amp; Resources
+      </h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">
+      </button>
+     </div>
+     <div class="modal-body">
+      <div class="row g-3 mb-2">
+       <div class="col-md-6">
+        <div class="input-group">
+         <span class="input-group-text bg-white">
+          <i class="fa-solid fa-filter text-muted">
+          </i>
+         </span>
+         <input class="form-control" id="resourceFilter" placeholder="Filter by title or type..." type="text"/>
+        </div>
+       </div>
+       <div class="col-md-6 text-md-end">
+        <small class="text-muted">
+         Click headers to sort
+        </small>
+       </div>
+      </div>
+      <div class="table-responsive">
+       <table class="table table-theme table-hover-reveal align-middle mb-2" id="resourcesTable">
+        <thead>
+         <tr>
+          <th class="sortable" data-key="title">
+           Title
+           <i class="fa-solid fa-sort ms-1">
+           </i>
+          </th>
+          <th class="sortable" data-key="type">
+           Type
+           <i class="fa-solid fa-sort ms-1">
+           </i>
+          </th>
+          <th class="sortable" data-key="updated">
+           Last Updated
+           <i class="fa-solid fa-sort ms-1">
+           </i>
+          </th>
+          <th>
+           Actions
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>
+           Earthquake Drop, Cover, Hold
+          </td>
+          <td>
+           Procedure
+          </td>
+          <td>
+           2025-02-03
+          </td>
+          <td>
+           <button class="btn btn-sm btn-light hover-control">
+            <i class="fa-solid fa-eye">
+            </i>
+            View
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           Flood Evacuation Checklist
+          </td>
+          <td>
+           Checklist
+          </td>
+          <td>
+           2025-01-26
+          </td>
+          <td>
+           <button class="btn btn-sm btn-light hover-control">
+            <i class="fa-solid fa-eye">
+            </i>
+            View
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           Fire Extinguisher Basics
+          </td>
+          <td>
+           Tutorial
+          </td>
+          <td>
+           2024-12-18
+          </td>
+          <td>
+           <button class="btn btn-sm btn-light hover-control">
+            <i class="fa-solid fa-eye">
+            </i>
+            View
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           Hurricane Supply Kit
+          </td>
+          <td>
+           Checklist
+          </td>
+          <td>
+           2025-02-10
+          </td>
+          <td>
+           <button class="btn btn-sm btn-light hover-control">
+            <i class="fa-solid fa-eye">
+            </i>
+            View
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           Tornado Safe Rooms
+          </td>
+          <td>
+           Guide
+          </td>
+          <td>
+           2025-01-02
+          </td>
+          <td>
+           <button class="btn btn-sm btn-light hover-control">
+            <i class="fa-solid fa-eye">
+            </i>
+            View
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           First Aid for Cuts
+          </td>
+          <td>
+           Guide
+          </td>
+          <td>
+           2024-11-20
+          </td>
+          <td>
+           <button class="btn btn-sm btn-light hover-control">
+            <i class="fa-solid fa-eye">
+            </i>
+            View
+           </button>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+       <small class="text-muted" id="resourcesSummary">
+        Showing 1-6 of 6
+       </small>
+       <nav>
+        <ul class="pagination pagination-sm mb-0">
+         <li class="page-item disabled">
+          <span class="page-link">
+           Prev
+          </span>
+         </li>
+         <li class="page-item active">
+          <span class="page-link">
+           1
+          </span>
+         </li>
+         <li class="page-item disabled">
+          <span class="page-link">
+           Next
+          </span>
+         </li>
+        </ul>
+       </nav>
+      </div>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+       Close
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Bootstrap 5 JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+   // Typography override to Poppins
+document.documentElement.style.setProperty('--font-sans', "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'");
+
+// Bootstrap Toast for connection message
+const toastEl = document.getElementById('liveToast');
+const toast = toastEl ? new bootstrap.Toast(toastEl, {
+    delay: 2400
+}) : null;
+window.addEventListener('load', () => {
+    toast && toast.show();
+});
+
+// Back button navigation
+document.getElementById('backToDashboard').addEventListener('click', () => {
+    window.location.href = './user_dashboard.html';
+});
+
+// Simple chat state and rendering
+const messageListEl = document.getElementById('messageList');
+const inputEl = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+const chatForm = document.getElementById('chatForm');
+
+let isLoadingResponse = false;
+let chatHistory = [{
+    sender: 'bot',
+    text: 'Hi! I\'m your AI Safety Assistant. Ask me anything about disaster preparedness, or start a guided scenario.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 5)
+}, {
+    sender: 'user',
+    text: 'How should I prepare a go-bag?',
+    timestamp: new Date(Date.now() - 1000 * 60 * 4)
+}, {
+    sender: 'bot',
+    text: 'Great question! Include water, non-perishable food, flashlight, first aid kit, portable charger, copies of important documents, and cash. Aim for 72 hours of supplies per person.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 3)
+}, ];
+
+// Demo scenario card object
+const scenarioCard = {
+    type: 'scenario',
+    scenarioId: 'EQ-101',
+    question: 'You feel strong shaking during class. What\'s your first action?',
+    options: [
+        'Run outside immediately',
+        'Drop, Cover, and Hold On under a sturdy desk',
+        'Stand in the doorway',
+        'Use the elevator to exit quickly'
+    ],
+    selected: null,
+    submitted: false,
+    feedback: null
+};
+
+function formatTime(ts) {
+    const d = new Date(ts);
+    return d.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function renderMessageBubble(msg) {
+    const outgoing = msg.sender === 'user';
+    return `
+        <div class="message-row ${outgoing ? 'outgoing' : 'incoming'}">
+          ${!outgoing ? '<img src="https://via.placeholder.com/28" onerror="this.onerror=null;this.src=\'https://picsum.photos/seed/ai/28/28\'" class="avatar sm" alt="AI" />' : ''}
+          <div class="message-bubble">
+            <div class="message-text">${escapeHtml(msg.text)}</div>
+            <div class="message-metadata mt-1">${outgoing ? 'You' : 'AI'} • ${formatTime(msg.timestamp)}</div>
+          </div>
+          ${outgoing ? '<img src="https://via.placeholder.com/28" onerror="this.onerror=null;this.src=\'https://picsum.photos/seed/user2/28/28\'" class="avatar sm" alt="You" />' : ''}
+        </div>`;
+}
+
+function renderScenarioCard(card) {
+    const optionsHtml = card.options.map((opt, idx) => `
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="radio" name="scenario_${card.scenarioId}" id="opt_${card.scenarioId}_${idx}" value="${idx}" ${card.submitted ? 'disabled' : ''} ${card.selected == idx ? 'checked' : ''}>
+          <label class="form-check-label" for="opt_${card.scenarioId}_${idx}">${escapeHtml(opt)}</label>
+        </div>`).join('');
+
+    return `
+        <div class="message-row incoming">
+          <div class="message-bubble bg-info-soft border">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fa-solid fa-clipboard-question me-2 text-info"></i>
+              <strong>Scenario • ${card.scenarioId}</strong>
+            </div>
+            <div class="mb-2">${escapeHtml(card.question)}</div>
+            <form class="scenario-form" data-scenario-id="${card.scenarioId}">
+              ${optionsHtml}
+              <div class="d-flex align-items-center gap-2 mt-2">
+                <button type="submit" class="btn btn-primary btn-sm" ${card.submitted || card.selected === null ? 'disabled' : ''}>Submit Answer</button>
+                <button type="button" class="btn btn-light btn-sm" ${card.submitted ? 'disabled' : ''} data-action="hint"><i class="fa-regular fa-lightbulb me-1"></i> Hint</button>
+              </div>
+              ${card.submitted && card.feedback ? `<div class="mt-2 alert ${card.feedback.correct ? 'alert-success' : 'alert-warning'} p-2 mb-0">${escapeHtml(card.feedback.message)}</div>` : ''}
+            </form>
+            <div class="message-metadata mt-2">AI • ${formatTime(Date.now())}</div>
+          </div>
+        </div>`;
+}
+
+function renderChat() {
+    const parts = [];
+    for (const item of chatHistory) {
+        if (item.type === 'scenario') {
+            parts.push(renderScenarioCard(item));
+        } else {
+            parts.push(renderMessageBubble(item));
+        }
+    }
+    if (isLoadingResponse) {
+        parts.push(`
+          <div class="message-row incoming">
+            <div class="message-bubble">
+              <div class="typing-indicator"><span></span><span></span><span></span></div>
+              <div class="message-metadata mt-1">AI • typing…</div>
+            </div>
+          </div>`);
+    }
+    messageListEl.innerHTML = parts.join('');
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    messageListEl.scrollTop = messageListEl.scrollHeight;
+}
+
+function setLoading(val) {
+    isLoadingResponse = val;
+    updateSendBtnState();
+    renderChat();
+}
+
+function updateSendBtnState() {
+    const hasText = inputEl.value.trim().length > 0;
+    sendBtn.disabled = !hasText || isLoadingResponse;
+}
+
+inputEl.addEventListener('input', updateSendBtnState);
+
+chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = inputEl.value.trim();
+    if (!text || isLoadingResponse) return;
+
+    // Push user message
+    chatHistory.push({
+        sender: 'user',
+        text,
+        timestamp: new Date()
+    });
+    inputEl.value = '';
+    updateSendBtnState();
+    renderChat();
+
+    // Simulate AI typing and response
+    setLoading(true);
+    setTimeout(() => {
+        // 30% chance to inject scenario card
+        if (Math.random() < 0.3) {
+            chatHistory.push({
+                ...scenarioCard
+            });
+        } else {
+            chatHistory.push({
+                sender: 'bot',
+                text: generateBotReply(text),
+                timestamp: new Date()
+            });
+        }
+        setLoading(false);
+    }, 1100 + Math.random() * 600);
+});
+
+function generateBotReply(userText) {
+    // Very simple mock logic
+    const u = userText.toLowerCase();
+    if (u.includes('earthquake')) return 'During an earthquake: Drop, Cover, and Hold On. After shaking stops, evacuate carefully and check for hazards.';
+    if (u.includes('flood')) return 'In floods: move to higher ground, avoid walking or driving through flood waters, and follow local alerts.';
+    if (u.includes('fire')) return 'For fire safety: know two exit routes, keep extinguishers accessible, and test smoke alarms monthly.';
+    return 'Thanks for asking! Here\'s a quick tip: keep copies of important documents in a waterproof pouch inside your go-bag.';
+}
+
+// Event delegation for scenario card interactions
+messageListEl.addEventListener('change', (e) => {
+    const input = e.target;
+    if (input.matches('input[type="radio"][name^="scenario_"]')) {
+        const form = input.closest('.scenario-form');
+        const id = form.getAttribute('data-scenario-id');
+        const idx = parseInt(input.value, 10);
+        const card = chatHistory.find(x => x.type === 'scenario' && x.scenarioId === id);
+        if (card && !card.submitted) {
+            card.selected = idx;
+            renderChat();
+        }
+    }
+});
+
+messageListEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const form = btn.closest('.scenario-form');
+    if (!form) return;
+    const id = form.getAttribute('data-scenario-id');
+    const card = chatHistory.find(x => x.type === 'scenario' && x.scenarioId === id);
+    if (btn.type === 'submit') return; // handled in submit
+    const action = btn.getAttribute('data-action');
+    if (action === 'hint') {
+        Swal.fire({
+            icon: 'info',
+            title: 'Hint',
+            text: 'Protect yourself first. Furniture can help shield you from falling objects.',
+            confirmButtonColor: getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#0000FF'
+        });
+    }
+});
+
+messageListEl.addEventListener('submit', (e) => {
+    if (!e.target.classList.contains('scenario-form')) return;
+    e.preventDefault();
+    const form = e.target;
+    const id = form.getAttribute('data-scenario-id');
+    const card = chatHistory.find(x => x.type === 'scenario' && x.scenarioId === id);
+    if (!card || card.submitted || card.selected === null) return;
+
+    // Simulate API submission
+    setLoading(true);
+    setTimeout(() => {
+        const correctIndex = 1; // Correct: Drop, Cover, Hold On
+        const correct = card.selected === correctIndex;
+        card.submitted = true;
+        card.feedback = {
+            correct,
+            message: correct ? 'Correct! Drop, Cover, and Hold On is the safest immediate action during shaking.' : 'Not quite. Running outside or using elevators during shaking can be dangerous. The safest action is to Drop, Cover, and Hold On.'
+        };
+        setLoading(false);
+        Swal.fire({
+            icon: correct ? 'success' : 'warning',
+            title: correct ? 'Well done!' : 'Review this',
+            text: card.feedback.message,
+            confirmButtonColor: getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#0000FF'
+        });
+    }, 900);
+});
+
+// Clear chat button
+document.getElementById('btnClearChat').addEventListener('click', () => {
+    Swal.fire({
+        title: 'Clear conversation?',
+        text: 'This will remove all messages in this session.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, clear it',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#dc3545'
+    }).then((r) => {
+        if (r.isConfirmed) {
+            chatHistory = [{
+                sender: 'bot',
+                text: 'Conversation cleared. How can I help you now?',
+                timestamp: new Date()
+            }];
+            renderChat();
+        }
+    });
+});
+
+// Start Scenario button injects scenario card
+document.getElementById('btnStartScenario').addEventListener('click', () => {
+    chatHistory.push({
+        ...scenarioCard,
+        submitted: false,
+        selected: null,
+        feedback: null
+    });
+    renderChat();
+});
+
+// Notifications button demo
+document.getElementById('btnNotifications').addEventListener('click', () => {
+    Swal.fire({
+        title: 'No new notifications',
+        text: 'You\'re all caught up! I\'ll let you know if anything changes.',
+        icon: 'info'
+    });
+});
+
+// Resources modal
+const resourcesModal = new bootstrap.Modal(document.getElementById('resourcesModal'));
+document.getElementById('btnOpenResources').addEventListener('click', () => resourcesModal.show());
+
+// Filtering & Sorting for resources table
+const filterInput = document.getElementById('resourceFilter');
+const table = document.getElementById('resourcesTable');
+const tbody = table.querySelector('tbody');
+
+filterInput.addEventListener('input', () => applyFilterAndSort());
+table.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', () => {
+    const key = th.getAttribute('data-key');
+    const current = table.getAttribute('data-sort') || '';
+    const [curKey, curDir] = current.split(':');
+    const dir = (curKey === key && curDir === 'asc') ? 'desc' : 'asc';
+    table.setAttribute('data-sort', key + ':' + dir);
+    applyFilterAndSort();
+}));
+
+function applyFilterAndSort() {
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const q = filterInput.value.toLowerCase();
+    const sortAttr = (table.getAttribute('data-sort') || 'title:asc').split(':');
+    const sortKey = sortAttr[0];
+    const sortDir = sortAttr[1];
+
+    const getCellVal = (tr, key) => {
+        const i = {
+            title: 0,
+            type: 1,
+            updated: 2
+        } [key];
+        return tr.children[i].textContent.trim();
+    };
+
+    const filtered = rows.filter(tr => {
+        const title = getCellVal(tr, 'title').toLowerCase();
+        const type = getCellVal(tr, 'type').toLowerCase();
+        return title.includes(q) || type.includes(q);
+    });
+
+    filtered.sort((a, b) => {
+        const va = getCellVal(a, sortKey);
+        const vb = getCellVal(b, sortKey);
+        if (sortKey === 'updated') {
+            return (sortDir === 'asc' ? 1 : -1) * (new Date(va) - new Date(vb));
+        }
+        return (sortDir === 'asc' ? 1 : -1) * va.localeCompare(vb);
+    });
+
+    tbody.innerHTML = '';
+    filtered.forEach(tr => tbody.appendChild(tr));
+
+    document.getElementById('resourcesSummary').textContent = `Showing 1-${filtered.length} of ${rows.length}`;
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"]/g, (s) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;'
+    } [s]));
+}
+
+// Initial render
+renderChat();
+applyFilterAndSort();
+  </script>
+ </body>
+</html>

@@ -1,0 +1,62 @@
+:root {
+    --nav-top-height: 0
+    }
+/* Page-specific: Institution Registration */
+:root {
+    /* Prefer Poppins as primary sans font for this page */
+    --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+    }
+/* Ensure sidebar keeps provided fixed width and does not auto-expand on hover from global theme */
+#sidebarAuth {
+    width: 260px !important
+    }
+#sidebarAuth:hover {
+    width: 260px !important
+    }
+/* Make sidebar sticky within viewport */
+#sidebarAuth {
+    position: sticky;
+    top: 0;
+    height: calc(100vh);
+    overflow-y: auto
+    }
+/* Main content max width for centered single-column form inside content area */
+#mainContent .container-max {
+    max-width: 980px
+    }
+/* Improve visual separation of sections inside form */
+#institutionForm section h2 {
+    color: var(--text-strong)
+    }
+/* Strength bar colors handled inline via classes; ensure smooth transition */
+#passwordStrengthBar {
+    transition: width 0.2s ease
+    }
+/* Align breadcrumb nicely with theme */
+.breadcrumb {
+    background: transparent;
+    padding-left: 0
+    }
+/* Tips card list spacing */
+.app-card ul {
+    margin-bottom: 0;
+    padding-left: 1.1rem
+    }
+/* Global alert spacing */
+#globalAlert {
+    margin-bottom: 1rem
+    }
+/* Make offcanvas consistent with theme spacing */
+.offcanvas .offcanvas-body a {
+    color: var(--text);
+    text-decoration: none
+    }
+.offcanvas .offcanvas-body a:hover {
+    text-decoration: underline
+    }
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    #mainContent {
+        padding: 16px
+        }
+    }

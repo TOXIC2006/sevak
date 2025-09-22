@@ -1,0 +1,74 @@
+/* disaster_map.css - Page-specific styles for Disaster Map */
+/* Ensure main content accounts for sidebar on md+ */
+@media (min-width: 768px) {
+    .with-sidebar .main-content {
+        margin-left: 260px
+        }
+    }
+/* Map container styling */
+#interactiveMapContainer {
+    border: 1px solid var(--border-color)
+    }
+#map {
+    width: 100%;
+    min-height: 60vh;
+    background: #e8ecf1
+    }
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 2
+    }
+/* Search overlay */
+.map-search-wrapper .search-form {
+    position: relative;
+    border-color: var(--border-color)
+    }
+#searchSuggestions {
+    max-height: 280px;
+    overflow: auto
+    }
+/* Floating action buttons column */
+.fab-vertical .btn.btn-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-1)
+    }
+.fab-vertical .btn {
+    border: 1px solid var(--border-color)
+    }
+/* Layer panel card tweaks */
+.layer-panel .card-header {
+    background: var(--surface-muted)
+    }
+.layer-panel {
+    z-index: 1050
+    }
+/* Risk panel content */
+#riskPanel .metric-card {
+    border: 1px solid var(--border-color)
+    }
+#riskPanel .metric-value {
+    font-size: 1.25rem
+    }
+/* Offcanvas shadows for depth */
+.offcanvas-end, .offcanvas-bottom {
+    box-shadow: var(--shadow-3)
+    }
+/* Alerts table hover control visibility */
+.table-hover-reveal tr td .hover-control {
+    opacity: 0;
+    transition: opacity 0.2s ease
+    }
+.table-hover-reveal tr:hover td .hover-control {
+    opacity: 1
+    }
+/* Breadcrumb harmonization */
+.breadcrumb {
+    padding-left: 0
+    }
+/* Improve tooltip contrast on light buttons */
+.tooltip .tooltip-inner {
+    font-weight: 500
+    }

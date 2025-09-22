@@ -1,0 +1,84 @@
+/* user_management.css - page specific styles */
+/* Layout harmony for sidebar + main */
+@media (min-width: 768px) {
+    body > .container-fluid > .d-flex > main.main-panel {
+        min-width: 0;
+        /* allow flex to shrink */
+        }
+    }
+/* Toolbar */
+.um-toolbar .form-select {
+    min-width: 180px
+    }
+@media (max-width: 575.98px) {
+    .um-toolbar .form-select {
+        min-width: 140px
+        }
+    }
+/* Sort indicators */
+.table-sortable th.sortable {
+    cursor: pointer;
+    user-select: none
+    }
+.sort-indicator {
+    margin-left: 6px;
+    display: inline-block;
+    width: 10px;
+    height: 10px
+    }
+.sort-indicator.asc {
+    border-bottom: 6px solid var(--color-primary);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent
+    }
+.sort-indicator.desc {
+    border-top: 6px solid var(--color-primary);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent
+    }
+/* Avatar initials */
+.avatar-initials {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-soft);
+    color: var(--text-strong);
+    font-weight: 700;
+    border: 1px solid var(--border-color)
+    }
+/* Loading overlay */
+.spinner-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: grid;
+    place-items: center;
+    backdrop-filter: blur(1px)
+    }
+/* Dropzone */
+.dropzone {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-2);
+    background: var(--surface-0);
+    transition: background-color 0.2s ease, border-color 0.2s ease
+    }
+.dropzone.dragover {
+    border-color: var(--color-primary);
+    background: var(--primary-soft)
+    }
+/* Pagination tweaks */
+#pagination .page-link {
+    color: var(--text)
+    }
+#pagination .page-item.active .page-link {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--text-on-primary)
+    }
+/* Card header title alignment */
+.app-card .card-header .widget-title {
+    font-weight: 700
+    }

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Disaster Map | Disaster Prep
+  </title>
+  <!-- Brand font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+   <!-- SweetAlert2 -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" rel="stylesheet"/>
+    <!-- Global theme CSS -->
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Page-specific CSS (loader will place this file at ./disaster_map.css) -->
+    <link href="disaster_map.css" rel="stylesheet"/>
+    <!-- As requested: load page CSS using style tag signature (kept for compatibility) -->
+    <style href="disaster_map.css" rel="stylesheet">
+    </style>
+   </link>
+  </link>
+ </head>
+ <body class="bg-surface" style="font-family: Poppins, var(--font-sans);">
+  <!-- Header (Common Learner Header) -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarLearner" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./user_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/120/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Disaster Prep
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search help topics or locations..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./safety_status.html">
+      <i class="fa-solid fa-siren-on me-1 text-danger">
+      </i>
+      SOS
+     </a>
+     <button class="btn btn-link text-white me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuLearner">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/user/28/28'" src="https://via.placeholder.com/28"/>
+       <span>
+        User
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuLearner" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         Student
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./profile_setup.html">
+         <i class="fa-solid fa-user me-2">
+         </i>
+         Profile
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="with-sidebar d-flex">
+   <!-- Sidebar (Common Learner Sidebar) -->
+   <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarLearner" style="width:260px;">
+    <style>
+     #sidebarLearner .list-group-item { border: 0; border-radius: 0; }
+        #sidebarLearner .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+        #sidebarLearner .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+        #sidebarLearner .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+    </style>
+    <div class="p-3 text-center border-bottom">
+     <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/160/38'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+    </div>
+    <div class="p-3">
+     <div class="profile-box rounded p-3 mb-3">
+      <div class="d-flex align-items-center">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar/40/40'" src="https://via.placeholder.com/40"/>
+       <div>
+        <div class="fw-semibold">
+         User
+        </div>
+        <small class="text-muted">
+         Student
+        </small>
+       </div>
+      </div>
+     </div>
+     <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action" href="./user_dashboard.html">
+       <i class="fa-solid fa-house me-2">
+       </i>
+       Dashboard
+      </a>
+      <a aria-controls="learnCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#learnCollapse" role="button">
+       <i class="fa-solid fa-book me-2">
+       </i>
+       Learn
+      </a>
+      <div class="collapse show ps-3" id="learnCollapse">
+       <a class="list-group-item list-group-item-action" href="./chatbot_interface.html">
+        <i class="fa-solid fa-robot me-2">
+        </i>
+        AI Chatbot
+       </a>
+       <a class="list-group-item list-group-item-action active" href="./disaster_map.html">
+        <i class="fa-solid fa-map me-2">
+        </i>
+        Disaster Map
+       </a>
+      </div>
+      <a aria-controls="emergencyCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#emergencyCollapse" role="button">
+       <i class="fa-solid fa-siren-on me-2">
+       </i>
+       Emergency
+      </a>
+      <div class="collapse show ps-3" id="emergencyCollapse">
+       <a class="list-group-item list-group-item-action" href="./safety_status.html">
+        <i class="fa-solid fa-person-circle-check me-2">
+        </i>
+        My Safety Status
+       </a>
+       <a class="list-group-item list-group-item-action" href="./broadcast_tool.html">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Broadcasts
+       </a>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <!-- Mobile Offcanvas Sidebar -->
+   <div class="offcanvas offcanvas-start" id="mobileSidebarLearner" tabindex="-1">
+    <div class="offcanvas-header">
+     <h5 class="offcanvas-title">
+      Menu
+     </h5>
+     <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+     </button>
+    </div>
+    <div class="offcanvas-body">
+     <a class="d-block mb-3" href="./user_dashboard.html">
+      <i class="fa-solid fa-house me-2">
+      </i>
+      Dashboard
+     </a>
+     <p class="text-uppercase small text-muted mb-2">
+      Learn
+     </p>
+     <a class="d-block mb-2" href="./chatbot_interface.html">
+      <i class="fa-solid fa-robot me-2">
+      </i>
+      AI Chatbot
+     </a>
+     <a class="d-block mb-3" href="./disaster_map.html">
+      <i class="fa-solid fa-map me-2">
+      </i>
+      Disaster Map
+     </a>
+     <p class="text-uppercase small text-muted mb-2">
+      Emergency
+     </p>
+     <a class="d-block mb-2" href="./safety_status.html">
+      <i class="fa-solid fa-person-circle-check me-2">
+      </i>
+      My Safety Status
+     </a>
+     <a class="d-block" href="./broadcast_tool.html">
+      <i class="fa-solid fa-bullhorn me-2">
+      </i>
+      Broadcasts
+     </a>
+    </div>
+   </div>
+   <!-- Main Content -->
+   <main class="main-content flex-grow-1">
+    <div class="container-fluid py-3">
+     <nav aria-label="breadcrumb" class="breadcrumb mb-2">
+      <span class="breadcrumb-item">
+       <a href="./user_dashboard.html">
+        <i class="fa-solid fa-house">
+        </i>
+        Home
+       </a>
+      </span>
+      <span aria-current="page" class="breadcrumb-item active">
+       Disaster Map
+      </span>
+     </nav>
+     <div class="page-header">
+      <div class="d-flex align-items-center gap-2">
+       <h1 class="page-title mb-0">
+        Disaster Risk Map - India
+       </h1>
+       <span class="badge-soft info">
+        <i class="fa-solid fa-location-dot">
+        </i>
+        Location Intelligence
+       </span>
+      </div>
+      <div aria-label="View Switch" class="view-switcher" role="group">
+       <span class="option active" title="Map View">
+        <i class="fa-solid fa-map">
+        </i>
+       </span>
+       <a class="option" href="./user_dashboard.html" title="Dashboard">
+        <i class="fa-solid fa-table-columns">
+        </i>
+       </a>
+      </div>
+     </div>
+     <!-- Interactive Map Container -->
+     <section class="app-card position-relative p-0 overflow-hidden" id="interactiveMapContainer">
+      <!-- Map -->
+      <div aria-label="Interactive disaster map of India" class="map-display" id="map" role="application">
+      </div>
+      <!-- Loading Overlay -->
+      <div class="loading-overlay d-flex align-items-center justify-content-center" id="mapLoadingOverlay">
+       <div class="text-center">
+        <div aria-hidden="true" class="spinner-border text-primary mb-2" role="status">
+        </div>
+        <div class="small text-muted">
+         Loading map and hazard layers...
+        </div>
+       </div>
+      </div>
+      <!-- SearchBar (overlay top center) -->
+      <div class="map-search-wrapper position-absolute top-0 start-50 translate-middle-x p-2 w-100" style="max-width:720px;">
+       <form class="search-form bg-white border rounded shadow-sm p-2" id="mapSearchForm">
+        <div class="input-group">
+         <span class="input-group-text bg-white">
+          <i class="fa-solid fa-search text-muted">
+          </i>
+         </span>
+         <input aria-label="Search location" class="form-control search-input-field" id="searchInput" placeholder="Search for your school or location..." type="search">
+          <button class="btn btn-primary" disabled="" id="searchBtn" type="submit">
+           <i class="fa-solid fa-magnifying-glass">
+           </i>
+          </button>
+         </input>
+        </div>
+        <div class="list-group position-absolute mt-1 w-100 d-none" id="searchSuggestions" style="z-index: 1051;">
+        </div>
+       </form>
+      </div>
+      <!-- Floating Action Buttons (right) -->
+      <div class="fab-vertical position-absolute" style="right:12px; bottom: 92px;">
+       <button class="btn btn-light btn-icon shadow-sm mb-2" data-bs-title="Use my location" data-bs-toggle="tooltip" id="btnGeolocate" type="button">
+        <i class="fa-solid fa-crosshairs">
+        </i>
+       </button>
+       <button class="btn btn-light btn-icon shadow-sm mb-2" data-bs-title="Layer controls" data-bs-toggle="tooltip" id="btnLayers" type="button">
+        <i class="fa-solid fa-layer-group">
+        </i>
+       </button>
+       <button aria-controls="alertsPanel" class="btn btn-light btn-icon shadow-sm" data-bs-target="#alertsPanel" data-bs-title="Open alerts panel" data-bs-toggle="offcanvas" id="btnAlerts" type="button">
+        <i class="fa-solid fa-bullhorn">
+        </i>
+       </button>
+      </div>
+      <!-- Layer Control Panel (floating card) -->
+      <div class="layer-panel card shadow-sm position-absolute d-none" id="layerControlPanel" style="right:12px; bottom: 170px; width: 280px;">
+       <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">
+         <i class="fa-solid fa-layer-group me-2">
+         </i>
+         Layers
+        </span>
+        <button aria-label="Close layer panel" class="btn btn-sm btn-light" id="closeLayerPanel" type="button">
+         <i class="fa-solid fa-xmark">
+         </i>
+        </button>
+       </div>
+       <div class="card-body">
+        <div class="form-check form-switch mb-2">
+         <input checked="" class="form-check-input" id="toggleSeismic" role="switch" type="checkbox"/>
+         <label class="form-check-label" for="toggleSeismic">
+          Seismic Zones
+         </label>
+        </div>
+        <div class="form-check form-switch mb-2">
+         <input checked="" class="form-check-input" id="toggleFlood" role="switch" type="checkbox"/>
+         <label class="form-check-label" for="toggleFlood">
+          Flood-prone Areas
+         </label>
+        </div>
+        <div class="form-check form-switch">
+         <input checked="" class="form-check-input" id="toggleCyclone" role="switch" type="checkbox"/>
+         <label class="form-check-label" for="toggleCyclone">
+          Cyclone Paths
+         </label>
+        </div>
+       </div>
+      </div>
+      <!-- Risk Information Panel (Bottom Offcanvas) -->
+      <div aria-labelledby="riskPanelLabel" class="offcanvas offcanvas-bottom" id="riskPanel" style="height: 45vh;" tabindex="-1">
+       <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="riskPanelLabel">
+         <i class="fa-solid fa-circle-info text-primary me-2">
+         </i>
+         <span id="riskLocationTitle">
+          Location
+         </span>
+        </h5>
+        <button aria-label="Close" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button">
+        </button>
+       </div>
+       <div class="offcanvas-body">
+        <div class="row g-3" id="riskDetails">
+         <!-- RiskDetailItem(s) will be injected here -->
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- Alerts/Reports Offcanvas (Right) with table/list -->
+     <div aria-labelledby="alertsPanelLabel" class="offcanvas offcanvas-end" id="alertsPanel" style="width: 480px;" tabindex="-1">
+      <div class="offcanvas-header">
+       <h5 class="mb-0" id="alertsPanelLabel">
+        <i class="fa-solid fa-bullhorn text-warning me-2">
+        </i>
+        Recent Alerts (Mock)
+       </h5>
+       <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+       </button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+       <div class="d-flex align-items-center gap-2 mb-3">
+        <select class="form-select form-select-sm" id="alertTypeFilter" style="max-width:220px;">
+         <option selected="" value="all">
+          All Types
+         </option>
+         <option value="Seismic">
+          Seismic
+         </option>
+         <option value="Flood">
+          Flood
+         </option>
+         <option value="Cyclone">
+          Cyclone
+         </option>
+        </select>
+        <button class="btn btn-light btn-sm" id="sortByDateBtn">
+         <i class="fa-solid fa-sort">
+         </i>
+         Sort by Date
+        </button>
+       </div>
+       <div class="table-responsive border rounded">
+        <table class="table table-theme table-hover-reveal mb-0" id="alertsTable">
+         <thead>
+          <tr>
+           <th scope="col">
+            Date
+           </th>
+           <th scope="col">
+            Type
+           </th>
+           <th scope="col">
+            Location
+           </th>
+           <th scope="col">
+            Severity
+           </th>
+           <th class="text-end" scope="col">
+            Action
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <!-- rows injected by JS -->
+         </tbody>
+        </table>
+       </div>
+       <div class="d-flex align-items-center justify-content-between mt-2 small text-muted">
+        <span id="paginationInfo">
+         Showing 1–6 of 6
+        </span>
+        <nav aria-label="Table pagination">
+         <ul class="pagination pagination-sm mb-0">
+          <li class="page-item disabled">
+           <a class="page-link" href="#" tabindex="-1">
+            Prev
+           </a>
+          </li>
+          <li class="page-item active">
+           <span class="page-link">
+            1
+           </span>
+          </li>
+          <li class="page-item disabled">
+           <a class="page-link" href="#">
+            Next
+           </a>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Footer (Common) -->
+  <footer class="border-top py-2 bg-white">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/120/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      © 2025 Disaster Prep
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast container (system feedback) -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-bg-primary border-0" id="appToast" role="alert">
+    <div class="d-flex">
+     <div class="toast-body">
+      <i class="fa-solid fa-circle-check me-2">
+      </i>
+      <span id="toastMsg">
+       Map ready
+      </span>
+     </div>
+     <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- JS Libraries -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js">
+  </script>
+  <script>
+   // Utility: debounce
+function debounce(fn, delay) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
+// Map and state
+let map, currentMarker = null;
+const activeLayers = {
+    seismic: true,
+    flood: true,
+    cyclone: true
+};
+
+// Sample GeoJSON (mock) for hazard layers in India
+const seismicGeoJSON = {
+    type: 'FeatureCollection',
+    features: [{
+        type: 'Feature',
+        properties: {
+            name: 'Seismic Zone V (Mock)',
+            risk: 'Very High',
+            riskColor: '#CD2026'
+        },
+        geometry: {
+            type: 'Polygon',
+            coordinates: [
+                [
+                    [92.0, 28.5],
+                    [97.0, 28.5],
+                    [97.0, 23.0],
+                    [92.0, 23.0],
+                    [92.0, 28.5]
+                ]
+            ]
+        }
+    }, {
+        type: 'Feature',
+        properties: {
+            name: 'Seismic Zone IV (Mock)',
+            risk: 'High',
+            riskColor: '#FFA500'
+        },
+        geometry: {
+            type: 'Polygon',
+            coordinates: [
+                [
+                    [72.0, 31.0],
+                    [83.0, 31.0],
+                    [83.0, 24.0],
+                    [72.0, 24.0],
+                    [72.0, 31.0]
+                ]
+            ]
+        }
+    }]
+};
+const floodGeoJSON = {
+    type: 'FeatureCollection',
+    features: [{
+        type: 'Feature',
+        properties: {
+            name: 'Ganga Floodplain (Mock)',
+            risk: 'Moderate',
+            riskColor: '#0099D2'
+        },
+        geometry: {
+            type: 'Polygon',
+            coordinates: [
+                [
+                    [77.0, 29.5],
+                    [88.0, 29.5],
+                    [88.0, 24.5],
+                    [77.0, 24.5],
+                    [77.0, 29.5]
+                ]
+            ]
+        }
+    }, {
+        type: 'Feature',
+        properties: {
+            name: 'Brahmaputra Basin (Mock)',
+            risk: 'High',
+            riskColor: '#007aa8'
+        },
+        geometry: {
+            type: 'Polygon',
+            coordinates: [
+                [
+                    [89.0, 27.5],
+                    [95.0, 27.5],
+                    [95.0, 24.0],
+                    [89.0, 24.0],
+                    [89.0, 27.5]
+                ]
+            ]
+        }
+    }]
+};
+const cycloneGeoJSON = {
+    type: 'FeatureCollection',
+    features: [{
+        type: 'Feature',
+        properties: {
+            name: 'Cyclone Corridor (Bay of Bengal - Mock)',
+            risk: 'High',
+            riskColor: '#6c1746'
+        },
+        geometry: {
+            type: 'LineString',
+            coordinates: [
+                [88.0, 16.0],
+                [86.0, 18.0],
+                [84.0, 20.0],
+                [82.0, 22.5],
+                [80.0, 18.0]
+            ]
+        }
+    }, {
+        type: 'Feature',
+        properties: {
+            name: 'Arabian Sea Track (Mock)',
+            risk: 'Moderate',
+            riskColor: '#5b626a'
+        },
+        geometry: {
+            type: 'LineString',
+            coordinates: [
+                [69.0, 15.0],
+                [71.5, 18.0],
+                [73.0, 20.0],
+                [72.0, 22.0]
+            ]
+        }
+    }]
+};
+
+// Mock: Get risk profile by coordinates or feature
+function getRiskProfileForCoordinates(lng, lat, name = 'Selected Location') {
+    // In production, call backend API with lng/lat
+    // Here we compute mock risk from proximity
+    const random = Math.random();
+    const risk = [{
+        riskName: 'Seismic Zone',
+        riskValue: random > 0.66 ? 'Zone IV' : (random > 0.33 ? 'Zone III' : 'Zone II'),
+        riskColor: random > 0.66 ? 'danger' : (random > 0.33 ? 'warning' : 'success')
+    }, {
+        riskName: 'Flood Risk',
+        riskValue: random > 0.7 ? 'High' : (random > 0.4 ? 'Moderate' : 'Low'),
+        riskColor: random > 0.7 ? 'danger' : (random > 0.4 ? 'warning' : 'success')
+    }, {
+        riskName: 'Cyclone Exposure',
+        riskValue: random > 0.5 ? 'Moderate' : 'Low',
+        riskColor: random > 0.5 ? 'warning' : 'success'
+    }, {
+        riskName: 'Landslide Susceptibility',
+        riskValue: random > 0.6 ? 'Moderate' : 'Low',
+        riskColor: random > 0.6 ? 'warning' : 'success'
+    }];
+    return {
+        name,
+        items: risk
+    };
+}
+
+function showToast(message = 'Action completed', type = 'primary') {
+    const toastEl = document.getElementById('appToast');
+    document.getElementById('toastMsg').textContent = message;
+    toastEl.className = `toast align-items-center text-bg-${type} border-0`;
+    const toast = new bootstrap.Toast(toastEl, {
+        delay: 2400
+    });
+    toast.show();
+}
+
+function setMapHeight() {
+    const nav = document.querySelector('.navbar');
+    const footer = document.querySelector('footer');
+    const h = nav ? nav.offsetHeight : 56;
+    const f = footer ? footer.offsetHeight : 40;
+    const mapEl = document.getElementById('map');
+    if (mapEl) {
+        mapEl.style.height = `calc(100vh - ${h + f + 32}px)`; // + container padding
+    }
+    if (map) {
+        map.resize();
+    }
+}
+
+function initTooltips() {
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+}
+
+function toggleLayerPanel(show) {
+    const panel = document.getElementById('layerControlPanel');
+    if (!panel) return;
+    if (typeof show === 'boolean') panel.classList.toggle('d-none', !show);
+    else panel.classList.toggle('d-none');
+}
+
+function addGeoJSONLayer(sourceId, data, layerId, type, paint, layout) {
+    if (!map.getSource(sourceId)) {
+        map.addSource(sourceId, {
+            type: 'geojson',
+            data
+        });
+    }
+    if (!map.getLayer(layerId)) {
+        map.addLayer({
+            id: layerId,
+            type,
+            source: sourceId,
+            paint,
+            layout
+        });
+    }
+}
+
+function initMap() {
+    map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://demotiles.maplibre.org/style.json',
+        center: [78.9629, 20.5937], // India center
+        zoom: 4.2,
+        attributionControl: true
+    });
+
+    map.addControl(new maplibregl.NavigationControl({
+        visualizePitch: true
+    }), 'top-left');
+
+    map.on('load', () => {
+        // Seismic (fill)
+        addGeoJSONLayer(
+            'seismicSource', seismicGeoJSON, 'seismicLayer', 'fill', {
+                'fill-color': ['coalesce', ['get', 'riskColor'], '#CD2026'],
+                'fill-opacity': 0.25,
+                'fill-outline-color': '#b81c22'
+            }, {
+                visibility: activeLayers.seismic ? 'visible' : 'none'
+            }
+        );
+        // Flood (fill)
+        addGeoJSONLayer(
+            'floodSource', floodGeoJSON, 'floodLayer', 'fill', {
+                'fill-color': ['coalesce', ['get', 'riskColor'], '#0099D2'],
+                'fill-opacity': 0.22,
+                'fill-outline-color': '#0089bd'
+            }, {
+                visibility: activeLayers.flood ? 'visible' : 'none'
+            }
+        );
+        // Cyclone (line)
+        addGeoJSONLayer(
+            'cycloneSource', cycloneGeoJSON, 'cycloneLayer', 'line', {
+                'line-color': ['coalesce', ['get', 'riskColor'], '#6c757d'],
+                'line-width': 3,
+                'line-opacity': 0.75
+            }, {
+                visibility: activeLayers.cyclone ? 'visible' : 'none'
+            }
+        );
+
+        // Click handlers to show Risk Panel
+        map.on('click', 'seismicLayer', (e) => {
+            const f = e.features && e.features[0];
+            if (!f) return;
+            const props = f.properties || {};
+            const center = e.lngLat;
+            const rp = getRiskProfileForCoordinates(center.lng, center.lat, props.name || 'Seismic Zone');
+            openRiskPanel(rp);
+        });
+        map.on('click', 'floodLayer', (e) => {
+            const f = e.features && e.features[0];
+            if (!f) return;
+            const props = f.properties || {};
+            const center = e.lngLat;
+            const rp = getRiskProfileForCoordinates(center.lng, center.lat, props.name || 'Flood Area');
+            openRiskPanel(rp);
+        });
+        map.on('click', 'cycloneLayer', (e) => {
+            const f = e.features && e.features[0];
+            if (!f) return;
+            const props = f.properties || {};
+            const center = e.lngLat;
+            const rp = getRiskProfileForCoordinates(center.lng, center.lat, props.name || 'Cyclone Path');
+            openRiskPanel(rp);
+        });
+
+        document.getElementById('mapLoadingOverlay').classList.add('d-none');
+        showToast('Map loaded successfully');
+        setMapHeight();
+    });
+
+    map.on('dragend', () => console.debug('onMapPan', map.getCenter()));
+    map.on('zoomend', () => console.debug('onMapZoom', map.getZoom()));
+}
+
+function openRiskPanel(profile) {
+    document.getElementById('riskLocationTitle').textContent = profile.name;
+    const container = document.getElementById('riskDetails');
+    container.innerHTML = '';
+    profile.items.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-md-6';
+        col.innerHTML = `
+          <div class="metric-card">
+            <div class="metric-title">${item.riskName}</div>
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="metric-value">${item.riskValue}</div>
+              <span class="badge-soft ${item.riskColor}">${item.riskColor === 'danger' ? 'High' : (item.riskColor === 'warning' ? 'Moderate' : 'Low')}</span>
+            </div>
+          </div>`;
+        container.appendChild(col);
+    });
+    const riskOffcanvas = bootstrap.Offcanvas.getOrCreateInstance('#riskPanel');
+    riskOffcanvas.show();
+}
+
+function setLayerVisibility(layerId, visible) {
+    const visibility = visible ? 'visible' : 'none';
+    if (map && map.getLayer(layerId)) {
+        map.setLayoutProperty(layerId, 'visibility', visibility);
+    }
+}
+
+function handleGeolocate() {
+    if (!navigator.geolocation) {
+        Swal.fire('Geolocation not supported', 'Your browser does not support geolocation.', 'warning');
+        return;
+    }
+    navigator.geolocation.getCurrentPosition((pos) => {
+        const {
+            latitude,
+            longitude
+        } = pos.coords;
+        if (currentMarker) currentMarker.remove();
+        currentMarker = new maplibregl.Marker({
+                color: '#0000FF'
+            })
+            .setLngLat([longitude, latitude])
+            .addTo(map);
+        map.flyTo({
+            center: [longitude, latitude],
+            zoom: 12
+        });
+        const rp = getRiskProfileForCoordinates(longitude, latitude, 'Your Location');
+        openRiskPanel(rp);
+    }, (err) => {
+        Swal.fire('Location error', err.message || 'Unable to retrieve your location.', 'error');
+    }, {
+        enableHighAccuracy: true,
+        timeout: 10000
+    });
+}
+
+function initSearch() {
+    const input = document.getElementById('searchInput');
+    const btn = document.getElementById('searchBtn');
+    const sugg = document.getElementById('searchSuggestions');
+
+    input.addEventListener('input', () => {
+        btn.disabled = input.value.trim().length === 0;
+    });
+
+    const fetchSuggestions = debounce(async (q) => {
+        if (!q || q.trim().length < 3) {
+            sugg.classList.add('d-none');
+            sugg.innerHTML = '';
+            return;
+        }
+        try {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&countrycodes=in&addressdetails=1&limit=5`;
+            const res = await fetch(url, {
+                headers: {
+                    'Accept-Language': 'en'
+                }
+            });
+            const data = await res.json();
+            sugg.innerHTML = '';
+            data.forEach(item => {
+                const a = document.createElement('a');
+                a.href = '#';
+                a.className = 'list-group-item list-group-item-action';
+                a.textContent = item.display_name;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    input.value = item.display_name;
+                    sugg.classList.add('d-none');
+                    focusLocation([parseFloat(item.lon), parseFloat(item.lat)], item.display_name);
+                });
+                sugg.appendChild(a);
+            });
+            sugg.classList.toggle('d-none', data.length === 0);
+        } catch (e) {
+            console.error(e);
+        }
+    }, 350);
+
+    input.addEventListener('input', () => fetchSuggestions(input.value));
+
+    document.getElementById('mapSearchForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const q = input.value.trim();
+        if (!q) return;
+        try {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&countrycodes=in&limit=1`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data && data[0]) {
+                const loc = data[0];
+                focusLocation([parseFloat(loc.lon), parseFloat(loc.lat)], loc.display_name);
+            } else {
+                Swal.fire('Not found', 'No results for your search.', 'info');
+            }
+        } catch (err) {
+            Swal.fire('Error', 'Failed to fetch location. Try again later.', 'error');
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!sugg.contains(e.target) && e.target !== input) sugg.classList.add('d-none');
+    });
+}
+
+function focusLocation([lng, lat], name) {
+    if (currentMarker) currentMarker.remove();
+    currentMarker = new maplibregl.Marker({
+        color: '#111'
+    }).setLngLat([lng, lat]).setPopup(new maplibregl.Popup().setText(name)).addTo(map);
+    map.flyTo({
+        center: [lng, lat],
+        zoom: 13
+    });
+    openRiskPanel(getRiskProfileForCoordinates(lng, lat, name));
+}
+
+// Alerts table (mock data, sorting/filtering)
+const alertsData = [{
+    date: '2025-09-18 14:20',
+    type: 'Flood',
+    location: 'Patna, Bihar',
+    severity: 'High'
+}, {
+    date: '2025-09-18 10:05',
+    type: 'Seismic',
+    location: 'Kohima, Nagaland',
+    severity: 'Moderate'
+}, {
+    date: '2025-09-17 19:45',
+    type: 'Cyclone',
+    location: 'Visakhapatnam, AP',
+    severity: 'High'
+}, {
+    date: '2025-09-16 08:30',
+    type: 'Flood',
+    location: 'Guwahati, Assam',
+    severity: 'Moderate'
+}, {
+    date: '2025-09-15 16:10',
+    type: 'Seismic',
+    location: 'Shimla, HP',
+    severity: 'Low'
+}, {
+    date: '2025-09-14 12:00',
+    type: 'Cyclone',
+    location: 'Puri, Odisha',
+    severity: 'Moderate'
+}];
+let alertsSortAsc = false;
+
+function renderAlertsTable() {
+    const tbody = document.querySelector('#alertsTable tbody');
+    const filter = document.getElementById('alertTypeFilter').value;
+    let rows = alertsData.filter(r => filter === 'all' ? true : r.type === filter);
+    rows.sort((a, b) => {
+        const da = new Date(a.date.replace(' ', 'T'));
+        const db = new Date(b.date.replace(' ', 'T'));
+        return alertsSortAsc ? da - db : db - da;
+    });
+    tbody.innerHTML = '';
+    rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.date}</td>
+          <td>${r.type}</td>
+          <td>${r.location}</td>
+          <td>
+            <span class="badge-soft ${r.severity === 'High' ? 'error' : (r.severity === 'Moderate' ? 'warning' : 'success')}">${r.severity}</span>
+          </td>
+          <td class="text-end"><button class="btn btn-sm btn-light hover-control"><i class="fa-solid fa-eye"></i></button></td>`;
+        tbody.appendChild(tr);
+    });
+    document.getElementById('paginationInfo').textContent = `Showing 1–${rows.length} of ${rows.length}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initTooltips();
+    initMap();
+    initSearch();
+
+    // Layer toggles
+    document.getElementById('btnLayers').addEventListener('click', () => toggleLayerPanel());
+    document.getElementById('closeLayerPanel').addEventListener('click', () => toggleLayerPanel(false));
+    document.getElementById('toggleSeismic').addEventListener('change', (e) => {
+        activeLayers.seismic = e.target.checked;
+        setLayerVisibility('seismicLayer', e.target.checked);
+        showToast(`Seismic layer ${e.target.checked ? 'on' : 'off'}`, 'info');
+    });
+    document.getElementById('toggleFlood').addEventListener('change', (e) => {
+        activeLayers.flood = e.target.checked;
+        setLayerVisibility('floodLayer', e.target.checked);
+        showToast(`Flood layer ${e.target.checked ? 'on' : 'off'}`, 'info');
+    });
+    document.getElementById('toggleCyclone').addEventListener('change', (e) => {
+        activeLayers.cyclone = e.target.checked;
+        setLayerVisibility('cycloneLayer', e.target.checked);
+        showToast(`Cyclone layer ${e.target.checked ? 'on' : 'off'}`, 'info');
+    });
+
+    // Geolocate
+    document.getElementById('btnGeolocate').addEventListener('click', handleGeolocate);
+
+    // Search input enable/disable
+    const si = document.getElementById('searchInput');
+    const sb = document.getElementById('searchBtn');
+    si.addEventListener('input', () => sb.disabled = si.value.trim().length === 0);
+
+    // Alerts panel table
+    renderAlertsTable();
+    document.getElementById('alertTypeFilter').addEventListener('change', renderAlertsTable);
+    document.getElementById('sortByDateBtn').addEventListener('click', () => {
+        alertsSortAsc = !alertsSortAsc;
+        renderAlertsTable();
+    });
+
+    window.addEventListener('resize', setMapHeight);
+    setTimeout(setMapHeight, 300);
+});
+  </script>
+ </body>
+</html>

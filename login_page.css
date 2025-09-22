@@ -1,0 +1,44 @@
+/* login_page.css - Page-specific styles for Login Page */
+/* Use Poppins as the brand typography on this page */
+body {
+    font-family: "Poppins", var(--font-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif
+    }
+/* Ensure main area has comfortable spacing on all devices */
+main {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4)
+    }
+/* Enhance login container spacing on small screens */
+.login-form-container {
+    padding: var(--space-6)
+    }
+@media (max-width: 575.98px) {
+    .login-form-container {
+        padding: var(--space-4)
+        }
+    }
+/* Error alert spacing */
+#errorAlert {
+    margin-bottom: var(--space-3)
+    }
+/* Table header interactivity */
+th.sortable {
+    cursor: pointer;
+    user-select: none
+    }
+th.sortable:hover {
+    color: var(--color-primary)
+    }
+/* Demo table code blocks for credentials */
+#credentialsTable code {
+    font-family: var(--font-mono)
+    }
+/* Improve visibility of Use/Copy buttons */
+#credentialsTable .btn-group .btn {
+    min-width: 64px
+    }
+/* Make the login card slightly elevate on hover for subtle affordance */
+.login-form-container:hover {
+    box-shadow: var(--shadow-2);
+    transition: box-shadow 0.2s ease
+    }

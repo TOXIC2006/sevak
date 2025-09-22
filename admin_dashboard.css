@@ -1,0 +1,53 @@
+/* Admin Dashboard - Page Specific Styles */
+/* Use Poppins for this page */
+body {
+    font-family: "Poppins", var(--font-sans) !important
+    }
+/* Prevent global sidebar hover expand for admin sidebar */
+#sidebarAdmin {
+    width: 260px !important
+    }
+#sidebarAdmin:hover {
+    width: 260px !important
+    }
+/* Ensure the main area uses full width next to sidebar */
+@media (min-width: 768px) {
+    .main-panel {
+        padding: var(--space-6)
+        }
+    }
+/* Emergency banner enhancements */
+#emergencyBanner {
+    display: flex;
+    border: 1px solid var(--color-error);
+    animation: bounceSoft 1.2s ease-in-out infinite
+    }
+/* Metric cards fine-tuning */
+.metric-card .metric-value {
+    line-height: 1.1
+    }
+.metric-card .fa-2x {
+    opacity: 0.85
+    }
+/* Charts: make canvas responsive within card */
+.card canvas {
+    width: 100% !important;
+    height: auto !important
+    }
+/* Recent activity list spacing */
+#activityList li:last-child {
+    border-bottom: 0
+    }
+/* Quick actions buttons */
+.card .btn.w-100 {
+    box-shadow: var(--shadow-1)
+    }
+.card .btn.w-100:hover {
+    box-shadow: var(--shadow-2)
+    }
+/* Header nav link active underline */
+.navbar .nav-link.active {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px
+    }

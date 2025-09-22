@@ -1,0 +1,44 @@
+/* profile_setup.css - Page-specific styles for Profile Setup */
+/* Use brand typography Poppins while respecting global fallbacks */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout adjustments so main content accommodates the sidebar */
+@media (min-width: 768px) {
+    #sidebarAuth + main {
+        min-height: calc(100vh - 56px - 58px)
+        }
+    }
+/* Wizard card visual emphasis */
+.setup-wizard {
+    max-width: 1100px;
+    margin: 0 auto
+    }
+/* Smooth progress animation on step change */
+.progress-animate {
+    transition: width 0.25s ease
+    }
+/* Contacts list spacing */
+.contacts-list .contact-row {
+    border-color: var(--bs-border-color, var(--border-color))
+    }
+/* Improve visibility of checklist badges */
+#passwordChecklist .badge {
+    font-weight: 600;
+    padding: 8px 10px
+    }
+/* Wizard footer sticks to card bottom visually */
+.setup-wizard .card-footer {
+    background: var(--surface-muted)
+    }
+/* Buttons: ensure icons align nicely */
+.btn .fa-solid, .btn .fa-regular {
+    vertical-align: -1px
+    }
+/* Mobile spacing tweaks */
+@media (max-width: 575.98px) {
+    .setup-wizard {
+        box-shadow: none;
+        border-radius: 0
+        }
+    }

@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Broadcast Tool - Admin Console
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+   <!-- SweetAlert2 -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Global Theme CSS -->
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Page Specific CSS -->
+    <link href="broadcast_tool.css" rel="stylesheet"/>
+    <style>
+     /* Ensure Poppins is used as primary font for this page */
+    body { font-family: 'Poppins', var(--font-sans); }
+    </style>
+   </link>
+  </link>
+ </head>
+ <body>
+  <!-- Administrator Management Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarAdmin" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./admin_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/28/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Admin Console
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search users, alerts, settings..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./broadcast_tool.html">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      New Broadcast
+     </a>
+     <a class="btn btn-outline-light btn-sm me-2" href="./user_management.html#add">
+      <i class="fa-solid fa-user-plus me-1">
+      </i>
+      Add Users
+     </a>
+     <button class="btn btn-link text-white me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuAdmin">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar28/28/28'" src="https://via.placeholder.com/28"/>
+       <span>
+        Alex Admin
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuAdmin" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         Administrator
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./admin_settings.html">
+         <i class="fa-solid fa-screwdriver-wrench me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="d-flex">
+   <!-- Administrator Management Sidebar (Desktop) -->
+   <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarAdmin" style="width:260px;">
+    <style>
+     #sidebarAdmin .list-group-item { border: 0; border-radius: 0; }
+        #sidebarAdmin .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+        #sidebarAdmin .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+        #sidebarAdmin .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+    </style>
+    <div class="p-3 text-center border-bottom">
+     <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo38/140/38'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+    </div>
+    <div class="p-3">
+     <div class="profile-box rounded p-3 mb-3">
+      <div class="d-flex align-items-center">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar40/40/40'" src="https://via.placeholder.com/40"/>
+       <div>
+        <div class="fw-semibold">
+         Alex Admin
+        </div>
+        <small class="text-muted">
+         Administrator
+        </small>
+       </div>
+      </div>
+     </div>
+     <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action" href="./admin_dashboard.html">
+       <i class="fa-solid fa-gauge me-2">
+       </i>
+       Admin Dashboard
+      </a>
+      <a class="list-group-item list-group-item-action" href="./user_management.html">
+       <i class="fa-solid fa-users me-2">
+       </i>
+       User Management
+      </a>
+      <a class="list-group-item list-group-item-action active" href="./broadcast_tool.html">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Broadcast Tool
+      </a>
+      <a aria-controls="adminSettingsCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#adminSettingsCollapse" role="button">
+       <i class="fa-solid fa-screwdriver-wrench me-2">
+       </i>
+       Settings
+      </a>
+      <div class="collapse show ps-3" id="adminSettingsCollapse">
+       <a class="list-group-item list-group-item-action" href="./admin_settings.html">
+        <i class="fa-solid fa-shield me-2">
+        </i>
+        Institution Settings
+       </a>
+       <a class="list-group-item list-group-item-action" href="./emergency_dashboard.html">
+        <i class="fa-solid fa-signal me-2">
+        </i>
+        Emergency Dashboard
+       </a>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <!-- Mobile Offcanvas Sidebar -->
+   <div class="offcanvas offcanvas-start" id="mobileSidebarAdmin" tabindex="-1">
+    <div class="offcanvas-header">
+     <h5 class="offcanvas-title">
+      Admin Menu
+     </h5>
+     <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+     </button>
+    </div>
+    <div class="offcanvas-body">
+     <a class="d-block mb-3" href="./admin_dashboard.html">
+      <i class="fa-solid fa-gauge me-2">
+      </i>
+      Admin Dashboard
+     </a>
+     <a class="d-block mb-3" href="./user_management.html">
+      <i class="fa-solid fa-users me-2">
+      </i>
+      User Management
+     </a>
+     <a class="d-block mb-3" href="./broadcast_tool.html">
+      <i class="fa-solid fa-bullhorn me-2">
+      </i>
+      Broadcast Tool
+     </a>
+     <a class="d-block mb-3" href="./admin_settings.html">
+      <i class="fa-solid fa-screwdriver-wrench me-2">
+      </i>
+      Institution Settings
+     </a>
+     <a class="d-block" href="./emergency_dashboard.html">
+      <i class="fa-solid fa-signal me-2">
+      </i>
+      Emergency Dashboard
+     </a>
+    </div>
+   </div>
+   <!-- Main Content -->
+   <main class="main-panel flex-grow-1">
+    <div class="container-fluid">
+     <!-- Breadcrumbs -->
+     <nav aria-label="breadcrumb" class="breadcrumb mb-3">
+      <ol class="breadcrumb mb-0">
+       <li class="breadcrumb-item">
+        <a href="./admin_dashboard.html">
+         Admin
+        </a>
+       </li>
+       <li aria-current="page" class="breadcrumb-item active">
+        Broadcast Tool
+       </li>
+      </ol>
+     </nav>
+     <!-- Page Header -->
+     <div class="page-header">
+      <div class="d-flex align-items-center gap-3">
+       <h1 class="page-title mb-0">
+        <i class="fa-solid fa-bullhorn me-2 text-primary">
+        </i>
+        Broadcast Tool
+       </h1>
+       <span class="badge-soft info">
+        <i class="fa-regular fa-clock me-1">
+        </i>
+        Last drill: Jan 14, 2025 10:30
+       </span>
+       <span class="badge-soft success">
+        <i class="fa-solid fa-signal me-1">
+        </i>
+        System Healthy
+       </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <button class="btn btn-light btn-sm" data-bs-toggle="tooltip" id="btnGuidance" title="Review broadcast best practices">
+        <i class="fa-regular fa-circle-question me-1">
+        </i>
+        Guidance
+       </button>
+       <a class="btn btn-outline-primary btn-sm" href="./emergency_dashboard.html">
+        <i class="fa-solid fa-signal me-1">
+        </i>
+        Emergency Dashboard
+       </a>
+      </div>
+     </div>
+     <!-- System Feedback Area -->
+     <div class="alert alert-warning d-none" id="systemFeedback" role="alert">
+      <i class="fa-solid fa-triangle-exclamation me-2">
+      </i>
+      <span id="systemFeedbackText">
+       System message goes here.
+      </span>
+     </div>
+     <div class="row g-4">
+      <!-- Left: Composer -->
+      <div class="col-12 col-lg-7">
+       <div class="card app-card">
+        <div class="card-header">
+         <div class="title d-flex align-items-center">
+          <i class="fa-solid fa-pen-to-square me-2 text-primary">
+          </i>
+          <span class="widget-title">
+           Compose Broadcast
+          </span>
+         </div>
+         <div class="text-muted small">
+          <i class="fa-solid fa-lock me-1">
+          </i>
+          Admins only
+         </div>
+        </div>
+        <div class="card-body">
+         <!-- Recipient Selector -->
+         <section class="mb-4">
+          <label class="form-label">
+           Recipients
+          </label>
+          <div class="row g-2" id="recipientList">
+           <!-- Checkboxes dynamically rendered here -->
+          </div>
+          <div class="d-flex align-items-center justify-content-between mt-2">
+           <small class="text-muted">
+            Tip: Selecting "All Users" disables other groups.
+           </small>
+           <div class="badge-soft primary" id="recipientCount">
+            <i class="fa-solid fa-users me-1">
+            </i>
+            Estimated recipients:
+            <strong id="recipientCountNumber">
+             0
+            </strong>
+           </div>
+          </div>
+         </section>
+         <!-- Message Editor -->
+         <section class="mb-3">
+          <div class="row g-2 align-items-center">
+           <div class="col-12 col-md-8">
+            <label class="form-label" for="templateSelect">
+             Use Template
+            </label>
+            <select aria-label="Select a template" class="form-select" id="templateSelect">
+             <option value="">
+              Select a pre-approved template...
+             </option>
+            </select>
+           </div>
+           <div class="col-12 col-md-4">
+            <label class="form-label" for="prioritySelect">
+             Priority
+            </label>
+            <select class="form-select" id="prioritySelect">
+             <option selected="" value="normal">
+              Normal
+             </option>
+             <option value="high">
+              High
+             </option>
+             <option value="critical">
+              Critical
+             </option>
+            </select>
+           </div>
+          </div>
+          <div class="mt-3">
+           <label class="form-label" for="messageText">
+            Message
+           </label>
+           <textarea class="form-control" id="messageText" maxlength="500" placeholder="Enter clear, concise instructions. Include location, action, and timing where possible (max 500 characters)." rows="6"></textarea>
+           <div class="d-flex justify-content-between align-items-center mt-2">
+            <small class="text-muted">
+             <i class="fa-regular fa-lightbulb me-1">
+             </i>
+             Use respectful, action-oriented language. Avoid abbreviations.
+            </small>
+            <div class="d-flex align-items-center gap-2">
+             <small class="text-muted" id="charCounter">
+              0 / 500
+             </small>
+             <div class="progress" style="width:120px; height:6px;">
+              <div class="progress-bar" id="charProgress" role="progressbar" style="width:0%">
+              </div>
+             </div>
+            </div>
+           </div>
+          </div>
+         </section>
+         <!-- Action Toolbar -->
+         <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-primary" disabled="" id="sendBtn">
+           <i class="fa-solid fa-paper-plane me-2">
+           </i>
+           Send Broadcast
+          </button>
+          <button class="btn btn-light" id="clearBtn">
+           <i class="fa-solid fa-eraser me-2">
+           </i>
+           Clear
+          </button>
+         </div>
+         <!-- API Error -->
+         <div class="alert alert-danger mt-3 d-none" id="apiError" role="alert">
+          <i class="fa-solid fa-circle-exclamation me-2">
+          </i>
+          <span id="apiErrorText">
+           An error occurred while sending. Please try again.
+          </span>
+         </div>
+        </div>
+        <div class="card-footer small text-muted">
+         Messages are delivered via email, SMS, and in-app push (where enabled).
+         <a class="text-decoration-none" href="#">
+          Learn more
+         </a>
+        </div>
+       </div>
+      </div>
+      <!-- Right: Insights and History -->
+      <div class="col-12 col-lg-5">
+       <!-- Broadcasts Chart -->
+       <div class="card app-card mb-4">
+        <div class="card-header">
+         <div class="title d-flex align-items-center">
+          <i class="fa-solid fa-chart-line me-2 text-primary">
+          </i>
+          <span class="widget-title">
+           Broadcasts by Day (Last 14 Days)
+          </span>
+         </div>
+         <div class="d-flex align-items-center gap-2">
+          <span class="badge-soft primary">
+           <i class="fa-solid fa-bullhorn me-1">
+           </i>
+           <span id="totalBroadcastsLabel">
+            0
+           </span>
+           total
+          </span>
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="chart-container">
+          <canvas height="140" id="broadcastsChart">
+          </canvas>
+         </div>
+         <div class="loading-state mt-2 d-none" id="chartLoading">
+          <span class="skeleton" style="height:120px">
+          </span>
+         </div>
+        </div>
+       </div>
+       <!-- History -->
+       <div class="card app-card">
+        <div class="card-header">
+         <div class="title d-flex align-items-center">
+          <i class="fa-regular fa-clock me-2 text-primary">
+          </i>
+          <span class="widget-title">
+           Broadcast History
+          </span>
+         </div>
+         <div class="d-none d-md-flex align-items-center gap-2">
+          <span class="text-muted small">
+           Recent
+          </span>
+         </div>
+        </div>
+        <div class="card-body">
+         <!-- Filters -->
+         <div class="row g-2 mb-3">
+          <div class="col-12 col-md-4">
+           <input class="form-control" id="searchInput" placeholder="Search message or sender">
+           </input>
+          </div>
+          <div class="col-6 col-md-3">
+           <select class="form-select" id="groupFilter">
+            <option value="">
+             All Groups
+            </option>
+           </select>
+          </div>
+          <div class="col-6 col-md-2">
+           <input class="form-control" id="dateFrom" type="date"/>
+          </div>
+          <div class="col-6 col-md-2">
+           <input class="form-control" id="dateTo" type="date"/>
+          </div>
+          <div class="col-6 col-md-1 d-grid">
+           <button class="btn btn-light" id="filterReset">
+            <i class="fa-solid fa-rotate-left">
+            </i>
+           </button>
+          </div>
+         </div>
+         <div class="loading-state mb-3 d-none" id="historyLoading">
+          <div class="skeleton" style="height:20px">
+          </div>
+          <div class="skeleton mt-2" style="height:20px">
+          </div>
+          <div class="skeleton mt-2" style="height:20px">
+          </div>
+         </div>
+         <div class="table-responsive">
+          <table class="table table-theme align-middle" id="historyTable">
+           <thead>
+            <tr>
+             <th data-sort-key="timestamp" style="min-width:140px; cursor:pointer">
+              Date/Time
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th>
+              Message
+             </th>
+             <th data-sort-key="sender" style="min-width:120px; cursor:pointer">
+              Sender
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th style="min-width:160px">
+              Recipients
+             </th>
+             <th class="text-end" style="min-width:90px">
+              Actions
+             </th>
+            </tr>
+           </thead>
+           <tbody id="historyBody">
+            <!-- Rows rendered via JS -->
+           </tbody>
+          </table>
+         </div>
+         <div class="d-flex justify-content-between align-items-center mt-2">
+          <small class="text-muted" id="paginationInfo">
+           Showing 0–0 of 0
+          </small>
+          <nav>
+           <ul class="pagination pagination-sm mb-0">
+            <li class="page-item">
+             <button aria-label="Previous" class="page-link" id="prevPage">
+              «
+             </button>
+            </li>
+            <li class="page-item">
+             <span class="page-link" id="currentPage">
+              1
+             </span>
+            </li>
+            <li class="page-item">
+             <button aria-label="Next" class="page-link" id="nextPage">
+              »
+             </button>
+            </li>
+           </ul>
+          </nav>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Administrator Management Footer -->
+  <footer class="border-top py-2 bg-white mt-4">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo18/60/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      Admin Console • © 2025
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="#">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="#">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./admin_dashboard.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast Container -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center border" id="liveToast" role="alert">
+    <div class="d-flex">
+     <div class="toast-body">
+      <i class="fa-solid fa-circle-check text-success me-2">
+      </i>
+      <span id="toastMessage">
+       Action completed.
+      </span>
+     </div>
+     <button aria-label="Close" class="btn-close me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Bootstrap 5 JS Bundle -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // Bootstrap tooltips
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+
+// Toast helper
+const toastEl = document.getElementById('liveToast');
+const toast = toastEl ? new bootstrap.Toast(toastEl, {
+    delay: 2500
+}) : null;
+
+function showToast(msg) {
+    if (!toast) return;
+    document.getElementById('toastMessage').textContent = msg;
+    toast.show();
+}
+
+// Mock Data
+const groups = [{
+    id: 'all',
+    label: 'All Users',
+    count: 12450
+}, {
+    id: 'students',
+    label: 'All Students',
+    count: 9800
+}, {
+    id: 'staff',
+    label: 'All Staff',
+    count: 1450
+}, {
+    id: 'faculty',
+    label: 'Faculty',
+    count: 780
+}, {
+    id: 'security',
+    label: 'Security Team',
+    count: 30
+}, {
+    id: 'maintenance',
+    label: 'Maintenance',
+    count: 45
+}];
+
+const templates = [{
+    id: 'evac',
+    label: 'Evacuation (Fire Alarm)',
+    text: 'Evacuate the building immediately via the nearest exit. Do not use elevators. Proceed to the assembly area at the main quad and await instructions.'
+}, {
+    id: 'lockdown',
+    label: 'Lockdown (Threat on Campus)',
+    text: 'Lockdown in effect. Shelter in place, lock doors, turn off lights, silence devices, and remain quiet. Await further instructions from authorities.'
+}, {
+    id: 'weather',
+    label: 'Severe Weather Warning',
+    text: 'Severe weather approaching. Move indoors away from windows. Classes and activities are paused until further notice. Updates will follow.'
+}, {
+    id: 'drill',
+    label: 'Scheduled Drill Notice',
+    text: 'This is a scheduled safety drill. Please follow your instructor’s guidance. No action required beyond standard drill procedures.'
+}];
+
+// Generate last 8 history items
+const now = new Date();
+const historyData = [{
+    id: 1,
+    timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000),
+    sender: 'Alex Admin',
+    message: 'Water outage in Building C from 2pm–4pm. Use facilities in Building B. Classes continue as scheduled.',
+    recipients: ['All Staff', 'Maintenance']
+}, {
+    id: 2,
+    timestamp: new Date(now.getTime() - 20 * 60 * 60 * 1000),
+    sender: 'Alex Admin',
+    message: 'This is a scheduled safety drill. Please follow your instructor’s guidance. No action required beyond standard drill procedures.',
+    recipients: ['All Students']
+}, {
+    id: 3,
+    timestamp: new Date(now.getTime() - 48 * 60 * 60 * 1000),
+    sender: 'Jamie Ops',
+    message: 'Severe weather approaching. Move indoors away from windows. Classes paused until further notice. Updates will follow.',
+    recipients: ['All Users']
+}, {
+    id: 4,
+    timestamp: new Date(now.getTime() - 72 * 60 * 60 * 1000),
+    sender: 'Security Team',
+    message: 'Lockdown in effect. Shelter in place, lock doors, silence devices, and await instructions from authorities.',
+    recipients: ['All Users']
+}, {
+    id: 5,
+    timestamp: new Date(now.getTime() - 96 * 60 * 60 * 1000),
+    sender: 'Facilities',
+    message: 'Routine maintenance on the north parking gate tomorrow 8am–11am. Expect delays entering via Gate 3.',
+    recipients: ['All Staff', 'Maintenance']
+}, {
+    id: 6,
+    timestamp: new Date(now.getTime() - 120 * 60 * 60 * 1000),
+    sender: 'Dean Office',
+    message: 'Faculty meeting at 3pm in Auditorium B. Agenda: curriculum update, accreditation review, research funding.',
+    recipients: ['Faculty']
+}, {
+    id: 7,
+    timestamp: new Date(now.getTime() - 150 * 60 * 60 * 1000),
+    sender: 'Safety Office',
+    message: 'Evacuate the building immediately via the nearest exit. Do not use elevators. Proceed to the assembly area at the main quad and await instructions.',
+    recipients: ['All Users']
+}, {
+    id: 8,
+    timestamp: new Date(now.getTime() - 170 * 60 * 60 * 1000),
+    sender: 'Alex Admin',
+    message: 'Planned power test today at 4pm. Momentary outages may occur. Save your work frequently.',
+    recipients: ['All Users']
+}];
+
+// State
+let selectedGroupIds = new Set();
+let messageText = '';
+let currentSort = {
+    key: 'timestamp',
+    dir: 'desc'
+};
+let currentPage = 1;
+const pageSize = 5;
+
+// Elements
+const recipientList = document.getElementById('recipientList');
+const recipientCountNumber = document.getElementById('recipientCountNumber');
+const templateSelect = document.getElementById('templateSelect');
+const messageTextEl = document.getElementById('messageText');
+const charCounter = document.getElementById('charCounter');
+const charProgress = document.getElementById('charProgress');
+const sendBtn = document.getElementById('sendBtn');
+const clearBtn = document.getElementById('clearBtn');
+const apiError = document.getElementById('apiError');
+const apiErrorText = document.getElementById('apiErrorText');
+
+const groupFilter = document.getElementById('groupFilter');
+const searchInput = document.getElementById('searchInput');
+const dateFrom = document.getElementById('dateFrom');
+const dateTo = document.getElementById('dateTo');
+const filterReset = document.getElementById('filterReset');
+const historyBody = document.getElementById('historyBody');
+const paginationInfo = document.getElementById('paginationInfo');
+const prevPage = document.getElementById('prevPage');
+const nextPage = document.getElementById('nextPage');
+const currentPageEl = document.getElementById('currentPage');
+
+// Render Recipients
+function renderRecipients() {
+    recipientList.innerHTML = '';
+    groups.forEach(g => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6';
+        const id = 'group_' + g.id;
+        col.innerHTML = `
+          <div class="form-check border rounded p-2">
+            <input class="form-check-input" type="checkbox" value="${g.id}" id="${id}" data-count="${g.count}">
+            <label class="form-check-label w-100" for="${id}">
+              <div class="d-flex align-items-center justify-content-between">
+                <span>${g.label}</span>
+                <span class="badge-soft primary"><i class="fa-solid fa-user-group me-1"></i>${g.count.toLocaleString()}</span>
+              </div>
+            </label>
+          </div>
+        `;
+        recipientList.appendChild(col);
+    });
+
+    // Add event listeners
+    recipientList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', onRecipientChange);
+    });
+}
+
+function onRecipientChange(e) {
+    const id = e.target.value;
+    if (id === 'all') {
+        if (e.target.checked) {
+            selectedGroupIds = new Set(['all']);
+        } else {
+            selectedGroupIds.delete('all');
+        }
+    } else {
+        if (selectedGroupIds.has('all')) {
+            // If All is selected, ignore others
+            e.target.checked = false;
+            return;
+        }
+        if (e.target.checked) selectedGroupIds.add(id);
+        else selectedGroupIds.delete(id);
+    }
+    applyAllUsersRule();
+    updateRecipientCount();
+    updateSendButtonState();
+}
+
+function applyAllUsersRule() {
+    const allCb = document.querySelector('#group_all');
+    const others = Array.from(recipientList.querySelectorAll('input[type="checkbox"]')).filter(cb => cb.value !== 'all');
+    if (selectedGroupIds.has('all')) {
+        allCb.checked = true;
+        others.forEach(cb => {
+            cb.checked = false;
+            cb.disabled = true;
+        });
+    } else {
+        allCb.checked = false;
+        others.forEach(cb => {
+            cb.disabled = false;
+        });
+    }
+}
+
+function updateRecipientCount() {
+    let count = 0;
+    if (selectedGroupIds.has('all')) {
+        const all = groups.find(g => g.id === 'all');
+        count = all ? all.count : 0;
+    } else {
+        selectedGroupIds.forEach(id => {
+            const g = groups.find(x => x.id === id);
+            if (g) count += g.count; // Estimated; may include overlap
+        });
+    }
+    recipientCountNumber.textContent = count.toLocaleString();
+}
+
+// Templates
+function renderTemplates() {
+    templates.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.label;
+        opt.setAttribute('data-text', t.text);
+        templateSelect.appendChild(opt);
+    });
+}
+
+templateSelect.addEventListener('change', () => {
+    const selected = templateSelect.options[templateSelect.selectedIndex];
+    const txt = selected.getAttribute('data-text') || '';
+    if (txt) {
+        messageTextEl.value = txt;
+        messageText = txt;
+        updateCharCounter();
+        updateSendButtonState();
+    }
+});
+
+// Message and char counter
+function updateCharCounter() {
+    const max = 500;
+    const len = messageTextEl.value.length;
+    charCounter.textContent = `${len} / ${max}`;
+    const pct = Math.min(100, Math.round((len / max) * 100));
+    charProgress.style.width = pct + '%';
+
+    charCounter.classList.remove('text-danger', 'text-warning');
+    charProgress.classList.remove('bg-danger', 'bg-warning');
+    if (len > 500) {
+        charCounter.classList.add('text-danger');
+        charProgress.classList.add('bg-danger');
+    } else if (len > 450) {
+        charCounter.classList.add('text-warning');
+        charProgress.classList.add('bg-warning');
+    }
+}
+
+messageTextEl.addEventListener('input', () => {
+    messageText = messageTextEl.value;
+    updateCharCounter();
+    updateSendButtonState();
+});
+
+// Buttons
+function updateSendButtonState() {
+    const validGroups = selectedGroupIds.size > 0;
+    const msgLen = messageTextEl.value.trim().length;
+    const withinLimit = msgLen > 0 && msgLen <= 500;
+    sendBtn.disabled = !(validGroups && withinLimit);
+}
+
+clearBtn.addEventListener('click', () => {
+    // Reset form
+    recipientList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+        cb.disabled = false;
+    });
+    selectedGroupIds = new Set();
+    updateRecipientCount();
+    templateSelect.value = '';
+    messageTextEl.value = '';
+    messageText = '';
+    updateCharCounter();
+    updateSendButtonState();
+    apiError.classList.add('d-none');
+});
+
+sendBtn.addEventListener('click', async () => {
+    const selectedLabels = selectedGroupIds.has('all') ? ['All Users'] : groups.filter(g => selectedGroupIds.has(g.id)).map(g => g.label);
+    const priority = document.getElementById('prioritySelect').value;
+
+    const result = await Swal.fire({
+        title: 'Confirm Broadcast',
+        html: `<div class="text-start">
+                <p class="mb-2"><strong>Recipients:</strong> ${selectedLabels.join(', ')}</p>
+                <p class="mb-2"><strong>Priority:</strong> ${priority.charAt(0).toUpperCase() + priority.slice(1)}</p>
+                <p class="mb-0"><strong>Message:</strong><br>${escapeHtml(messageTextEl.value)}</p>
+               </div>`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, send it',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#0000FF'
+    });
+
+    if (result.isConfirmed) {
+        try {
+            Swal.showLoading();
+            await new Promise(res => setTimeout(res, 1000)); // simulate API
+            Swal.close();
+            showToast('Broadcast sent successfully');
+
+            // Add to history (top)
+            historyData.unshift({
+                id: Math.floor(Math.random() * 100000),
+                timestamp: new Date(),
+                sender: 'Alex Admin',
+                message: messageTextEl.value.trim(),
+                recipients: selectedLabels
+            });
+
+            // Update chart
+            incrementTodayChartCount();
+
+            // Rerender table
+            currentPage = 1;
+            renderHistory();
+
+            // Optionally clear form
+            clearBtn.click();
+        } catch (err) {
+            apiErrorText.textContent = 'Failed to send broadcast. Please retry.';
+            apiError.classList.remove('d-none');
+        }
+    }
+});
+
+function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function(m) {
+        switch (m) {
+            case '&':
+                return '&amp;';
+            case '<':
+                return '&lt;';
+            case '>':
+                return '&gt;';
+            case '"':
+                return '&quot;';
+            case "'":
+                return '&#039;';
+            default:
+                return m;
+        }
+    });
+}
+
+// History rendering with filters, sort, pagination
+function renderGroupFilter() {
+    // Base options already added
+    groups.filter(g => g.id !== 'all').forEach(g => {
+        const opt = document.createElement('option');
+        opt.value = g.label; // use label for matching
+        opt.textContent = g.label;
+        groupFilter.appendChild(opt);
+    });
+}
+
+function applyFilters(data) {
+    let out = [...data];
+    const q = (searchInput.value || '').toLowerCase();
+    const gf = groupFilter.value;
+    const df = dateFrom.value ? new Date(dateFrom.value) : null;
+    const dt = dateTo.value ? new Date(dateTo.value) : null;
+
+    if (q) out = out.filter(item => item.message.toLowerCase().includes(q) || (item.sender || '').toLowerCase().includes(q));
+    if (gf) out = out.filter(item => item.recipients.some(r => r === gf));
+    if (df) out = out.filter(item => new Date(item.timestamp) >= df);
+    if (dt) {
+        // include entire day for dt
+        const end = new Date(dt);
+        end.setHours(23, 59, 59, 999);
+        out = out.filter(item => new Date(item.timestamp) <= end);
+    }
+    return out;
+}
+
+function applySort(data) {
+    const arr = [...data];
+    const {
+        key,
+        dir
+    } = currentSort;
+    arr.sort((a, b) => {
+        let va = a[key];
+        let vb = b[key];
+        if (key === 'timestamp') {
+            va = new Date(va).getTime();
+            vb = new Date(vb).getTime();
+        } else {
+            va = String(va).toLowerCase();
+            vb = String(vb).toLowerCase();
+        }
+        if (va < vb) return dir === 'asc' ? -1 : 1;
+        if (va > vb) return dir === 'asc' ? 1 : -1;
+        return 0;
+    });
+    return arr;
+}
+
+function paginate(data) {
+    const total = data.length;
+    const start = (currentPage - 1) * pageSize;
+    const end = Math.min(start + pageSize, total);
+    const pageItems = data.slice(start, end);
+    paginationInfo.textContent = total === 0 ? 'Showing 0–0 of 0' : `Showing ${start+1}–${end} of ${total}`;
+    currentPageEl.textContent = String(currentPage);
+    prevPage.disabled = currentPage === 1;
+    nextPage.disabled = end >= total;
+    return pageItems;
+}
+
+function renderHistory() {
+    const filtered = applyFilters(historyData);
+    const sorted = applySort(filtered);
+    const pageItems = paginate(sorted);
+
+    historyBody.innerHTML = '';
+    pageItems.forEach(item => {
+        const tr = document.createElement('tr');
+        const dateStr = new Date(item.timestamp).toLocaleString();
+        const msgShort = item.message.length > 120 ? item.message.slice(0, 117) + '…' : item.message;
+        tr.innerHTML = `
+          <td>${dateStr}</td>
+          <td>
+            <div class="text-truncate-2">${escapeHtml(msgShort)}</div>
+          </td>
+          <td>${escapeHtml(item.sender)}</td>
+          <td>
+            ${item.recipients.map(r => `<span class="badge-soft info me-1 mb-1 d-inline-flex">${escapeHtml(r)}</span>`).join('')}
+          </td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-light me-1 viewBtn"><i class="fa-regular fa-eye"></i></button>
+            <button class="btn btn-sm btn-light copyBtn" data-msg="${escapeHtml(item.message)}"><i class="fa-regular fa-copy"></i></button>
+          </td>
+        `;
+        // View full message
+        tr.querySelector('.viewBtn').addEventListener('click', () => {
+            Swal.fire({
+                title: 'Broadcast Details',
+                html: `<div class='text-start'>
+                    <p><strong>Date/Time:</strong> ${dateStr}</p>
+                    <p><strong>Sender:</strong> ${escapeHtml(item.sender)}</p>
+                    <p><strong>Recipients:</strong> ${item.recipients.map(r => `<span class='badge-soft info me-1'>${escapeHtml(r)}</span>`).join('')}</p>
+                    <p class='mb-0'><strong>Message:</strong><br>${escapeHtml(item.message)}</p>
+                  </div>`,
+                icon: 'info',
+                confirmButtonColor: '#0000FF'
+            });
+        });
+        // Copy message
+        tr.querySelector('.copyBtn').addEventListener('click', (ev) => {
+            const msg = item.message;
+            navigator.clipboard.writeText(msg).then(() => showToast('Message copied'));
+        });
+
+        historyBody.appendChild(tr);
+    });
+}
+
+// Sorting handlers
+document.querySelectorAll('#historyTable thead th[data-sort-key]').forEach(th => {
+    th.addEventListener('click', () => {
+        const key = th.getAttribute('data-sort-key');
+        if (currentSort.key === key) {
+            currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.key = key;
+            currentSort.dir = 'asc';
+        }
+        renderHistory();
+    });
+});
+
+// Pagination handlers
+prevPage.addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        renderHistory();
+    }
+});
+nextPage.addEventListener('click', () => {
+    const total = applyFilters(historyData).length;
+    const maxPage = Math.max(1, Math.ceil(total / pageSize));
+    if (currentPage < maxPage) {
+        currentPage++;
+        renderHistory();
+    }
+});
+
+// Filter events
+[searchInput, groupFilter, dateFrom, dateTo].forEach(el => el.addEventListener('input', () => {
+    currentPage = 1;
+    renderHistory();
+}));
+filterReset.addEventListener('click', () => {
+    searchInput.value = '';
+    groupFilter.value = '';
+    dateFrom.value = '';
+    dateTo.value = '';
+    currentPage = 1;
+    renderHistory();
+});
+
+// Chart.js - broadcasts by day (last 14 days)
+let chart;
+
+function initChart() {
+    const labels = [];
+    const counts = [];
+    for (let i = 13; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        labels.push((d.getMonth() + 1) + '/' + d.getDate());
+        // mock counts
+        counts.push(Math.max(0, Math.round((Math.sin(i / 2) + 1) * 2 + (Math.random() * 2))));
+    }
+    const total = counts.reduce((a, b) => a + b, 0);
+    document.getElementById('totalBroadcastsLabel').textContent = total;
+
+    const ctx = document.getElementById('broadcastsChart');
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Broadcasts',
+                data: counts,
+                backgroundColor: 'rgba(0,0,255,0.3)',
+                borderColor: 'rgba(0,0,255,0.8)',
+                borderWidth: 1,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+}
+
+function incrementTodayChartCount() {
+    if (!chart) return;
+    const idx = chart.data.labels.length - 1; // last label is today
+    chart.data.datasets[0].data[idx] = (chart.data.datasets[0].data[idx] || 0) + 1;
+    chart.update();
+    const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+    document.getElementById('totalBroadcastsLabel').textContent = total;
+}
+
+// Initial load simulation
+function init() {
+    renderRecipients();
+    renderTemplates();
+    renderGroupFilter();
+    applyAllUsersRule();
+    updateRecipientCount();
+    updateCharCounter();
+    updateSendButtonState();
+
+    // Loading state for history
+    document.getElementById('historyLoading').classList.remove('d-none');
+    setTimeout(() => {
+        document.getElementById('historyLoading').classList.add('d-none');
+        renderHistory();
+    }, 800);
+
+    // Chart init with small delay
+    document.getElementById('chartLoading').classList.remove('d-none');
+    setTimeout(() => {
+        document.getElementById('chartLoading').classList.add('d-none');
+        initChart();
+    }, 600);
+}
+
+init();
+  </script>
+ </body>
+</html>

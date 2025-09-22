@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   User Dashboard - Disaster Prep
+  </title>
+  <!-- Poppins Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- Site Theme -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page-specific CSS -->
+   <link href="user_dashboard.css" rel="stylesheet"/>
+   <style>
+    :root { font-family: 'Poppins', var(--font-sans); }
+   </style>
+  </link>
+ </head>
+ <body>
+  <!-- Header (Common Learner Header) -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarLearner" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./user_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/56/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Disaster Prep
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search help topics or locations..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./safety_status.html">
+      <i class="fa-solid fa-siren-on me-1 text-danger">
+      </i>
+      SOS
+     </a>
+     <button class="btn btn-link text-white me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuLearner">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/user/28/28';" src="https://via.placeholder.com/28"/>
+       <span id="topbarUserName">
+        Alex Johnson
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuLearner" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header" id="topbarUserRole">
+         Student
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./profile_setup.html">
+         <i class="fa-solid fa-user me-2">
+         </i>
+         Profile
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="dashboard-shell d-flex">
+   <!-- Sidebar (Common Learner Sidebar) -->
+   <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarLearner" style="width:260px;">
+    <style>
+     #sidebarLearner .list-group-item { border: 0; border-radius: 0; }
+        #sidebarLearner .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+        #sidebarLearner .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+        #sidebarLearner .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+    </style>
+    <div class="p-3 text-center border-bottom">
+     <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo2/152/38';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+    </div>
+    <div class="p-3">
+     <div class="profile-box rounded p-3 mb-3">
+      <div class="d-flex align-items-center">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar/40/40';" src="https://via.placeholder.com/40"/>
+       <div>
+        <div class="fw-semibold" id="sidebarUserName">
+         Alex Johnson
+        </div>
+        <small class="text-muted" id="sidebarUserRole">
+         Student
+        </small>
+       </div>
+      </div>
+     </div>
+     <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action active" href="./user_dashboard.html">
+       <i class="fa-solid fa-house me-2">
+       </i>
+       Dashboard
+      </a>
+      <a aria-controls="learnCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#learnCollapse" role="button">
+       <i class="fa-solid fa-book me-2">
+       </i>
+       Learn
+      </a>
+      <div class="collapse show ps-3" id="learnCollapse">
+       <a class="list-group-item list-group-item-action" href="./chatbot_interface.html">
+        <i class="fa-solid fa-robot me-2">
+        </i>
+        AI Chatbot
+       </a>
+       <a class="list-group-item list-group-item-action" href="./disaster_map.html">
+        <i class="fa-solid fa-map me-2">
+        </i>
+        Disaster Map
+       </a>
+      </div>
+      <a aria-controls="emergencyCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#emergencyCollapse" role="button">
+       <i class="fa-solid fa-siren-on me-2">
+       </i>
+       Emergency
+      </a>
+      <div class="collapse show ps-3" id="emergencyCollapse">
+       <a class="list-group-item list-group-item-action" href="./safety_status.html">
+        <i class="fa-solid fa-person-circle-check me-2">
+        </i>
+        My Safety Status
+       </a>
+       <a class="list-group-item list-group-item-action" href="/alerts">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Broadcasts
+       </a>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <!-- Mobile Offcanvas Sidebar -->
+   <div class="offcanvas offcanvas-start" id="mobileSidebarLearner" tabindex="-1">
+    <div class="offcanvas-header">
+     <h5 class="offcanvas-title">
+      Menu
+     </h5>
+     <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+     </button>
+    </div>
+    <div class="offcanvas-body">
+     <a class="d-block mb-3" href="./user_dashboard.html">
+      <i class="fa-solid fa-house me-2">
+      </i>
+      Dashboard
+     </a>
+     <p class="text-uppercase small text-muted mb-2">
+      Learn
+     </p>
+     <a class="d-block mb-2" href="./chatbot_interface.html">
+      <i class="fa-solid fa-robot me-2">
+      </i>
+      AI Chatbot
+     </a>
+     <a class="d-block mb-3" href="./disaster_map.html">
+      <i class="fa-solid fa-map me-2">
+      </i>
+      Disaster Map
+     </a>
+     <p class="text-uppercase small text-muted mb-2">
+      Emergency
+     </p>
+     <a class="d-block mb-2" href="./safety_status.html">
+      <i class="fa-solid fa-person-circle-check me-2">
+      </i>
+      My Safety Status
+     </a>
+     <a class="d-block" href="/alerts">
+      <i class="fa-solid fa-bullhorn me-2">
+      </i>
+      Broadcasts
+     </a>
+    </div>
+   </div>
+   <!-- Main Content -->
+   <main class="flex-grow-1">
+    <!-- Emergency SOS Sub-Header (Prominent) -->
+    <section class="emergency-sos-bar" id="emergencySosBar">
+     <div class="container-fluid">
+      <div class="d-flex align-items-center justify-content-between gap-3">
+       <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2">
+        <div class="fw-semibold text-strong">
+         Welcome,
+         <span id="emUserName">
+          Alex Johnson
+         </span>
+        </div>
+        <div class="text-muted">
+         Institution:
+         <span id="emInstitution">
+          North Ridge High School
+         </span>
+        </div>
+       </div>
+       <div>
+        <button class="btn btn-danger btn-lg sos-button-large" id="btnSos">
+         <i class="fa-solid fa-siren-on me-2">
+         </i>
+         SOS
+        </button>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- Safety Status Updater Banner (Conditional) -->
+    <div class="safety-banner alert alert-warning border-2 border-warning-subtle d-none rounded-2 m-0" id="safetyBanner">
+     <div class="container-fluid d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+      <div class="d-flex align-items-center gap-2">
+       <i class="fa-solid fa-triangle-exclamation text-warning">
+       </i>
+       <span class="fw-semibold">
+        An emergency event is active. Please update your status.
+       </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <button class="btn btn-success" id="btnMarkSafe">
+        <i class="fa-solid fa-shield-heart me-1">
+        </i>
+        I am Safe
+       </button>
+       <button class="btn btn-warning text-dark" id="btnNeedHelp">
+        <i class="fa-solid fa-hand-holding-medical me-1">
+        </i>
+        I Need Help
+       </button>
+       <span class="text-muted" id="statusFeedback">
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="container-fluid py-3 py-md-4">
+     <!-- Feature Navigation Cards -->
+     <div class="row g-3 g-md-4 mb-3">
+      <div class="col-12 col-lg-6">
+       <div class="card feature-card h-100 clickable" data-href="./chatbot_interface.html" role="button">
+        <div class="card-body d-flex align-items-center justify-content-between">
+         <div>
+          <h5 class="card-title mb-1">
+           Learn with AI Chatbot
+          </h5>
+          <p class="card-text text-muted mb-0">
+           Ask questions and learn safety protocols
+          </p>
+         </div>
+         <div class="feature-icon">
+          <i class="fa-solid fa-robot">
+          </i>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-lg-6">
+       <div class="card feature-card h-100 clickable" data-href="./disaster_map.html" role="button">
+        <div class="card-body d-flex align-items-center justify-content-between">
+         <div>
+          <h5 class="card-title mb-1">
+           View Disaster Map
+          </h5>
+          <p class="card-text text-muted mb-0">
+           Explore local risks like seismic zones
+          </p>
+         </div>
+         <div class="feature-icon">
+          <i class="fa-solid fa-map-location-dot">
+          </i>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Charts and Alerts -->
+     <div class="row g-3 g-md-4 mb-3">
+      <div class="col-12 col-xl-7">
+       <div class="card h-100">
+        <div class="card-header">
+         <div class="widget-title">
+          Recent Alerts Activity
+         </div>
+         <div class="text-muted small">
+          Last 7 days
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="chart-container position-relative">
+          <canvas aria-label="Line chart of alerts volume" height="140" id="alertsChart" role="img">
+          </canvas>
+          <div class="skeleton chart-skeleton" id="chartSkeleton">
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-xl-5">
+       <div class="card h-100">
+        <div class="card-header d-flex align-items-center justify-content-between">
+         <div class="widget-title mb-0">
+          Latest Broadcasts
+         </div>
+         <a class="btn btn-sm btn-light" href="./broadcast_tool.html">
+          View All
+         </a>
+        </div>
+        <div class="card-body">
+         <div class="skeleton mb-2" id="alertsLoading" style="height: 16px;">
+         </div>
+         <div class="alert alert-danger d-none" id="alertsError">
+          Failed to load broadcasts. Please try again later.
+         </div>
+         <ul class="list-group list-group-flush" id="alertsList">
+          <!-- Broadcast items injected here -->
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Training Modules Table -->
+     <div class="row g-3 g-md-4 mb-4">
+      <div class="col-12">
+       <div class="card">
+        <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+         <div class="widget-title mb-0">
+          Training Modules
+         </div>
+         <div class="d-flex align-items-center gap-2">
+          <div class="input-group input-group-sm" style="width: 280px;">
+           <span class="input-group-text bg-white">
+            <i class="fa-solid fa-filter text-muted">
+            </i>
+           </span>
+           <input class="form-control" id="moduleFilter" placeholder="Filter by module or category" type="text"/>
+          </div>
+         </div>
+        </div>
+        <div class="card-body p-0">
+         <div class="table-responsive">
+          <table class="table table-hover table-theme mb-0" id="modulesTable">
+           <thead>
+            <tr>
+             <th class="sortable" data-key="module" role="button">
+              Module
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th>
+              Category
+             </th>
+             <th>
+              Progress
+             </th>
+             <th class="sortable" data-key="last" role="button">
+              Last Activity
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th>
+              Est. Time
+             </th>
+             <th>
+              Action
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <!-- Rows injected by JS -->
+           </tbody>
+          </table>
+         </div>
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+         <small class="text-muted" id="paginationInfo">
+          Showing 1–6 of 12
+         </small>
+         <nav aria-label="Module pagination">
+          <ul class="pagination pagination-sm mb-0">
+           <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">
+             Previous
+            </a>
+           </li>
+           <li class="page-item active">
+            <a class="page-link" href="#">
+             1
+            </a>
+           </li>
+           <li class="page-item">
+            <a class="page-link" href="#">
+             2
+            </a>
+           </li>
+           <li class="page-item">
+            <a class="page-link" href="#">
+             3
+            </a>
+           </li>
+           <li class="page-item">
+            <a class="page-link" href="#">
+             Next
+            </a>
+           </li>
+          </ul>
+         </nav>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Footer (Common Learner Footer) -->
+  <footer class="border-top py-2 bg-white">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/footerlogo/36/18';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      © 2025 Disaster Prep
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- SweetAlert2 -->
+  <script crossorigin="anonymous" integrity="sha256-Dk8V2M0Y3XjRf+QWRf+WQwAJTW2C3VBjPUK11BOJqu8=" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js">
+  </script>
+  <!-- Chart.js -->
+  <script crossorigin="anonymous" integrity="sha256-rw0W5lwUIxD2YdTGF0AOPFZxwq0HU0Zy6PM1zJZ8zM8=" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <!-- Bootstrap 5 JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+   // Mock user context
+const userContext = {
+    id: 'u-1029',
+    name: 'Alex Johnson',
+    role: 'Student',
+    institution: 'North Ridge High School'
+};
+
+// Apply user context to UI
+document.getElementById('topbarUserName').textContent = userContext.name;
+document.getElementById('topbarUserRole').textContent = userContext.role;
+document.getElementById('sidebarUserName').textContent = userContext.name;
+document.getElementById('sidebarUserRole').textContent = userContext.role;
+document.getElementById('emUserName').textContent = userContext.name;
+document.getElementById('emInstitution').textContent = userContext.institution;
+
+// Feature cards navigation
+document.querySelectorAll('.feature-card.clickable').forEach(card => {
+    card.addEventListener('click', () => {
+        const href = card.getAttribute('data-href');
+        if (href) window.location.href = href;
+    });
+});
+
+// SOS Button Logic
+const sosBtn = document.getElementById('btnSos');
+sosBtn.addEventListener('click', async () => {
+    const result = await Swal.fire({
+        title: 'Confirm SOS',
+        html: '<div class="text-start">\n          <p>Are you sure you want to trigger an SOS alert?</p>\n          <small class="text-muted">This will notify your institution emergency team with your name and current location.</small>\n        </div>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Send SOS',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#d33'
+    });
+
+    if (!result.isConfirmed) return;
+
+    Swal.fire({
+        title: 'Sending SOS...',
+        html: '<div class="text-start"><small class="text-muted">Acquiring GPS location and preparing alert payload.</small></div>',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    try {
+        const position = await getLocation();
+        const payload = {
+            userId: userContext.id,
+            name: userContext.name,
+            institution: userContext.institution,
+            coords: {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            },
+            timestamp: new Date().toISOString()
+        };
+        // Mock API call
+        await new Promise(res => setTimeout(res, 1200));
+        console.log('SOS payload', payload);
+
+        Swal.fire({
+            title: 'SOS Sent',
+            text: 'Your SOS has been sent to the emergency team. Stay safe and await instructions.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } catch (err) {
+        console.error(err);
+        Swal.fire({
+            title: 'Location Error',
+            text: 'We could not access your location. Please check your browser settings and try again, or call local emergency services.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+});
+
+function getLocation() {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject(new Error('Geolocation not supported'));
+        } else {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: true,
+                timeout: 8000
+            });
+        }
+    });
+}
+
+// Safety Status Updater: mock check for active emergency
+const safetyBanner = document.getElementById('safetyBanner');
+const statusFeedback = document.getElementById('statusFeedback');
+const btnMarkSafe = document.getElementById('btnMarkSafe');
+const btnNeedHelp = document.getElementById('btnNeedHelp');
+
+async function checkEmergencyActive() {
+    // Mock API call to institution emergency status
+    await new Promise(res => setTimeout(res, 800));
+    const active = true; // Toggle for demo
+    if (active) {
+        safetyBanner.classList.remove('d-none');
+        const saved = localStorage.getItem('userSafetyStatus');
+        if (saved) {
+            statusFeedback.textContent = `Your status: ${saved}`;
+            btnMarkSafe.disabled = true;
+            btnNeedHelp.disabled = true;
+        }
+    }
+}
+
+btnMarkSafe.addEventListener('click', async () => {
+    btnMarkSafe.disabled = true;
+    btnNeedHelp.disabled = true;
+    statusFeedback.textContent = 'Updating...';
+    await new Promise(res => setTimeout(res, 1000));
+    localStorage.setItem('userSafetyStatus', 'Safe');
+    statusFeedback.textContent = 'Your status: Safe';
+});
+
+btnNeedHelp.addEventListener('click', async () => {
+    btnMarkSafe.disabled = true;
+    btnNeedHelp.disabled = true;
+    statusFeedback.textContent = 'Updating...';
+    await new Promise(res => setTimeout(res, 1000));
+    localStorage.setItem('userSafetyStatus', 'Need Help');
+    statusFeedback.textContent = 'Your status: Need Help';
+});
+
+checkEmergencyActive();
+
+// Alerts Feed - mock load latest 3
+const alertsLoading = document.getElementById('alertsLoading');
+const alertsError = document.getElementById('alertsError');
+const alertsList = document.getElementById('alertsList');
+
+function timeAgo(dateStr) {
+    const now = new Date();
+    const then = new Date(dateStr);
+    const diff = Math.floor((now - then) / 1000);
+    const mins = Math.floor(diff / 60);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins} minute${mins===1?'':'s'} ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours} hour${hours===1?'':'s'} ago`;
+    const days = Math.floor(hours / 24);
+    return `${days} day${days===1?'':'s'} ago`;
+}
+
+async function loadBroadcasts() {
+    alertsError.classList.add('d-none');
+    alertsLoading.classList.remove('d-none');
+    alertsList.innerHTML = '';
+    try {
+        await new Promise(res => setTimeout(res, 900));
+        const data = [{
+            sender: 'School Administration',
+            message: 'Evacuation drill scheduled tomorrow at 10:00 AM. Please assemble by zone markers.',
+            timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString()
+        }, {
+            sender: 'Counseling Dept.',
+            message: 'Post-drill debrief sessions available in Room 204 between 1-3 PM.',
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+        }, {
+            sender: 'Facilities',
+            message: 'North exit under maintenance this week. Use east and west exits during drills.',
+            timestamp: new Date(Date.now() - 28 * 60 * 60 * 1000).toISOString()
+        }];
+        data.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item px-0';
+            li.innerHTML = `
+            <div class="d-flex align-items-start gap-2">
+              <div class="mt-1"><i class="fa-solid fa-bullhorn text-primary"></i></div>
+              <div class="flex-grow-1">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="fw-semibold">${item.sender}</div>
+                  <small class="text-muted">${timeAgo(item.timestamp)}</small>
+                </div>
+                <div class="text-muted line-clamp-2">${item.message}</div>
+              </div>
+            </div>`;
+            alertsList.appendChild(li);
+        });
+    } catch (e) {
+        alertsError.classList.remove('d-none');
+    } finally {
+        alertsLoading.classList.add('d-none');
+    }
+}
+
+loadBroadcasts();
+
+// Chart.js: Recent Alerts Activity
+let alertsChart;
+
+function renderChart() {
+    const ctx = document.getElementById('alertsChart').getContext('2d');
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const data = [3, 5, 2, 6, 4, 7, 5];
+    alertsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Alerts',
+                data,
+                borderColor: getComputedStyle(document.documentElement).getPropertyValue('--color-primary') || '#0000FF',
+                backgroundColor: 'rgba(0,0,255,0.08)',
+                fill: true,
+                tension: 0.35,
+                pointRadius: 3,
+                pointHoverRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+    document.getElementById('chartSkeleton').style.display = 'none';
+}
+// Delay render to simulate load
+setTimeout(renderChart, 700);
+
+// Training Modules Table: mock data
+const moduleRows = [{
+    module: 'Earthquake Readiness 101',
+    category: 'Seismic',
+    progress: 0.85,
+    last: '2025-02-12T14:20:00Z',
+    time: '20 min',
+    action: 'Continue'
+}, {
+    module: 'Fire Safety Basics',
+    category: 'Fire',
+    progress: 0.5,
+    last: '2025-02-10T10:05:00Z',
+    time: '15 min',
+    action: 'Continue'
+}, {
+    module: 'Flood Evacuation Routes',
+    category: 'Flood',
+    progress: 0.2,
+    last: '2025-02-09T09:30:00Z',
+    time: '25 min',
+    action: 'Start'
+}, {
+    module: 'First Aid: Bleeding Control',
+    category: 'Medical',
+    progress: 0.65,
+    last: '2025-02-08T16:10:00Z',
+    time: '30 min',
+    action: 'Review'
+}, {
+    module: 'Shelter-in-Place Procedures',
+    category: 'General',
+    progress: 0.95,
+    last: '2025-02-07T12:45:00Z',
+    time: '10 min',
+    action: 'Review'
+}, {
+    module: 'Tornado Drill Protocol',
+    category: 'Wind',
+    progress: 0.35,
+    last: '2025-02-06T08:15:00Z',
+    time: '18 min',
+    action: 'Continue'
+}];
+
+const tableBody = document.querySelector('#modulesTable tbody');
+
+function renderTableRows(rows) {
+    tableBody.innerHTML = '';
+    rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.module}</td>
+          <td>${r.category}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="progress flex-grow-1" style="height:8px;">
+                <div class="progress-bar" role="progressbar" style="width:${Math.round(r.progress*100)}%" aria-valuenow="${Math.round(r.progress*100)}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <small class="text-muted">${Math.round(r.progress*100)}%</small>
+            </div>
+          </td>
+          <td>${new Date(r.last).toLocaleString()}</td>
+          <td>${r.time}</td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <a href="#" class="btn btn-light">${r.action}</a>
+              <a href="#" class="btn btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
+            </div>
+          </td>`;
+        tableBody.appendChild(tr);
+    });
+}
+renderTableRows(moduleRows);
+
+// Filtering
+const filterInput = document.getElementById('moduleFilter');
+filterInput.addEventListener('input', () => {
+    const q = filterInput.value.toLowerCase();
+    const filtered = moduleRows.filter(r => r.module.toLowerCase().includes(q) || r.category.toLowerCase().includes(q));
+    renderTableRows(filtered);
+    document.getElementById('paginationInfo').textContent = `Showing 1–${filtered.length} of ${moduleRows.length}`;
+});
+
+// Sorting
+let sortState = {
+    key: null,
+    dir: 1
+};
+document.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+        const key = th.dataset.key;
+        if (sortState.key === key) sortState.dir *= -1;
+        else {
+            sortState.key = key;
+            sortState.dir = 1;
+        }
+        const sorted = [...moduleRows].sort((a, b) => {
+            if (key === 'last') return (new Date(a.last) - new Date(b.last)) * sortState.dir;
+            return a[key].localeCompare(b[key]) * sortState.dir;
+        });
+        renderTableRows(sorted);
+    });
+});
+  </script>
+ </body>
+</html>

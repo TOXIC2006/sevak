@@ -1,0 +1,50 @@
+/* safety_status.css - Page specific styles for Safety Status */
+/* Typography override for this page (use Poppins first) */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout: reserve space for the left sidebar on md+ */
+@media (min-width: 768px) {
+    .main-content {
+        margin-left: 260px
+        }
+    }
+/* Status Panel emphasis */
+.status-panel {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2);
+    background: var(--surface-0);
+    box-shadow: var(--shadow-1)
+    }
+/* Big action buttons */
+.status-buttons .btn {
+    font-weight: 700;
+    font-size: 1.15rem;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+    box-shadow: var(--shadow-1)
+    }
+.status-buttons .btn:active {
+    transform: translatey(1px)
+    }
+/* Confirmation panel visuals */
+.confirmation-panel .alert {
+    margin-bottom: 0.75rem
+    }
+.confirmation-panel ul {
+    margin-bottom: 0
+    }
+/* Table tweaks */
+#broadcastTable thead th {
+    cursor: pointer;
+    user-select: none
+    }
+#broadcastTable tbody tr:hover {
+    background: rgba(0, 0, 0, 0.03)
+    }
+/* Mobile-first spacing adjustments */
+@media (max-width: 575.98px) {
+    .status-buttons .btn {
+        font-size: 1.05rem
+        }
+    }

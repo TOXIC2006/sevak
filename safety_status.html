@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Safety Status | Disaster Prep
+  </title>
+  <!-- Brand Typography: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Font Awesome 6 -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+   <!-- Global Theme Styles -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page Specific Styles -->
+   <link href="safety_status.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body>
+  <!-- Header (Common Learner Header) -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarLearner" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./user_dashboard.html">
+     <img alt="Logo" class="me-2" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Disaster Prep
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search help topics or locations..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./safety_status.html">
+      <i class="fa-solid fa-siren-on me-1 text-danger">
+      </i>
+      SOS
+     </a>
+     <button class="btn btn-link text-white me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuLearner">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar/28/28';" src="https://via.placeholder.com/28"/>
+       <span>
+        {{userName}}
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuLearner" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         {{role}}
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./profile_setup.html">
+         <i class="fa-solid fa-user me-2">
+         </i>
+         Profile
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <!-- Sidebar (Common Learner Sidebar) -->
+  <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarLearner" style="width:260px;">
+   <style>
+    #sidebarLearner .list-group-item { border: 0; border-radius: 0; }
+      #sidebarLearner .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+      #sidebarLearner .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+      #sidebarLearner .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+   </style>
+   <div class="p-3 text-center border-bottom">
+    <img alt="Logo" class="img-fluid" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+   </div>
+   <div class="p-3">
+    <div class="profile-box rounded p-3 mb-3">
+     <div class="d-flex align-items-center">
+      <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/user/40/40';" src="https://via.placeholder.com/40"/>
+      <div>
+       <div class="fw-semibold">
+        {{userName}}
+       </div>
+       <small class="text-muted">
+        {{role: Student/Teacher/Staff}}
+       </small>
+      </div>
+     </div>
+    </div>
+    <div class="list-group list-group-flush">
+     <a class="list-group-item list-group-item-action" href="./user_dashboard.html">
+      <i class="fa-solid fa-house me-2">
+      </i>
+      Dashboard
+     </a>
+     <a aria-controls="learnCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#learnCollapse" role="button">
+      <i class="fa-solid fa-book me-2">
+      </i>
+      Learn
+     </a>
+     <div class="collapse show ps-3" id="learnCollapse">
+      <a class="list-group-item list-group-item-action" href="./chatbot_interface.html">
+       <i class="fa-solid fa-robot me-2">
+       </i>
+       AI Chatbot
+      </a>
+      <a class="list-group-item list-group-item-action" href="./disaster_map.html">
+       <i class="fa-solid fa-map me-2">
+       </i>
+       Disaster Map
+      </a>
+     </div>
+     <a aria-controls="emergencyCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#emergencyCollapse" role="button">
+      <i class="fa-solid fa-siren-on me-2">
+      </i>
+      Emergency
+     </a>
+     <div class="collapse show ps-3" id="emergencyCollapse">
+      <a class="list-group-item list-group-item-action active" href="./safety_status.html">
+       <i class="fa-solid fa-person-circle-check me-2">
+       </i>
+       My Safety Status
+      </a>
+      <a class="list-group-item list-group-item-action" href="./broadcast_tool.html">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Broadcasts
+      </a>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <!-- Mobile Offcanvas Sidebar -->
+  <div class="offcanvas offcanvas-start" id="mobileSidebarLearner" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Menu
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <a class="d-block mb-3" href="./user_dashboard.html">
+     <i class="fa-solid fa-house me-2">
+     </i>
+     Dashboard
+    </a>
+    <p class="text-uppercase small text-muted mb-2">
+     Learn
+    </p>
+    <a class="d-block mb-2" href="./chatbot_interface.html">
+     <i class="fa-solid fa-robot me-2">
+     </i>
+     AI Chatbot
+    </a>
+    <a class="d-block mb-3" href="./disaster_map.html">
+     <i class="fa-solid fa-map me-2">
+     </i>
+     Disaster Map
+    </a>
+    <p class="text-uppercase small text-muted mb-2">
+     Emergency
+    </p>
+    <a class="d-block mb-2" href="./safety_status.html">
+     <i class="fa-solid fa-person-circle-check me-2">
+     </i>
+     My Safety Status
+    </a>
+    <a class="d-block" href="./broadcast_tool.html">
+     <i class="fa-solid fa-bullhorn me-2">
+     </i>
+     Broadcasts
+    </a>
+   </div>
+  </div>
+  <!-- Main Content -->
+  <main class="main-content">
+   <div class="container-fluid py-3 py-lg-4">
+    <!-- Active Emergency Banner -->
+    <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+     <i class="fa-solid fa-triangle-exclamation me-2">
+     </i>
+     <div>
+      Active Emergency: Please report your safety status now.
+     </div>
+    </div>
+    <div class="row g-3 g-lg-4">
+     <!-- Status Update Panel -->
+     <div class="col-12 col-lg-7 col-xl-8">
+      <section aria-labelledby="statusPanelTitle" class="app-card status-panel p-3 p-md-4">
+       <!-- Event Header -->
+       <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+         <div class="skeleton" id="eventTitleSkeleton" style="width: 260px; height: 28px; border-radius: 6px;">
+         </div>
+         <h1 aria-live="polite" class="page-title d-none" id="eventTitle">
+          <i class="fa-solid fa-bell text-danger me-2">
+          </i>
+          <span class="event-name">
+           Loading...
+          </span>
+         </h1>
+         <div class="skeleton mt-2" id="eventTimeSkeleton" style="width: 180px; height: 16px; border-radius: 6px;">
+         </div>
+         <p class="text-muted mb-0 d-none" id="eventTime">
+          <small>
+           Started:
+           <span class="event-start-time">
+            --
+           </span>
+          </small>
+         </p>
+        </div>
+        <div class="text-end">
+         <span class="badge-soft warning">
+          <i class="fa-solid fa-siren-on me-1">
+          </i>
+          Active
+         </span>
+        </div>
+       </div>
+       <hr class="my-3"/>
+       <!-- Status Selector -->
+       <div class="status-buttons grid auto-fit-md">
+        <button aria-pressed="false" class="btn btn-success btn-lg w-100 py-4" id="btnSafe">
+         <i class="fa-solid fa-circle-check me-2">
+         </i>
+         I am Safe
+        </button>
+        <button aria-pressed="false" class="btn btn-danger btn-lg w-100 py-4" id="btnHelp">
+         <i class="fa-solid fa-hand-holding-medical me-2">
+         </i>
+         I Need Help
+        </button>
+       </div>
+       <div class="mt-3 d-flex align-items-center text-muted small">
+        <i class="fa-solid fa-location-crosshairs me-2">
+        </i>
+        Location will be shared with administrators for faster assistance.
+       </div>
+       <!-- Confirmation Feedback -->
+       <div aria-live="assertive" class="confirmation-panel mt-4 d-none" id="confirmationPanel">
+        <div class="alert alert-success d-flex align-items-start mb-3" id="confirmationMessage">
+         <i class="fa-solid fa-circle-check fs-4 me-2">
+         </i>
+         <div>
+          <div class="fw-semibold">
+           Your status has been updated.
+          </div>
+          <div class="small text-muted">
+           Thank you for responding quickly.
+          </div>
+         </div>
+        </div>
+        <div class="bg-info-soft p-3 rounded" id="nextSteps">
+         <div class="fw-semibold mb-1">
+          Next steps
+         </div>
+         <ul class="mb-0 ps-3 small" id="nextStepsList">
+          <li>
+           Please remain in a secure location and await further instructions.
+          </li>
+          <li>
+           Follow any evacuation guidance from staff and safety officers.
+          </li>
+         </ul>
+        </div>
+       </div>
+       <!-- System Toast Container -->
+       <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+        <div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-bg-danger border-0" id="statusToast" role="alert">
+         <div class="d-flex">
+          <div class="toast-body">
+           <i class="fa-solid fa-triangle-exclamation me-2">
+           </i>
+           <span id="toastMessage">
+            An error occurred. Please try again.
+           </span>
+          </div>
+          <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+          </button>
+         </div>
+        </div>
+       </div>
+      </section>
+     </div>
+     <!-- Sidebar Info: Overview + Broadcasts -->
+     <div class="col-12 col-lg-5 col-xl-4">
+      <!-- Status Overview Card with Chart -->
+      <div class="card mb-3">
+       <div class="card-header">
+        <div class="title d-flex align-items-center">
+         <i class="fa-solid fa-chart-pie me-2 text-info">
+         </i>
+         <span class="widget-title">
+          Status Overview
+         </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+         <select class="form-select form-select-sm" id="buildingFilter">
+          <option selected="" value="all">
+           All Buildings
+          </option>
+          <option value="science">
+           Science Block
+          </option>
+          <option value="library">
+           Central Library
+          </option>
+          <option value="gym">
+           Gymnasium
+          </option>
+          <option value="hostel">
+           Hostel A
+          </option>
+         </select>
+        </div>
+       </div>
+       <div class="card-body">
+        <canvas aria-label="Community safety status distribution" height="180" id="statusChart" role="img">
+        </canvas>
+        <div class="text-muted small mt-2">
+         Data refreshed every 30s (sample data).
+        </div>
+       </div>
+      </div>
+      <!-- Recent Broadcasts -->
+      <div class="card">
+       <div class="card-header">
+        <div class="title d-flex align-items-center">
+         <i class="fa-solid fa-bullhorn me-2 text-warning">
+         </i>
+         <span class="widget-title">
+          Recent Broadcasts
+         </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+         <input class="form-control form-control-sm" id="broadcastSearch" placeholder="Search..." type="text">
+          <select class="form-select form-select-sm" id="broadcastCategory">
+           <option selected="" value="all">
+            All
+           </option>
+           <option value="alert">
+            Alert
+           </option>
+           <option value="instruction">
+            Instruction
+           </option>
+           <option value="update">
+            Update
+           </option>
+          </select>
+         </input>
+        </div>
+       </div>
+       <div class="card-body p-0">
+        <div class="table-responsive">
+         <table class="table-theme mb-0" id="broadcastTable">
+          <thead>
+           <tr>
+            <th data-sort="time" role="button">
+             Time
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th data-sort="title" role="button">
+             Title
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th>
+             Category
+            </th>
+            <th>
+             Priority
+            </th>
+            <th>
+             Action
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+          </tbody>
+         </table>
+        </div>
+       </div>
+       <div class="card-footer d-flex align-items-center justify-content-between">
+        <small class="text-muted" id="broadcastPagination">
+         Showing 1–6 of 24
+        </small>
+        <div>
+         <button class="btn btn-light btn-sm me-1" disabled="">
+          <i class="fa-solid fa-chevron-left">
+          </i>
+         </button>
+         <button class="btn btn-light btn-sm">
+          <i class="fa-solid fa-chevron-right">
+          </i>
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <!-- Footer (Common Learner Footer) -->
+  <footer class="border-top py-2 bg-white">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      © 2025 Disaster Prep
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // Page State
+const state = {
+    activeEvent: null,
+    user: {
+        id: 'user-123',
+        name: 'Alex Johnson'
+    },
+    isSubmitting: false,
+    submissionAcknowledged: false,
+    selectedStatus: null,
+    chart: null,
+    broadcasts: [],
+    sort: {
+        key: 'time',
+        dir: 'desc'
+    },
+};
+
+// Utilities
+function fmtDateTime(iso) {
+    try {
+        const d = new Date(iso);
+        return d.toLocaleString([], {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } catch (e) {
+        return iso;
+    }
+}
+
+function showToast(message) {
+    const toastEl = document.getElementById('statusToast');
+    document.getElementById('toastMessage').textContent = message;
+    if (toastEl) {
+        const t = new bootstrap.Toast(toastEl);
+        t.show();
+    }
+}
+
+function setButtonsEnabled(enabled) {
+    const btnSafe = document.getElementById('btnSafe');
+    const btnHelp = document.getElementById('btnHelp');
+    btnSafe.disabled = !enabled;
+    btnHelp.disabled = !enabled;
+}
+
+function setLoading(button, loading) {
+    if (!button) return;
+    if (loading) {
+        button.dataset.originalText = button.innerHTML;
+        button.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Submitting...';
+        button.disabled = true;
+    } else {
+        button.innerHTML = button.dataset.originalText || button.innerHTML;
+    }
+}
+
+function saveLocalStatus(eventId, status) {
+    try {
+        localStorage.setItem(`event_${eventId}_status`, status);
+    } catch (e) {}
+}
+
+function getLocalStatus(eventId) {
+    try {
+        return localStorage.getItem(`event_${eventId}_status`);
+    } catch (e) {
+        return null;
+    }
+}
+
+// Load Active Event (Mock)
+async function loadActiveEvent() {
+    // Simulate API call delay
+    await new Promise(r => setTimeout(r, 600));
+    // Mock active event
+    const event = {
+        id: 'evt-2025-09-20-1',
+        name: 'Fire Alarm Activated',
+        startTime: new Date(Date.now() - 1000 * 60 * 7).toISOString(), // 7 min ago
+    };
+    state.activeEvent = event;
+    // Render header
+    document.getElementById('eventTitle').classList.remove('d-none');
+    document.getElementById('eventTime').classList.remove('d-none');
+    document.getElementById('eventTitleSkeleton').classList.add('d-none');
+    document.getElementById('eventTimeSkeleton').classList.add('d-none');
+    document.querySelector('#eventTitle .event-name').textContent = event.name;
+    document.querySelector('#eventTime .event-start-time').textContent = fmtDateTime(event.startTime);
+
+    // Pre-select from local storage
+    const prev = getLocalStatus(event.id);
+    if (prev) {
+        state.selectedStatus = prev;
+        state.submissionAcknowledged = true;
+        reflectSelection(prev);
+        renderConfirmation(prev);
+        setButtonsEnabled(false);
+    }
+}
+
+// Get Geolocation
+function getLocation() {
+    return new Promise((resolve, reject) => {
+        if (!('geolocation' in navigator)) {
+            reject(new Error('Geolocation not supported'));
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            pos => resolve({
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+                accuracy: pos.coords.accuracy,
+            }),
+            err => reject(err), {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        );
+    });
+}
+
+function reflectSelection(status) {
+    const btnSafe = document.getElementById('btnSafe');
+    const btnHelp = document.getElementById('btnHelp');
+    btnSafe.classList.toggle('btn-outline-success', status !== 'safe');
+    btnHelp.classList.toggle('btn-outline-danger', status !== 'need_help');
+    btnSafe.setAttribute('aria-pressed', status === 'safe' ? 'true' : 'false');
+    btnHelp.setAttribute('aria-pressed', status === 'need_help' ? 'true' : 'false');
+}
+
+function renderConfirmation(status) {
+    const panel = document.getElementById('confirmationPanel');
+    const msg = document.getElementById('confirmationMessage');
+    const next = document.getElementById('nextSteps');
+    const list = document.getElementById('nextStepsList');
+    panel.classList.remove('d-none');
+    if (status === 'safe') {
+        msg.classList.remove('alert-danger');
+        msg.classList.add('alert-success');
+        msg.querySelector('.fw-semibold').textContent = 'Your status has been updated to SAFE.';
+        list.innerHTML = '<li>Please remain in a secure area until the all-clear is given.</li><li>Follow instructions from staff and safety officers.</li>';
+    } else {
+        msg.classList.remove('alert-success');
+        msg.classList.add('alert-danger');
+        msg.querySelector('.fw-semibold').textContent = 'Your request for HELP has been sent.';
+        list.innerHTML = '<li>Stay where you are if safe to do so. Help is on the way.</li><li>Keep your phone line open. Responders may contact you.</li>';
+    }
+}
+
+// Submit Status (Mock API)
+async function submitStatus(status, triggerBtn) {
+    if (!state.activeEvent || state.isSubmitting) return;
+    state.isSubmitting = true;
+    setLoading(triggerBtn, true);
+
+    let coords = null;
+    try {
+        coords = await getLocation();
+    } catch (e) {
+        // If location not available, ask to proceed
+        const res = await Swal.fire({
+            icon: 'warning',
+            title: 'Location Unavailable',
+            text: 'We could not access your location. You can still submit status without location. Proceed?',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+        });
+        if (!res.isConfirmed) {
+            setLoading(triggerBtn, false);
+            state.isSubmitting = false;
+            return;
+        }
+    }
+
+    // Simulate API call
+    try {
+        await new Promise(r => setTimeout(r, 900));
+        // Mock POST body
+        const payload = {
+            userId: state.user.id,
+            eventId: state.activeEvent.id,
+            status,
+            location: coords,
+            submittedAt: new Date().toISOString(),
+        };
+        // console.log('Submitting', payload);
+
+        // Mock success
+        state.selectedStatus = status;
+        state.submissionAcknowledged = true;
+        saveLocalStatus(state.activeEvent.id, status);
+        renderConfirmation(status);
+        setButtonsEnabled(false);
+        reflectSelection(status);
+
+        await Swal.fire({
+            icon: status === 'safe' ? 'success' : 'info',
+            title: status === 'safe' ? 'Status Updated' : 'Help Requested',
+            text: status === 'safe' ? 'Thank you. Stay safe and await instructions.' : 'Responders have been notified of your request. Keep calm and remain reachable.',
+            confirmButtonText: 'OK',
+        });
+    } catch (e) {
+        showToast('Failed to submit status. Please try again.');
+    } finally {
+        setLoading(triggerBtn, false);
+        state.isSubmitting = false;
+    }
+}
+
+// Chart.js: Status Overview
+function initChart() {
+    const ctx = document.getElementById('statusChart');
+    if (!ctx) return;
+    const data = getAggregateData('all');
+    state.chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Safe', 'Need Help', 'No Response'],
+            datasets: [{
+                data: [data.safe, data.help, data.no],
+                backgroundColor: ['#00774E', '#CD2026', 'rgba(0,0,0,0.15)'],
+                borderWidth: 0,
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    enabled: true
+                },
+            },
+            cutout: '60%',
+        },
+    });
+}
+
+function getAggregateData(building) {
+    // Mocked sample data by building
+    const samples = {
+        all: {
+            safe: 412,
+            help: 27,
+            no: 88
+        },
+        science: {
+            safe: 96,
+            help: 8,
+            no: 12
+        },
+        library: {
+            safe: 72,
+            help: 3,
+            no: 29
+        },
+        gym: {
+            safe: 54,
+            help: 6,
+            no: 21
+        },
+        hostel: {
+            safe: 190,
+            help: 10,
+            no: 26
+        },
+    };
+    return samples[building] || samples.all;
+}
+
+function updateChartFor(building) {
+    if (!state.chart) return;
+    const agg = getAggregateData(building);
+    state.chart.data.datasets[0].data = [agg.safe, agg.help, agg.no];
+    state.chart.update();
+}
+
+// Broadcasts: mock data, sorting, filtering, search
+function loadBroadcasts() {
+    state.broadcasts = [{
+        id: 1,
+        time: new Date(Date.now() - 3 * 60 * 1000).toISOString(),
+        title: 'Evacuate Science Block Level 2',
+        category: 'alert',
+        priority: 'High'
+    }, {
+        id: 2,
+        time: new Date(Date.now() - 6 * 60 * 1000).toISOString(),
+        title: 'Use Stairwells, Avoid Elevators',
+        category: 'instruction',
+        priority: 'Medium'
+    }, {
+        id: 3,
+        time: new Date(Date.now() - 9 * 60 * 1000).toISOString(),
+        title: 'Assembly Point: Central Ground',
+        category: 'update',
+        priority: 'High'
+    }, {
+        id: 4,
+        time: new Date(Date.now() - 12 * 60 * 1000).toISOString(),
+        title: 'Smoke Reported Near Library',
+        category: 'alert',
+        priority: 'High'
+    }, {
+        id: 5,
+        time: new Date(Date.now() - 14 * 60 * 1000).toISOString(),
+        title: 'Remain Calm and Proceed',
+        category: 'instruction',
+        priority: 'Low'
+    }, {
+        id: 6,
+        time: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
+        title: 'All-Clear Pending Investigation',
+        category: 'update',
+        priority: 'Medium'
+    }, ];
+    renderBroadcasts();
+}
+
+function renderBroadcasts() {
+    const tbody = document.querySelector('#broadcastTable tbody');
+    const q = document.getElementById('broadcastSearch').value.toLowerCase();
+    const cat = document.getElementById('broadcastCategory').value;
+
+    let rows = state.broadcasts.slice();
+    if (cat !== 'all') rows = rows.filter(r => r.category === cat);
+    if (q) rows = rows.filter(r => r.title.toLowerCase().includes(q));
+
+    rows.sort((a, b) => {
+        const dir = state.sort.dir === 'asc' ? 1 : -1;
+        if (state.sort.key === 'time') return (new Date(a.time) - new Date(b.time)) * dir;
+        if (state.sort.key === 'title') return a.title.localeCompare(b.title) * dir;
+        return 0;
+    });
+
+    tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${fmtDateTime(r.time)}</td>
+          <td>${r.title}</td>
+          <td class="text-capitalize">${r.category}</td>
+          <td>${r.priority}</td>
+          <td><button class="btn btn-light btn-sm view-broadcast" data-id="${r.id}"><i class="fa-solid fa-eye me-1"></i>View</button></td>
+        </tr>
+      `).join('');
+
+    // Pagination text mock
+    document.getElementById('broadcastPagination').textContent = `Showing 1–${rows.length} of 24`;
+
+    // Bind view actions
+    tbody.querySelectorAll('.view-broadcast').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = state.broadcasts.find(x => x.id == btn.dataset.id);
+            if (!item) return;
+            Swal.fire({
+                icon: item.category === 'alert' ? 'warning' : 'info',
+                title: item.title,
+                html: `<div class="text-start small text-muted mb-2">${fmtDateTime(item.time)} · Priority: ${item.priority}</div>
+                   <p class="mb-0">Follow the instructions carefully and stay safe.</p>`,
+                confirmButtonText: 'OK',
+            });
+        });
+    });
+}
+
+function initSorting() {
+    document.querySelectorAll('#broadcastTable thead th[role="button"]').forEach(th => {
+        th.addEventListener('click', () => {
+            const key = th.dataset.sort;
+            if (state.sort.key === key) {
+                state.sort.dir = state.sort.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+                state.sort.key = key;
+                state.sort.dir = 'asc';
+            }
+            renderBroadcasts();
+        });
+    });
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', async () => {
+    // Font: Poppins applied via CSS override in page css
+    await loadActiveEvent();
+
+    // Bind buttons
+    document.getElementById('btnSafe').addEventListener('click', (e) => submitStatus('safe', e.currentTarget));
+    document.getElementById('btnHelp').addEventListener('click', (e) => submitStatus('need_help', e.currentTarget));
+
+    // Chart
+    initChart();
+    document.getElementById('buildingFilter').addEventListener('change', (e) => updateChartFor(e.target.value));
+
+    // Broadcasts
+    loadBroadcasts();
+    initSorting();
+    document.getElementById('broadcastSearch').addEventListener('input', renderBroadcasts);
+    document.getElementById('broadcastCategory').addEventListener('change', renderBroadcasts);
+});
+  </script>
+ </body>
+</html>

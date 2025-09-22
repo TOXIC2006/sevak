@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Login | Disaster Prep Platform
+  </title>
+  <!-- Brand Typography: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet"/>
+  <!-- Theme CSS -->
+  <link href="style.css" rel="stylesheet"/>
+  <!-- Page-specific CSS -->
+  <link href="login_page.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <!-- Header (Common Auth & Onboarding Header) -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarAuth" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./login_page.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dpbrand/112/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Disaster Prep Platform
+     </span>
+    </a>
+    <div class="ms-auto d-flex align-items-center">
+     <div aria-label="Language" class="btn-group me-2" role="group">
+      <button class="btn btn-light btn-sm">
+       EN
+      </button>
+      <button class="btn btn-outline-light btn-sm">
+       HI
+      </button>
+     </div>
+     <button class="btn btn-link text-white disabled me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white disabled me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuAuth">
+       <img alt="avatar" class="rounded-circle me-2" src="https://via.placeholder.com/28"/>
+       <span>
+        Guest
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuAuth" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-to-bracket me-2">
+         </i>
+         Login
+        </a>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./institution_registration.html">
+         <i class="fa-solid fa-building-columns me-2">
+         </i>
+         Register Institution
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <!-- Mobile Offcanvas Sidebar (for mobile navigation only; desktop sidebar omitted for login page) -->
+  <div class="offcanvas offcanvas-start" id="mobileSidebarAuth" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Disaster Prep
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <a class="d-block mb-3" href="./login_page.html">
+     <i class="fa-solid fa-right-to-bracket me-2">
+     </i>
+     Login
+    </a>
+    <a class="d-block mb-3" href="./institution_registration.html">
+     <i class="fa-solid fa-building-columns me-2">
+     </i>
+     Register Institution
+    </a>
+    <a class="d-block mb-3" href="./profile_setup.html">
+     <i class="fa-solid fa-user-gear me-2">
+     </i>
+     Profile Setup
+    </a>
+    <hr/>
+    <a class="d-block mb-2" href="./admin_settings.html">
+     Settings
+    </a>
+    <a aria-disabled="true" class="d-block disabled" href="./help.html" tabindex="-1">
+     Help (coming soon)
+    </a>
+   </div>
+  </div>
+  <!-- Main Content -->
+  <main class="container-max px-3 px-md-4 my-4 my-md-5">
+   <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+     <div class="login-form-container">
+      <div class="text-center mb-3">
+       <img alt="Disaster Prep Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disasterprep/112/56'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:56px;"/>
+      </div>
+      <h1 class="page-title text-center mb-2">
+       Welcome back
+      </h1>
+      <p class="text-center text-muted mb-4">
+       Sign in to access your dashboard and tools.
+      </p>
+      <!-- Error Message Display (hidden by default) -->
+      <div aria-live="polite" class="alert alert-danger d-none" id="errorAlert" role="alert">
+      </div>
+      <!-- Authentication Component: Login Form -->
+      <form id="loginForm" novalidate="">
+       <div class="mb-3">
+        <label class="form-label" for="authIdentifier">
+         Email Address / Username
+        </label>
+        <div class="input-group">
+         <span class="input-group-text">
+          <i class="fa-regular fa-envelope">
+          </i>
+         </span>
+         <input autocomplete="username" class="form-control" id="authIdentifier" name="authIdentifier" placeholder="Enter your email or username" required="" type="text"/>
+        </div>
+        <div class="invalid-feedback" id="idInvalid">
+         Please enter a valid email address or username.
+        </div>
+       </div>
+       <div class="mb-2">
+        <label class="form-label" for="password">
+         Password
+        </label>
+        <div class="input-group">
+         <span class="input-group-text">
+          <i class="fa-solid fa-lock">
+          </i>
+         </span>
+         <input autocomplete="current-password" class="form-control" id="password" name="password" placeholder="Enter your password" required="" type="password"/>
+         <button aria-label="Toggle password visibility" class="btn btn-light" data-bs-title="Show/Hide Password" data-bs-toggle="tooltip" id="toggleVisibility" type="button">
+          <i class="fa-regular fa-eye" id="toggleIcon">
+          </i>
+         </button>
+        </div>
+        <div class="invalid-feedback" id="pwdInvalid">
+         Password cannot be empty.
+        </div>
+       </div>
+       <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="form-check">
+         <input class="form-check-input" id="rememberMe" type="checkbox" value="1"/>
+         <label class="form-check-label" for="rememberMe">
+          Remember me
+         </label>
+        </div>
+        <a class="small" href="#" id="forgotPasswordLink">
+         Forgot Password?
+        </a>
+       </div>
+       <button class="btn btn-primary w-100 py-2" id="loginBtn" type="submit">
+        <span aria-hidden="true" class="spinner-border spinner-border-sm me-2 d-none" id="btnSpinner" role="status">
+        </span>
+        <i class="fa-solid fa-right-to-bracket me-2">
+        </i>
+        Log In
+       </button>
+       <div class="mt-3 text-center small text-muted">
+        New here?
+        <a href="./institution_registration.html">
+         Register your institution
+        </a>
+        or
+        <a href="./profile_setup.html">
+         set up your profile
+        </a>
+        .
+       </div>
+      </form>
+     </div>
+     <!-- Demo Accounts / Test Credentials -->
+     <div class="app-card mt-4">
+      <div class="card-header">
+       <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-id-badge text-primary">
+        </i>
+        <span class="widget-title">
+         Demo Accounts for Testing
+        </span>
+       </div>
+       <div class="d-flex align-items-center gap-2">
+        <div class="input-group input-group-sm" style="width:240px;">
+         <span class="input-group-text">
+          <i class="fa-solid fa-magnifying-glass">
+          </i>
+         </span>
+         <input class="form-control" id="credSearch" placeholder="Filter by role, email..." type="text"/>
+        </div>
+        <button class="btn btn-light btn-sm" id="sortRole" type="button">
+         <i class="fa-solid fa-arrow-down-a-z me-1">
+         </i>
+         Sort by Role
+        </button>
+       </div>
+      </div>
+      <div class="card-body">
+       <div class="table-responsive">
+        <table class="table table-theme align-middle" id="credentialsTable">
+         <thead>
+          <tr>
+           <th class="sortable" data-key="role" scope="col">
+            Role
+           </th>
+           <th scope="col">
+            Username
+           </th>
+           <th scope="col">
+            Password
+           </th>
+           <th scope="col">
+            Redirect Page
+           </th>
+           <th class="text-end" scope="col">
+            Actions
+           </th>
+          </tr>
+         </thead>
+         <tbody id="credTbody">
+          <!-- Rows will be injected by JS for easier sorting/filtering -->
+         </tbody>
+        </table>
+       </div>
+       <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+        <span id="credCount">
+         Showing 0 of 0
+        </span>
+        <span>
+         Tip: Click "Use" to autofill the login form.
+        </span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <!-- Footer (Common Auth & Onboarding Footer) -->
+  <footer class="border-top py-3 bg-white">
+   <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dpfooter/80/20'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:20px;"/>
+     <span class="text-muted">
+      © 2025 Disaster Prep
+     </span>
+    </div>
+    <div class="d-flex gap-3">
+     <a aria-disabled="true" class="text-muted text-decoration-none disabled" href="./terms.html" tabindex="-1">
+      Terms
+     </a>
+     <a aria-disabled="true" class="text-muted text-decoration-none disabled" href="./privacy.html" tabindex="-1">
+      Privacy
+     </a>
+     <a aria-disabled="true" class="text-muted text-decoration-none disabled" href="./help.html" tabindex="-1">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Bootstrap Bundle JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js">
+  </script>
+  <!-- Page Logic -->
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
+    // Enable Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
+    const form = document.getElementById('loginForm');
+    const idInput = document.getElementById('authIdentifier');
+    const pwdInput = document.getElementById('password');
+    const rememberMe = document.getElementById('rememberMe');
+    const errorAlert = document.getElementById('errorAlert');
+    const loginBtn = document.getElementById('loginBtn');
+    const btnSpinner = document.getElementById('btnSpinner');
+    const toggleBtn = document.getElementById('toggleVisibility');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    // Demo accounts
+    const demoUsers = [{
+        role: 'Student',
+        username: 'student@example.com',
+        password: 'Student@123',
+        redirect: './user_dashboard.html'
+    }, {
+        role: 'Administrator',
+        username: 'admin@example.com',
+        password: 'Admin@123',
+        redirect: './admin_dashboard.html'
+    }, {
+        role: 'Emergency Responder',
+        username: 'responder@example.com',
+        password: 'Responder@123',
+        redirect: './emergency_dashboard.html'
+    }, {
+        role: 'Broadcaster',
+        username: 'coordinator@example.com',
+        password: 'Coordinator@123',
+        redirect: './broadcast_tool.html'
+    }, {
+        role: 'Analyst',
+        username: 'analyst@example.com',
+        password: 'Analyst@123',
+        redirect: './disaster_map.html'
+    }, {
+        role: 'Moderator',
+        username: 'moderator@example.com',
+        password: 'Moderator@123',
+        redirect: './user_management.html'
+    }, {
+        role: 'Settings Admin',
+        username: 'settingsadmin@example.com',
+        password: 'Settings@123',
+        redirect: './admin_settings.html'
+    }];
+
+    // Build a lookup map for quick auth check
+    const credMap = new Map();
+    demoUsers.forEach(u => credMap.set(u.username.toLowerCase(), u));
+
+    // Populate credential table
+    const tbody = document.getElementById('credTbody');
+    const credCount = document.getElementById('credCount');
+    let filtered = [...demoUsers];
+
+    function renderTable(rows) {
+        tbody.innerHTML = '';
+        rows.forEach((u, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+            <td>${u.role}</td>
+            <td><code>${u.username}</code></td>
+            <td><code>${u.password}</code></td>
+            <td><span class="badge-soft info">${u.redirect.replace('./','')}</span></td>
+            <td class="text-end">
+              <div class="btn-group btn-group-sm" role="group">
+                <button class="btn btn-outline-primary useCred" data-idx="${idx}"><i class="fa-solid fa-hand-point-right me-1"></i>Use</button>
+                <button class="btn btn-light copyCred" data-username="${u.username}" data-password="${u.password}" data-bs-toggle="tooltip" data-bs-title="Copy username & password"><i class="fa-regular fa-copy"></i></button>
+              </div>
+            </td>
+          `;
+            tbody.appendChild(tr);
+        });
+        credCount.textContent = `Showing ${rows.length} of ${demoUsers.length}`;
+    }
+
+    renderTable(filtered);
+
+    // Table filtering
+    const credSearch = document.getElementById('credSearch');
+    credSearch.addEventListener('input', () => {
+        const q = credSearch.value.toLowerCase();
+        filtered = demoUsers.filter(u =>
+            u.role.toLowerCase().includes(q) ||
+            u.username.toLowerCase().includes(q) ||
+            u.redirect.toLowerCase().includes(q)
+        );
+        renderTable(filtered);
+    });
+
+    // Sorting by role
+    let roleAsc = true;
+    document.getElementById('sortRole').addEventListener('click', () => {
+        filtered.sort((a, b) => roleAsc ? a.role.localeCompare(b.role) : b.role.localeCompare(a.role));
+        roleAsc = !roleAsc;
+        renderTable(filtered);
+    });
+
+    // Delegate actions for Use and Copy buttons
+    tbody.addEventListener('click', (e) => {
+        const useBtn = e.target.closest('.useCred');
+        const copyBtn = e.target.closest('.copyCred');
+        if (useBtn) {
+            const idx = parseInt(useBtn.getAttribute('data-idx'), 10);
+            const u = filtered[idx];
+            idInput.value = u.username;
+            pwdInput.value = u.password;
+            validateFields();
+            idInput.focus();
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'info',
+                title: 'Credentials filled',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+        if (copyBtn) {
+            const uname = copyBtn.getAttribute('data-username');
+            const pass = copyBtn.getAttribute('data-password');
+            navigator.clipboard.writeText(`${uname} | ${pass}`).then(() => {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Copied to clipboard',
+                    timer: 1200,
+                    showConfirmButton: false
+                });
+            });
+        }
+    });
+
+    // Password visibility
+    toggleBtn.addEventListener('click', () => {
+        const isPwd = pwdInput.type === 'password';
+        pwdInput.type = isPwd ? 'text' : 'password';
+        toggleIcon.classList.toggle('fa-eye');
+        toggleIcon.classList.toggle('fa-eye-slash');
+    });
+
+    // Forgot password behavior
+    document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'info',
+            title: 'Password Recovery',
+            html: '<p>For this demo, password recovery is simulated.</p><p>Please contact your institution admin or try a demo account below.</p>',
+            confirmButtonText: 'Got it',
+            confirmButtonColor: '#0000FF'
+        });
+    });
+
+    // Basic validators
+    function isEmail(v) {
+        return /\S+@\S+\.\S+/.test(v);
+    }
+
+    function isUsername(v) {
+        return /^[A-Za-z0-9._-]{3,}$/.test(v);
+    }
+
+    function validateFields() {
+        const idVal = idInput.value.trim();
+        const pwdVal = pwdInput.value;
+        let validId = false;
+        if (!idVal) {
+            validId = false;
+        } else if (idVal.includes('@')) {
+            validId = isEmail(idVal);
+        } else {
+            validId = isUsername(idVal);
+        }
+        let validPwd = pwdVal.length > 0;
+
+        idInput.classList.toggle('is-invalid', !validId && idVal.length > 0);
+        pwdInput.classList.toggle('is-invalid', !validPwd && pwdVal.length > 0);
+
+        loginBtn.disabled = !(validId && validPwd);
+        return validId && validPwd;
+    }
+
+    idInput.addEventListener('input', validateFields);
+    pwdInput.addEventListener('input', validateFields);
+
+    // Remember me: prefill last username
+    const lastUser = localStorage.getItem('dp:lastUser');
+    if (lastUser) {
+        idInput.value = lastUser;
+        validateFields();
+    }
+
+    // Submit handler
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        errorAlert.classList.add('d-none');
+        if (!validateFields()) {
+            errorAlert.textContent = 'Please correct the highlighted fields.';
+            errorAlert.classList.remove('d-none');
+            return;
+        }
+        // Simulate API call
+        setLoading(true);
+        const entered = idInput.value.trim().toLowerCase();
+        const pwd = pwdInput.value;
+
+        setTimeout(() => {
+            const user = credMap.get(entered);
+            if (user && user.password === pwd) {
+                if (rememberMe.checked) {
+                    localStorage.setItem('dp:lastUser', user.username);
+                } else {
+                    localStorage.removeItem('dp:lastUser');
+                }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login successful',
+                    text: `Redirecting to ${user.role} page...`,
+                    timer: 1200,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = user.redirect;
+                });
+            } else {
+                errorAlert.textContent = 'Invalid credentials. Please try again.';
+                errorAlert.classList.remove('d-none');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login failed',
+                    text: 'Invalid credentials.'
+                });
+                setLoading(false);
+            }
+        }, 900);
+    });
+
+    function setLoading(isLoading) {
+        [idInput, pwdInput, rememberMe, loginBtn].forEach(el => el.disabled = isLoading);
+        btnSpinner.classList.toggle('d-none', !isLoading);
+        loginBtn.classList.toggle('disabled', isLoading);
+        loginBtn.innerHTML = isLoading ?
+            `<span class="spinner-border spinner-border-sm me-2" id="btnSpinner" role="status" aria-hidden="true"></span><i class="fa-solid fa-right-to-bracket me-2"></i>Logging in...` :
+            `<span class="spinner-border spinner-border-sm me-2 d-none" id="btnSpinner" role="status" aria-hidden="true"></span><i class="fa-solid fa-right-to-bracket me-2"></i>Log In`;
+    }
+});
+  </script>
+ </body>
+</html>

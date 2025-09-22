@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Admin Dashboard • Admin Console
+  </title>
+  <!-- Brand Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+   <!-- Site Theme -->
+   <link href="style.css" rel="stylesheet">
+    <!-- Page specific CSS -->
+    <link href="admin_dashboard.css" rel="stylesheet"/>
+   </link>
+  </link>
+ </head>
+ <body>
+  <!-- Administrator Management Header (sticky top) -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <!-- Mobile sidebar toggle -->
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarAdmin" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./admin_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brandmark/120/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span class="fw-semibold">
+      Admin Console
+     </span>
+     <small class="ms-2 opacity-75 d-none d-sm-inline">
+      • {{institutionName}}
+     </small>
+    </a>
+    <!-- Inline navigation links (desktop) -->
+    <div class="collapse navbar-collapse" id="adminTopNav">
+     <ul class="navbar-nav ms-3 d-none d-lg-flex">
+      <li class="nav-item">
+       <a aria-current="page" class="nav-link active" href="./admin_dashboard.html">
+        Dashboard
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link" href="./user_management.html">
+        User Management
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link" href="./emergency_dashboard.html">
+        Emergency Dashboard
+       </a>
+      </li>
+     </ul>
+     <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+      <div class="input-group">
+       <span class="input-group-text bg-white">
+        <i class="fa-solid fa-search text-muted">
+        </i>
+       </span>
+       <input aria-label="Search" class="form-control" placeholder="Search users, alerts, settings..." type="search"/>
+      </div>
+     </form>
+    </div>
+    <!-- Right controls -->
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./broadcast_tool.html">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      New Broadcast
+     </a>
+     <a class="btn btn-outline-light btn-sm me-2" href="./user_management.html#add">
+      <i class="fa-solid fa-user-plus me-1">
+      </i>
+      Add Users
+     </a>
+     <button class="btn btn-link text-white me-2" data-bs-title="Notifications" data-bs-toggle="tooltip" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" data-bs-title="Messages" data-bs-toggle="tooltip" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuAdmin">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/admin/28/28'" src="https://via.placeholder.com/28"/>
+       <span>
+        {{userName}}
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuAdmin" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         Administrator
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./admin_settings.html">
+         <i class="fa-solid fa-screwdriver-wrench me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <button aria-controls="adminTopNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler ms-2" data-bs-target="#adminTopNav" data-bs-toggle="collapse" type="button">
+     <span class="navbar-toggler-icon">
+     </span>
+    </button>
+   </div>
+  </nav>
+  <div class="container-fluid p-0">
+   <div class="d-flex">
+    <!-- Administrator Management Sidebar (Desktop) -->
+    <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarAdmin" style="width:260px;">
+     <style>
+      #sidebarAdmin .list-group-item { border: 0; border-radius: 0; }
+          #sidebarAdmin .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+          #sidebarAdmin .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+          #sidebarAdmin .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+     </style>
+     <div class="p-3 text-center border-bottom">
+      <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brandmark/120/38'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+     </div>
+     <div class="p-3">
+      <div class="profile-box rounded p-3 mb-3">
+       <div class="d-flex align-items-center">
+        <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/adminprofile/40/40'" src="https://via.placeholder.com/40"/>
+        <div>
+         <div class="fw-semibold">
+          {{userName}}
+         </div>
+         <small class="text-muted">
+          Administrator
+         </small>
+        </div>
+       </div>
+      </div>
+      <div class="list-group list-group-flush">
+       <a class="list-group-item list-group-item-action active" href="./admin_dashboard.html">
+        <i class="fa-solid fa-gauge me-2">
+        </i>
+        Admin Dashboard
+       </a>
+       <a class="list-group-item list-group-item-action" href="./user_management.html">
+        <i class="fa-solid fa-users me-2">
+        </i>
+        User Management
+       </a>
+       <a class="list-group-item list-group-item-action" href="./broadcast_tool.html">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Broadcast Tool
+       </a>
+       <a aria-controls="adminSettingsCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#adminSettingsCollapse" role="button">
+        <i class="fa-solid fa-screwdriver-wrench me-2">
+        </i>
+        Settings
+       </a>
+       <div class="collapse show ps-3" id="adminSettingsCollapse">
+        <a class="list-group-item list-group-item-action" href="./admin_settings.html">
+         <i class="fa-solid fa-shield me-2">
+         </i>
+         Institution Settings
+        </a>
+        <a class="list-group-item list-group-item-action" href="./emergency_dashboard.html">
+         <i class="fa-solid fa-signal me-2">
+         </i>
+         Emergency Dashboard
+        </a>
+       </div>
+      </div>
+     </div>
+    </nav>
+    <!-- Mobile Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start" id="mobileSidebarAdmin" tabindex="-1">
+     <div class="offcanvas-header">
+      <h5 class="offcanvas-title">
+       Admin Menu
+      </h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+      </button>
+     </div>
+     <div class="offcanvas-body">
+      <a class="d-block mb-3" href="./admin_dashboard.html">
+       <i class="fa-solid fa-gauge me-2">
+       </i>
+       Admin Dashboard
+      </a>
+      <a class="d-block mb-3" href="./user_management.html">
+       <i class="fa-solid fa-users me-2">
+       </i>
+       User Management
+      </a>
+      <a class="d-block mb-3" href="./broadcast_tool.html">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Broadcast Tool
+      </a>
+      <a class="d-block mb-3" href="./admin_settings.html">
+       <i class="fa-solid fa-screwdriver-wrench me-2">
+       </i>
+       Institution Settings
+      </a>
+      <a class="d-block" href="./emergency_dashboard.html">
+       <i class="fa-solid fa-signal me-2">
+       </i>
+       Emergency Dashboard
+      </a>
+     </div>
+    </div>
+    <!-- Main Panel -->
+    <main class="flex-grow-1 main-panel">
+     <!-- Page Header -->
+     <div class="page-header">
+      <div>
+       <h1 class="page-title mb-1">
+        Administrator Dashboard
+       </h1>
+       <div class="breadcrumb small">
+        <span class="text-muted">
+         Home
+        </span>
+        <span class="text-muted">
+         /
+        </span>
+        <a class="text-decoration-none" href="./admin_dashboard.html">
+         Admin Dashboard
+        </a>
+       </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <div aria-label="View switcher" class="view-switcher" role="group">
+        <div class="option active" data-view="grid">
+         Grid
+        </div>
+        <div class="option" data-view="table">
+         Table
+        </div>
+        <div class="option" data-view="tiles">
+         Tiles
+        </div>
+       </div>
+       <button class="btn btn-light" id="refreshAllBtn">
+        <i class="fa-solid fa-rotate me-1">
+        </i>
+        Refresh Data
+       </button>
+      </div>
+     </div>
+     <!-- Live Emergency Status Banner (conditional) -->
+     <div class="alert alert-danger d-none align-items-center justify-content-between" id="emergencyBanner" role="alert">
+      <div class="d-flex align-items-center gap-3">
+       <i class="fa-solid fa-triangle-exclamation fa-lg">
+       </i>
+       <div>
+        <div class="fw-bold">
+         EMERGENCY EVENT IN PROGRESS
+        </div>
+        <div class="small">
+         <span id="activeAlertsCount">
+          0
+         </span>
+         active SOS alerts.
+        </div>
+       </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <a class="btn btn-light btn-sm" href="./emergency_dashboard.html">
+        <i class="fa-solid fa-signal me-1">
+        </i>
+        Monitor Situation Now
+       </a>
+       <button class="btn btn-outline-light btn-sm" id="dismissEmergencyBanner" type="button">
+        Dismiss
+       </button>
+      </div>
+     </div>
+     <!-- Key Metrics Summary -->
+     <section class="mb-4">
+      <div class="grid auto-fit-lg" id="metricsGrid">
+       <!-- Metric Cards -->
+       <div class="metric-card">
+        <div class="d-flex align-items-center justify-content-between">
+         <div>
+          <div class="metric-title">
+           Total Students
+          </div>
+          <div class="metric-value" id="metricStudents">
+           <span class="skeleton" style="width:100px;height:36px;display:inline-block;border-radius:8px;">
+           </span>
+          </div>
+         </div>
+         <div class="text-info">
+          <i class="fa-solid fa-user-graduate fa-2x">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="metric-card">
+        <div class="d-flex align-items-center justify-content-between">
+         <div>
+          <div class="metric-title">
+           Total Staff
+          </div>
+          <div class="metric-value" id="metricStaff">
+           <span class="skeleton" style="width:80px;height:36px;display:inline-block;border-radius:8px;">
+           </span>
+          </div>
+         </div>
+         <div class="text-success">
+          <i class="fa-solid fa-chalkboard-user fa-2x">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="metric-card">
+        <div class="d-flex align-items-center justify-content-between">
+         <div>
+          <div class="metric-title">
+           Total Users
+          </div>
+          <div class="metric-value" id="metricUsers">
+           <span class="skeleton" style="width:90px;height:36px;display:inline-block;border-radius:8px;">
+           </span>
+          </div>
+         </div>
+         <div class="text-primary">
+          <i class="fa-solid fa-users fa-2x">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="metric-card">
+        <div class="d-flex align-items-center justify-content-between">
+         <div>
+          <div class="metric-title">
+           SOS Alerts (24h)
+          </div>
+          <div class="metric-value highlight-info" id="metricAlerts24h">
+           <span class="skeleton" style="width:60px;height:36px;display:inline-block;border-radius:8px;">
+           </span>
+          </div>
+         </div>
+         <div class="text-danger">
+          <i class="fa-solid fa-bell fa-2x">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="metric-card">
+        <div class="d-flex align-items-center justify-content-between">
+         <div>
+          <div class="metric-title">
+           Active Emergencies
+          </div>
+          <div class="metric-value text-danger" id="metricActiveEmergencies">
+           <span class="skeleton" style="width:40px;height:36px;display:inline-block;border-radius:8px;">
+           </span>
+          </div>
+         </div>
+         <div class="text-danger">
+          <i class="fa-solid fa-triangle-exclamation fa-2x">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="metric-card">
+        <div class="d-flex align-items-center justify-content-between">
+         <div>
+          <div class="metric-title">
+           System Uptime
+          </div>
+          <div class="metric-value text-success" id="metricUptime">
+           <span class="skeleton" style="width:120px;height:36px;display:inline-block;border-radius:8px;">
+           </span>
+          </div>
+         </div>
+         <div class="text-success">
+          <i class="fa-solid fa-heart-pulse fa-2x">
+          </i>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- Charts Row -->
+     <section class="grid auto-fit-lg mb-4">
+      <div class="card">
+       <div class="card-header">
+        <div class="title">
+         SOS Alerts - Last 7 Days
+        </div>
+        <div class="d-flex align-items-center gap-2">
+         <button class="btn btn-light btn-sm" id="alertsChartRefresh">
+          <i class="fa-solid fa-arrows-rotate me-1">
+          </i>
+          Refresh
+         </button>
+        </div>
+       </div>
+       <div class="card-body">
+        <canvas aria-label="SOS alerts time series" height="120" id="alertsChart" role="img">
+        </canvas>
+       </div>
+      </div>
+      <div class="card">
+       <div class="card-header">
+        <div class="title">
+         User Registrations (30 days)
+        </div>
+        <div class="d-flex align-items-center gap-2">
+         <button class="btn btn-light btn-sm" id="registrationsChartRefresh">
+          <i class="fa-solid fa-arrows-rotate me-1">
+          </i>
+          Refresh
+         </button>
+        </div>
+       </div>
+       <div class="card-body">
+        <canvas aria-label="User registrations chart" height="120" id="registrationsChart" role="img">
+        </canvas>
+       </div>
+      </div>
+     </section>
+     <!-- Quick Actions -->
+     <section class="mb-4">
+      <div class="card">
+       <div class="card-header">
+        <div class="title">
+         Quick Actions
+        </div>
+       </div>
+       <div class="card-body">
+        <div class="row g-3">
+         <div class="col-12 col-md-4">
+          <a class="btn btn-primary w-100 py-3" href="./user_management.html">
+           <i class="fa-solid fa-users me-2">
+           </i>
+           Manage Users
+          </a>
+         </div>
+         <div class="col-12 col-md-4">
+          <a class="btn btn-info w-100 py-3 text-white" href="./broadcast_tool.html">
+           <i class="fa-solid fa-bullhorn me-2">
+           </i>
+           Send Broadcast
+          </a>
+         </div>
+         <div class="col-12 col-md-4">
+          <a class="btn btn-secondary w-100 py-3" href="./admin_settings.html">
+           <i class="fa-solid fa-screwdriver-wrench me-2">
+           </i>
+           Configure Settings
+          </a>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- Recent Activity Feed -->
+     <section class="mb-5">
+      <div class="card h-100">
+       <div class="card-header">
+        <div class="title">
+         Recent Activity
+        </div>
+        <div class="d-flex align-items-center gap-2">
+         <select class="form-select form-select-sm" id="activityFilterType" style="width:auto;">
+          <option selected="" value="all">
+           All Types
+          </option>
+          <option value="user">
+           User
+          </option>
+          <option value="broadcast">
+           Broadcast
+          </option>
+          <option value="alert">
+           SOS Alert
+          </option>
+         </select>
+         <input class="form-control form-control-sm" id="activitySearch" placeholder="Search..." style="width:200px;">
+         </input>
+        </div>
+       </div>
+       <div class="card-body">
+        <ul aria-live="polite" class="list-unstyled" id="activityList">
+         <!-- Activity items dynamically rendered -->
+        </ul>
+        <div class="d-flex align-items-center justify-content-between mt-3">
+         <small class="text-muted" id="activityPaginationInfo">
+          Showing 0-0 of 0
+         </small>
+         <button class="btn btn-light btn-sm" id="loadMoreActivity">
+          Load More
+         </button>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- System feedback area (hidden placeholder) -->
+     <div aria-live="polite" class="visually-hidden" id="systemFeedbackArea">
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Administrator Management Footer -->
+  <footer class="border-top py-2 bg-white">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brandmark/120/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      Admin Console • © 2025
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <!-- Day.js for relative time -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <!-- Bootstrap 5 JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+   // Initialize tooltips
+[...document.querySelectorAll('[data-bs-toggle="tooltip"]')].forEach(el => new bootstrap.Tooltip(el));
+
+// Day.js relative time
+dayjs.extend(window.dayjs_plugin_relativeTime);
+
+// Simple view switcher to toggle body class (optional demo)
+const viewOptions = document.querySelectorAll('.view-switcher .option');
+viewOptions.forEach(opt => opt.addEventListener('click', () => {
+    document.body.classList.remove('view-grid', 'view-table', 'view-tiles');
+    viewOptions.forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+    document.body.classList.add('view-' + opt.dataset.view);
+}));
+
+// Emergency banner mock logic
+const emergencyBanner = document.getElementById('emergencyBanner');
+const activeAlertsCountEl = document.getElementById('activeAlertsCount');
+const dismissEmergencyBannerBtn = document.getElementById('dismissEmergencyBanner');
+
+function updateEmergencyStatus() {
+    // Mock: randomize emergency state
+    const activeAlerts = Math.random() < 0.35 ? Math.floor(Math.random() * 5) + 1 : 0;
+    if (activeAlerts > 0) {
+        activeAlertsCountEl.textContent = String(activeAlerts);
+        emergencyBanner.classList.remove('d-none');
+    } else {
+        emergencyBanner.classList.add('d-none');
+    }
+}
+dismissEmergencyBannerBtn.addEventListener('click', () => emergencyBanner.classList.add('d-none'));
+
+// Metrics mock loading
+const metricEls = {
+    students: document.getElementById('metricStudents'),
+    staff: document.getElementById('metricStaff'),
+    users: document.getElementById('metricUsers'),
+    alerts24h: document.getElementById('metricAlerts24h'),
+    activeEmergencies: document.getElementById('metricActiveEmergencies'),
+    uptime: document.getElementById('metricUptime'),
+};
+
+function formatNumber(n) {
+    return n.toLocaleString();
+}
+
+function loadMetrics() {
+    // Simulate API delay
+    return new Promise(resolve => {
+        setTimeout(() => {
+            const students = 8245;
+            const staff = 642;
+            const users = students + staff;
+            const alerts24h = Math.floor(Math.random() * 12);
+            const activeEmergencies = Math.random() < 0.3 ? Math.floor(Math.random() * 3) + 1 : 0;
+            const uptime = '99.98%';
+            resolve({
+                students,
+                staff,
+                users,
+                alerts24h,
+                activeEmergencies,
+                uptime
+            });
+        }, 900);
+    });
+}
+
+function renderMetrics(m) {
+    metricEls.students.textContent = formatNumber(m.students);
+    metricEls.staff.textContent = formatNumber(m.staff);
+    metricEls.users.textContent = formatNumber(m.users);
+    metricEls.alerts24h.textContent = formatNumber(m.alerts24h);
+    metricEls.activeEmergencies.textContent = formatNumber(m.activeEmergencies);
+    metricEls.uptime.textContent = m.uptime;
+}
+
+// Charts
+let alertsChart, registrationsChart;
+
+function createAlertsChart(ctx) {
+    const labels = Array.from({
+        length: 7
+    }, (_, i) => dayjs().subtract(6 - i, 'day').format('MMM D'));
+    const data = labels.map(() => Math.floor(Math.random() * 8));
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'SOS Alerts',
+                data,
+                borderColor: '#00F',
+                backgroundColor: 'rgba(0,0,255,0.1)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createRegistrationsChart(ctx) {
+    const labels = Array.from({
+        length: 10
+    }, (_, i) => dayjs().subtract(9 - i, 'day').format('MMM D'));
+    const students = labels.map(() => Math.floor(Math.random() * 40) + 10);
+    const staff = labels.map(() => Math.floor(Math.random() * 12) + 3);
+    return new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Students',
+                data: students,
+                backgroundColor: 'rgba(0,153,210,0.6)'
+            }, {
+                label: 'Staff',
+                data: staff,
+                backgroundColor: 'rgba(0,119,78,0.6)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function refreshAlertsChart() {
+    if (!alertsChart) return;
+    alertsChart.data.datasets[0].data = alertsChart.data.labels.map(() => Math.floor(Math.random() * 8));
+    alertsChart.update();
+}
+
+function refreshRegistrationsChart() {
+    if (!registrationsChart) return;
+    registrationsChart.data.datasets.forEach(ds => {
+        ds.data = registrationsChart.data.labels.map(() => ds.label === 'Students' ? Math.floor(Math.random() * 40) + 10 : Math.floor(Math.random() * 12) + 3);
+    });
+    registrationsChart.update();
+}
+
+document.getElementById('alertsChartRefresh').addEventListener('click', () => {
+    refreshAlertsChart();
+    Swal.fire({
+        icon: 'success',
+        title: 'Alerts chart refreshed',
+        timer: 1200,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+    });
+});
+
+document.getElementById('registrationsChartRefresh').addEventListener('click', () => {
+    refreshRegistrationsChart();
+    Swal.fire({
+        icon: 'success',
+        title: 'Registrations chart refreshed',
+        timer: 1200,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+    });
+});
+
+// Recent Activity (mock data, filtering, pagination)
+const activityData = [{
+    id: 1,
+    type: 'user',
+    user: 'Alex Kim',
+    ts: dayjs().subtract(5, 'minute'),
+    text: 'registered as a new student.'
+}, {
+    id: 2,
+    type: 'broadcast',
+    user: 'System',
+    ts: dayjs().subtract(20, 'minute'),
+    text: 'sent a campus-wide safety update.'
+}, {
+    id: 3,
+    type: 'alert',
+    user: 'SOS Sensor A-12',
+    ts: dayjs().subtract(35, 'minute'),
+    text: 'triggered an SOS alert near Library.'
+}, {
+    id: 4,
+    type: 'user',
+    user: 'Priya Singh',
+    ts: dayjs().subtract(1, 'hour'),
+    text: 'account approved as staff.'
+}, {
+    id: 5,
+    type: 'broadcast',
+    user: 'Dean Office',
+    ts: dayjs().subtract(2, 'hour'),
+    text: 'shared orientation schedule.'
+}, {
+    id: 6,
+    type: 'alert',
+    user: 'SOS Sensor B-04',
+    ts: dayjs().subtract(3, 'hour'),
+    text: 'false alarm cleared.'
+}, {
+    id: 7,
+    type: 'user',
+    user: 'Jordan Lee',
+    ts: dayjs().subtract(6, 'hour'),
+    text: 'password reset requested.'
+}, {
+    id: 8,
+    type: 'alert',
+    user: 'SOS Sensor C-03',
+    ts: dayjs().subtract(9, 'hour'),
+    text: 'triggered an SOS alert at Gym.'
+}, {
+    id: 9,
+    type: 'broadcast',
+    user: 'Admin',
+    ts: dayjs().subtract(18, 'hour'),
+    text: 'maintenance window announced.'
+}, {
+    id: 10,
+    type: 'user',
+    user: 'Maria Garcia',
+    ts: dayjs().subtract(1, 'day'),
+    text: 'profile updated.'
+}, {
+    id: 11,
+    type: 'user',
+    user: 'Chen Wei',
+    ts: dayjs().subtract(2, 'day'),
+    text: 'registered as a new student.'
+}, {
+    id: 12,
+    type: 'broadcast',
+    user: 'Security',
+    ts: dayjs().subtract(3, 'day'),
+    text: 'shared evacuation drill results.'
+}];
+
+let activityPageSize = 5;
+let activityPage = 1;
+
+const activityListEl = document.getElementById('activityList');
+const activityInfoEl = document.getElementById('activityPaginationInfo');
+const activityFilterTypeEl = document.getElementById('activityFilterType');
+const activitySearchEl = document.getElementById('activitySearch');
+const loadMoreBtn = document.getElementById('loadMoreActivity');
+
+function iconForType(t) {
+    if (t === 'user') return 'fa-user';
+    if (t === 'broadcast') return 'fa-bullhorn';
+    if (t === 'alert') return 'fa-bell';
+    return 'fa-circle-info';
+}
+
+function filteredActivities() {
+    const type = activityFilterTypeEl.value;
+    const q = activitySearchEl.value.trim().toLowerCase();
+    return activityData.filter(a => (type === 'all' || a.type === type) && (q === '' || a.user.toLowerCase().includes(q) || a.text.toLowerCase().includes(q)))
+        .sort((a, b) => b.ts.valueOf() - a.ts.valueOf());
+}
+
+function renderActivity() {
+    const items = filteredActivities();
+    const start = 0;
+    const end = activityPage * activityPageSize;
+    const slice = items.slice(start, end);
+    activityListEl.innerHTML = slice.map(a => `
+        <li class="border-bottom py-2">
+          <div class="d-flex align-items-start gap-3">
+            <div class="text-muted"><i class="fa-solid ${iconForType(a.type)}"></i></div>
+            <div class="flex-grow-1">
+              <div class="mb-1"><strong>${a.user}</strong> ${a.text}</div>
+              <div class="small text-muted">${dayjs(a.ts).fromNow()}</div>
+            </div>
+            <div>
+              <a href="${a.type==='user' ? './user_management.html' : (a.type==='broadcast' ? './broadcast_tool.html' : './emergency_dashboard.html')}" class="btn btn-light btn-sm">View</a>
+            </div>
+          </div>
+        </li>
+      `).join('');
+
+    const showing = slice.length;
+    const total = items.length;
+    activityInfoEl.textContent = `Showing ${showing === 0 ? 0 : 1}-${showing} of ${total}`;
+    loadMoreBtn.disabled = showing >= total;
+}
+
+loadMoreBtn.addEventListener('click', () => {
+    activityPage++;
+    renderActivity();
+});
+activityFilterTypeEl.addEventListener('change', () => {
+    activityPage = 1;
+    renderActivity();
+});
+activitySearchEl.addEventListener('input', () => {
+    activityPage = 1;
+    renderActivity();
+});
+
+// Refresh all
+const refreshAllBtn = document.getElementById('refreshAllBtn');
+refreshAllBtn.addEventListener('click', async () => {
+    const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1600,
+        timerProgressBar: true
+    });
+    toast.fire({
+        icon: 'info',
+        title: 'Refreshing dashboard data...'
+    });
+    updateEmergencyStatus();
+    const m = await loadMetrics();
+    renderMetrics(m);
+    refreshAlertsChart();
+    refreshRegistrationsChart();
+    toast.fire({
+        icon: 'success',
+        title: 'Dashboard updated'
+    });
+});
+
+// Init on load
+(async function init() {
+    updateEmergencyStatus();
+
+    // Load metrics
+    const m = await loadMetrics();
+    renderMetrics(m);
+
+    // Charts
+    alertsChart = createAlertsChart(document.getElementById('alertsChart'));
+    registrationsChart = createRegistrationsChart(document.getElementById('registrationsChart'));
+
+    // Activity
+    renderActivity();
+
+    // Welcome toast
+    Swal.fire({
+        title: 'Welcome back, {{userName}}',
+        text: 'Here is your latest platform overview.',
+        icon: 'success',
+        timer: 1800,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+    });
+})();
+  </script>
+ </body>
+</html>

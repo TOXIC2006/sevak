@@ -1,0 +1,107 @@
+/* Emergency Dashboard page-specific styles */
+/* Typography: prefer Poppins for this page */
+body {
+    font-family: "Poppins", var(--font-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif
+    }
+/* Sticky actions toolbar directly under navbar */
+.actions-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    background: var(--surface-1, #fff);
+    backdrop-filter: saturate(160%) blur(6px)
+    }
+/* Map container sizing */
+#emergencyMap {
+    width: 100%;
+    height: 520px
+    }
+@media (max-width: 767.98px) {
+    #emergencyMap {
+        height: 360px
+        }
+    }
+/* Map loading overlay */
+.map-loading-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.6)
+    }
+/* Leaflet custom marker styles */
+.custom-div-icon .marker-pin {
+    width: 30px;
+    height: 42px;
+    border-radius: 14px 14px 14px 0;
+    transform: rotate(-45deg);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2)
+    }
+.custom-div-icon .marker-pin i {
+    transform: rotate(45deg)
+    }
+.marker-sos .marker-pin {
+    background: var(--color-error, #CD2026)
+    }
+.marker-needhelp .marker-pin {
+    background: var(--color-warning, #FFA500);
+    color: #111
+    }
+.marker-safe .marker-pin {
+    background: var(--color-success, #00774E)
+    }
+/* Map legend dots */
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    vertical-align: middle
+    }
+.legend-dot.sos {
+    background: var(--color-error)
+    }
+.legend-dot.needhelp {
+    background: var(--color-warning)
+    }
+/* Clickable metric cards */
+.status-card.clickable {
+    cursor: pointer
+    }
+.status-card.clickable:hover {
+    box-shadow: var(--shadow-2);
+    border-color: var(--color-primary)
+    }
+/* Table headers as sort triggers */
+#usersTable thead th[data-sort] {
+    cursor: pointer;
+    user-select: none
+    }
+#usersTable tbody tr {
+    transition: background-color 0.15s ease
+    }
+#usersTable tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02)
+    }
+/* View switcher tweaks */
+.view-switcher .option {
+    min-width: 40px;
+    text-align: center
+    }
+/* Ensure sidebar + main layout plays nicely */
+@media (min-width: 768px) {
+    #sidebarEmergencyOps {
+        flex: 0 0 260px
+        }
+    main.flex-grow-1 {
+        width: calc(100% - 260px)
+        }
+    }
+/* Card titles alignment */
+.card-header .title .widget-title {
+    font-weight: 600
+    }

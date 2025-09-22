@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   User Management • Admin Console
+  </title>
+  <!-- Brand Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+   <!-- SweetAlert2 CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+   <!-- Site Theme CSS -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page-specific CSS -->
+   <link href="user_management.css" rel="stylesheet"/>
+   <style>
+    body { font-family: 'Poppins', var(--font-sans); }
+   </style>
+  </link>
+ </head>
+ <body>
+  <!-- Administrator Management Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarAdmin" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./admin_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/80/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Admin Console
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search users, alerts, settings..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./broadcast_tool.html">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      New Broadcast
+     </a>
+     <a class="btn btn-outline-light btn-sm me-2" href="./user_management.html#add">
+      <i class="fa-solid fa-user-plus me-1">
+      </i>
+      Add Users
+     </a>
+     <button class="btn btn-link text-white me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuAdmin">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/u28/28'" src="https://via.placeholder.com/28"/>
+       <span id="topUserName">
+        Alex Admin
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuAdmin" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         Administrator
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./admin_settings.html">
+         <i class="fa-solid fa-screwdriver-wrench me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <!-- Mobile Offcanvas Sidebar -->
+  <div class="offcanvas offcanvas-start" id="mobileSidebarAdmin" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Admin Menu
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <a class="d-block mb-3" href="./admin_dashboard.html">
+     <i class="fa-solid fa-gauge me-2">
+     </i>
+     Admin Dashboard
+    </a>
+    <a class="d-block mb-3" href="./user_management.html">
+     <i class="fa-solid fa-users me-2">
+     </i>
+     User Management
+    </a>
+    <a class="d-block mb-3" href="./broadcast_tool.html">
+     <i class="fa-solid fa-bullhorn me-2">
+     </i>
+     Broadcast Tool
+    </a>
+    <a class="d-block mb-3" href="./admin_settings.html">
+     <i class="fa-solid fa-screwdriver-wrench me-2">
+     </i>
+     Institution Settings
+    </a>
+    <a class="d-block" href="./emergency_dashboard.html">
+     <i class="fa-solid fa-signal me-2">
+     </i>
+     Emergency Dashboard
+    </a>
+   </div>
+  </div>
+  <div class="container-fluid p-0">
+   <div class="d-flex">
+    <!-- Administrator Management Sidebar (desktop) -->
+    <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarAdmin" style="width:260px;">
+     <style>
+      #sidebarAdmin .list-group-item { border: 0; border-radius: 0; }
+          #sidebarAdmin .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+          #sidebarAdmin .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+          #sidebarAdmin .profile-box { background:#f8f9ff; border:1px solid #e8eafc; }
+     </style>
+     <div class="p-3 text-center border-bottom">
+      <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo2/114/38'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+     </div>
+     <div class="p-3">
+      <div class="profile-box rounded p-3 mb-3">
+       <div class="d-flex align-items-center">
+        <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/u40/40'" src="https://via.placeholder.com/40"/>
+        <div>
+         <div class="fw-semibold">
+          Alex Admin
+         </div>
+         <small class="text-muted">
+          Administrator
+         </small>
+        </div>
+       </div>
+      </div>
+      <div class="list-group list-group-flush">
+       <a class="list-group-item list-group-item-action" href="./admin_dashboard.html">
+        <i class="fa-solid fa-gauge me-2">
+        </i>
+        Admin Dashboard
+       </a>
+       <a class="list-group-item list-group-item-action active" href="./user_management.html">
+        <i class="fa-solid fa-users me-2">
+        </i>
+        User Management
+       </a>
+       <a class="list-group-item list-group-item-action" href="./broadcast_tool.html">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Broadcast Tool
+       </a>
+       <a aria-controls="adminSettingsCollapse" aria-expanded="true" class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#adminSettingsCollapse" role="button">
+        <i class="fa-solid fa-screwdriver-wrench me-2">
+        </i>
+        Settings
+       </a>
+       <div class="collapse show ps-3" id="adminSettingsCollapse">
+        <a class="list-group-item list-group-item-action" href="./admin_settings.html">
+         <i class="fa-solid fa-shield me-2">
+         </i>
+         Institution Settings
+        </a>
+        <a class="list-group-item list-group-item-action" href="./emergency_dashboard.html">
+         <i class="fa-solid fa-signal me-2">
+         </i>
+         Emergency Dashboard
+        </a>
+       </div>
+      </div>
+     </div>
+    </nav>
+    <main class="main-panel flex-grow-1">
+     <!-- Breadcrumb and Title -->
+     <div class="page-header">
+      <div>
+       <nav aria-label="breadcrumb" class="breadcrumb mb-1">
+        <span class="breadcrumb-item">
+         <a href="./admin_dashboard.html">
+          Admin
+         </a>
+        </span>
+        <span aria-current="page" class="breadcrumb-item active">
+         User Management
+        </span>
+       </nav>
+       <h1 class="page-title mb-0">
+        User Management
+       </h1>
+       <small class="text-muted">
+        Manage all users across your institution. Add, edit, filter, and perform bulk actions.
+       </small>
+      </div>
+      <div class="d-none d-lg-flex align-items-center gap-2">
+       <a class="btn btn-light" href="#" id="exportCsvBtn">
+        <i class="fa-solid fa-file-export me-1">
+        </i>
+        Export CSV
+       </a>
+      </div>
+     </div>
+     <!-- Alerts / Feedback placeholder -->
+     <div aria-atomic="true" aria-live="polite" class="mb-3" id="alertRegion">
+     </div>
+     <!-- Toolbar: Search, Filters, Actions -->
+     <div class="app-card mb-4">
+      <div class="card-body">
+       <div class="um-toolbar d-flex flex-wrap align-items-center gap-2">
+        <div class="flex-grow-1">
+         <div class="input-group">
+          <span class="input-group-text bg-white">
+           <i class="fa-solid fa-magnifying-glass text-muted">
+           </i>
+          </span>
+          <input aria-label="Search by name or email" class="form-control" id="searchInput" placeholder="Search by name or email..." type="search">
+          </input>
+         </div>
+        </div>
+        <div>
+         <select class="form-select" id="roleFilter">
+          <option value="All">
+           All Roles
+          </option>
+          <option>
+           Student
+          </option>
+          <option>
+           Teacher
+          </option>
+          <option>
+           Staff
+          </option>
+          <option>
+           Parent
+          </option>
+          <option>
+           Administrator
+          </option>
+         </select>
+        </div>
+        <div>
+         <select class="form-select" id="statusFilter">
+          <option value="All">
+           All Status
+          </option>
+          <option>
+           Active
+          </option>
+          <option>
+           Pending
+          </option>
+          <option>
+           Suspended
+          </option>
+          <option>
+           Deactivated
+          </option>
+         </select>
+        </div>
+        <div class="ms-auto d-flex gap-2">
+         <button class="btn btn-primary" id="addUserBtn">
+          <i class="fa-solid fa-user-plus me-1">
+          </i>
+          Add User
+         </button>
+         <button class="btn btn-secondary" id="bulkImportBtn">
+          <i class="fa-solid fa-file-arrow-up me-1">
+          </i>
+          Bulk Import
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Key Metrics Row -->
+     <div class="row g-3 mb-4">
+      <div class="col-6 col-lg-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Total Users
+        </div>
+        <div class="metric-value" id="metricTotalUsers">
+         —
+        </div>
+       </div>
+      </div>
+      <div class="col-6 col-lg-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Active
+        </div>
+        <div class="metric-value text-success" id="metricActiveUsers">
+         —
+        </div>
+       </div>
+      </div>
+      <div class="col-6 col-lg-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Pending
+        </div>
+        <div class="metric-value text-warning" id="metricPendingUsers">
+         —
+        </div>
+       </div>
+      </div>
+      <div class="col-6 col-lg-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Last Import
+        </div>
+        <div class="metric-value text-info" id="metricLastImport">
+         —
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Analytics / Chart -->
+     <div class="row g-3 mb-4">
+      <div class="col-12 col-xl-6">
+       <div class="app-card h-100">
+        <div class="card-header">
+         <span class="widget-title">
+          User Breakdown by Role
+         </span>
+        </div>
+        <div class="card-body">
+         <canvas aria-label="User Breakdown by Role" height="140" id="rolesChart" role="img">
+         </canvas>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- User List Table -->
+     <div class="app-card position-relative" id="userTableCard">
+      <div class="card-header">
+       <div class="d-flex align-items-center w-100">
+        <div class="widget-title">
+         Users
+        </div>
+        <div class="ms-auto d-flex align-items-center gap-2">
+         <label class="text-muted small mb-0">
+          Rows per page
+         </label>
+         <select class="form-select form-select-sm" id="perPageSelect" style="width:auto;">
+          <option>
+           5
+          </option>
+          <option selected="">
+           10
+          </option>
+          <option>
+           20
+          </option>
+         </select>
+        </div>
+       </div>
+      </div>
+      <div class="card-body p-0">
+       <div class="table-responsive">
+        <table class="table table-theme table-hover table-sortable mb-0" id="usersTable">
+         <thead>
+          <tr>
+           <th style="width:46px;">
+           </th>
+           <th class="sortable" data-col="fullName">
+            Name
+            <i class="sort-indicator">
+            </i>
+           </th>
+           <th class="sortable" data-col="email">
+            Email
+            <i class="sort-indicator">
+            </i>
+           </th>
+           <th class="sortable" data-col="role">
+            Role
+            <i class="sort-indicator">
+            </i>
+           </th>
+           <th class="sortable" data-col="status">
+            Status
+            <i class="sort-indicator">
+            </i>
+           </th>
+           <th class="sortable" data-col="createdAt">
+            Created
+            <i class="sort-indicator">
+            </i>
+           </th>
+           <th style="width:120px;">
+            Actions
+           </th>
+          </tr>
+         </thead>
+         <tbody id="usersTbody">
+          <!-- Rows injected by JS -->
+         </tbody>
+        </table>
+       </div>
+      </div>
+      <div class="card-footer d-flex flex-wrap align-items-center gap-2 justify-content-between">
+       <div class="small text-muted" id="tableInfo">
+        —
+       </div>
+       <nav aria-label="User table pagination">
+        <ul class="pagination pagination-sm mb-0" id="pagination">
+         <!-- Pagination items injected by JS -->
+        </ul>
+       </nav>
+      </div>
+      <!-- Loading overlay -->
+      <div class="spinner-overlay d-none" id="loadingOverlay">
+       <div class="text-center">
+        <div aria-hidden="true" class="spinner-border text-primary" role="status">
+        </div>
+        <div class="mt-2 small text-muted">
+         Loading users...
+        </div>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Administrator Management Footer -->
+  <footer class="border-top py-2 bg-white mt-4">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo3/54/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      Admin Console • © 2025
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+     <a class="text-muted text-decoration-none small" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none small" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Add/Edit User Modal -->
+  <div aria-hidden="true" class="modal fade" id="userFormModal" tabindex="-1">
+   <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h5 class="modal-title" id="userFormModalTitle">
+       Add User
+      </h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">
+      </button>
+     </div>
+     <form id="userForm" novalidate="">
+      <div class="modal-body">
+       <div class="mb-3">
+        <label class="form-label" for="fullNameInput">
+         Full Name
+        </label>
+        <input class="form-control" id="fullNameInput" required="" type="text"/>
+        <div class="form-text">
+         Only letters and spaces allowed.
+        </div>
+        <div class="invalid-feedback">
+         Please enter a valid full name.
+        </div>
+       </div>
+       <div class="mb-3">
+        <label class="form-label" for="emailInput">
+         Email Address
+        </label>
+        <input class="form-control" id="emailInput" required="" type="email"/>
+        <div class="invalid-feedback">
+         Enter a valid, unique email address.
+        </div>
+       </div>
+       <div class="mb-3">
+        <label class="form-label" for="roleSelect">
+         Role
+        </label>
+        <select class="form-select" id="roleSelect" required="">
+         <option disabled="" selected="" value="">
+          Select role
+         </option>
+         <option>
+          Student
+         </option>
+         <option>
+          Teacher
+         </option>
+         <option>
+          Staff
+         </option>
+         <option>
+          Parent
+         </option>
+         <option>
+          Administrator
+         </option>
+        </select>
+        <div class="invalid-feedback">
+         Please select a role.
+        </div>
+       </div>
+      </div>
+      <div class="modal-footer">
+       <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+        Cancel
+       </button>
+       <button class="btn btn-primary" id="saveUserBtn" type="submit">
+        <span class="me-1">
+         <i class="fa-solid fa-floppy-disk">
+         </i>
+        </span>
+        Save User
+       </button>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- Bulk Import Modal -->
+  <div aria-hidden="true" class="modal fade" id="bulkImportModal" tabindex="-1">
+   <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h5 class="modal-title">
+       Bulk Import Users (CSV)
+      </h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">
+      </button>
+     </div>
+     <div class="modal-body">
+      <p class="mb-2">
+       Upload a CSV file with the following headers: fullName,email,role,status (optional).
+       <a href="#" id="downloadTemplateLink">
+        Download CSV Template
+       </a>
+      </p>
+      <div aria-label="Upload CSV file" class="dropzone text-center p-4 mb-3" id="dropzone" role="button" tabindex="0">
+       <i class="fa-solid fa-file-csv fa-2x text-primary mb-2">
+       </i>
+       <div class="fw-semibold">
+        Drag &amp; drop a .csv file here, or click to select
+       </div>
+       <div class="small text-muted">
+        Max 2MB
+       </div>
+       <input accept=".csv" class="d-none" id="fileInput" type="file"/>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mb-2">
+       <div class="small text-muted">
+        Selected:
+        <span class="fw-semibold" id="selectedFileName">
+         None
+        </span>
+       </div>
+       <button class="btn btn-secondary btn-sm" disabled="" id="uploadBtn">
+        <i class="fa-solid fa-cloud-arrow-up me-1">
+        </i>
+        Upload and Process
+       </button>
+      </div>
+      <div class="progress mb-3 d-none" id="uploadProgressWrap">
+       <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar" id="uploadProgressBar" role="progressbar" style="width:0%">
+       </div>
+      </div>
+      <div class="d-none" id="importResults">
+      </div>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+       Close
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Toast Container -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: var(--z-toast);">
+   <div aria-atomic="true" aria-live="polite" class="toast align-items-center text-bg-dark border-0" id="actionToast" role="status">
+    <div class="d-flex">
+     <div class="toast-body" id="toastBody">
+      Action completed.
+     </div>
+     <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Dependencies -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // Sample Data (mock)
+const users = [{
+    id: 1,
+    fullName: 'Alicia Gomez',
+    email: 'alicia.gomez@example.edu',
+    role: 'Student',
+    status: 'Active',
+    createdAt: '2025-02-15'
+}, {
+    id: 2,
+    fullName: 'Marcus Lee',
+    email: 'marcus.lee@example.edu',
+    role: 'Teacher',
+    status: 'Active',
+    createdAt: '2025-01-18'
+}, {
+    id: 3,
+    fullName: 'Priya Nair',
+    email: 'priya.nair@example.edu',
+    role: 'Staff',
+    status: 'Pending',
+    createdAt: '2025-02-02'
+}, {
+    id: 4,
+    fullName: 'John Carter',
+    email: 'john.carter@example.edu',
+    role: 'Parent',
+    status: 'Active',
+    createdAt: '2024-12-20'
+}, {
+    id: 5,
+    fullName: 'Emily Zhang',
+    email: 'emily.zhang@example.edu',
+    role: 'Student',
+    status: 'Suspended',
+    createdAt: '2025-03-01'
+}, {
+    id: 6,
+    fullName: "Liam O'Connor",
+    email: 'liam.oconnor@example.edu',
+    role: 'Administrator',
+    status: 'Active',
+    createdAt: '2024-11-12'
+}, {
+    id: 7,
+    fullName: 'Sophia Martinez',
+    email: 'sophia.martinez@example.edu',
+    role: 'Teacher',
+    status: 'Active',
+    createdAt: '2025-01-05'
+}, {
+    id: 8,
+    fullName: 'Noah Patel',
+    email: 'noah.patel@example.edu',
+    role: 'Student',
+    status: 'Active',
+    createdAt: '2025-02-22'
+}, {
+    id: 9,
+    fullName: 'Olivia Brown',
+    email: 'olivia.brown@example.edu',
+    role: 'Parent',
+    status: 'Active',
+    createdAt: '2025-02-09'
+}, {
+    id: 10,
+    fullName: 'Ethan Wilson',
+    email: 'ethan.wilson@example.edu',
+    role: 'Staff',
+    status: 'Active',
+    createdAt: '2025-02-26'
+}, {
+    id: 11,
+    fullName: 'Ava Johnson',
+    email: 'ava.johnson@example.edu',
+    role: 'Student',
+    status: 'Pending',
+    createdAt: '2025-03-03'
+}, {
+    id: 12,
+    fullName: 'William Davis',
+    email: 'william.davis@example.edu',
+    role: 'Teacher',
+    status: 'Active',
+    createdAt: '2024-10-30'
+}, {
+    id: 13,
+    fullName: 'Mia Hernandez',
+    email: 'mia.hernandez@example.edu',
+    role: 'Staff',
+    status: 'Active',
+    createdAt: '2025-01-28'
+}, {
+    id: 14,
+    fullName: 'James Anderson',
+    email: 'james.anderson@example.edu',
+    role: 'Parent',
+    status: 'Deactivated',
+    createdAt: '2024-09-21'
+}, {
+    id: 15,
+    fullName: 'Isabella Clark',
+    email: 'isabella.clark@example.edu',
+    role: 'Student',
+    status: 'Active',
+    createdAt: '2025-02-14'
+}, {
+    id: 16,
+    fullName: 'Benjamin Lewis',
+    email: 'benjamin.lewis@example.edu',
+    role: 'Administrator',
+    status: 'Active',
+    createdAt: '2024-08-01'
+}, {
+    id: 17,
+    fullName: 'Lucas Nguyen',
+    email: 'lucas.nguyen@example.edu',
+    role: 'Student',
+    status: 'Active',
+    createdAt: '2025-01-12'
+}, {
+    id: 18,
+    fullName: 'Harper Kim',
+    email: 'harper.kim@example.edu',
+    role: 'Teacher',
+    status: 'Active',
+    createdAt: '2024-12-05'
+}];
+
+// UI State
+const state = {
+    query: '',
+    role: 'All',
+    status: 'All',
+    sortColumn: 'createdAt',
+    sortDirection: 'desc',
+    page: 1,
+    perPage: 10,
+    editingId: null,
+    lastImportAt: '—'
+};
+
+// Elements
+const tbody = document.getElementById('usersTbody');
+const pagination = document.getElementById('pagination');
+const tableInfo = document.getElementById('tableInfo');
+const searchInput = document.getElementById('searchInput');
+const roleFilter = document.getElementById('roleFilter');
+const statusFilter = document.getElementById('statusFilter');
+const perPageSelect = document.getElementById('perPageSelect');
+const loadingOverlay = document.getElementById('loadingOverlay');
+const addUserBtn = document.getElementById('addUserBtn');
+const bulkImportBtn = document.getElementById('bulkImportBtn');
+const exportCsvBtn = document.getElementById('exportCsvBtn');
+
+const metricTotalUsers = document.getElementById('metricTotalUsers');
+const metricActiveUsers = document.getElementById('metricActiveUsers');
+const metricPendingUsers = document.getElementById('metricPendingUsers');
+const metricLastImport = document.getElementById('metricLastImport');
+
+// Modal refs
+const userFormModal = new bootstrap.Modal(document.getElementById('userFormModal'));
+const userForm = document.getElementById('userForm');
+const userFormModalTitle = document.getElementById('userFormModalTitle');
+const fullNameInput = document.getElementById('fullNameInput');
+const emailInput = document.getElementById('emailInput');
+const roleSelect = document.getElementById('roleSelect');
+
+const bulkModal = new bootstrap.Modal(document.getElementById('bulkImportModal'));
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const selectedFileName = document.getElementById('selectedFileName');
+const uploadBtn = document.getElementById('uploadBtn');
+const uploadProgressWrap = document.getElementById('uploadProgressWrap');
+const uploadProgressBar = document.getElementById('uploadProgressBar');
+const importResults = document.getElementById('importResults');
+
+// Toast
+const toastEl = document.getElementById('actionToast');
+const toastBody = document.getElementById('toastBody');
+const toast = new bootstrap.Toast(toastEl, {
+    delay: 2200
+});
+
+// Debounce
+function debounce(fn, delay = 300) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), delay);
+    };
+}
+
+function compare(a, b, col, dir) {
+    const x = a[col];
+    const y = b[col];
+    if (col === 'createdAt') {
+        const dx = new Date(x).getTime();
+        const dy = new Date(y).getTime();
+        return dir === 'asc' ? dx - dy : dy - dx;
+    }
+    const sx = String(x).toLowerCase();
+    const sy = String(y).toLowerCase();
+    if (sx < sy) return dir === 'asc' ? -1 : 1;
+    if (sx > sy) return dir === 'asc' ? 1 : -1;
+    return 0;
+}
+
+function filterData() {
+    return users.filter(u => {
+        const q = state.query.trim().toLowerCase();
+        const qMatch = !q || u.fullName.toLowerCase().includes(q) || u.email.toLowerCase().includes(q);
+        const roleMatch = state.role === 'All' || u.role === state.role;
+        const statusMatch = state.status === 'All' || u.status === state.status;
+        return qMatch && roleMatch && statusMatch;
+    });
+}
+
+function sortData(data) {
+    return data.slice().sort((a, b) => compare(a, b, state.sortColumn, state.sortDirection));
+}
+
+function paginate(data) {
+    const total = data.length;
+    const start = (state.page - 1) * state.perPage;
+    const end = start + state.perPage;
+    return {
+        rows: data.slice(start, end),
+        total,
+        start,
+        end: Math.min(end, total)
+    };
+}
+
+function initials(name) {
+    const parts = name.split(' ').filter(Boolean);
+    const chars = parts.slice(0, 2).map(p => p[0].toUpperCase()).join('');
+    return chars || '?';
+}
+
+function badgeForStatus(status) {
+    const map = {
+        Active: 'success',
+        Pending: 'warning',
+        Suspended: 'error',
+        Deactivated: 'secondary'
+    };
+    const cls = map[status] || 'secondary';
+    return `<span class="badge-soft ${cls}">${status}</span>`;
+}
+
+function renderTable() {
+    const filtered = filterData();
+    const sorted = sortData(filtered);
+    const {
+        rows,
+        total,
+        start,
+        end
+    } = paginate(sorted);
+
+    tbody.innerHTML = rows.map(u => `
+        <tr>
+          <td>
+            <div class="avatar-initials" title="${u.fullName}">${initials(u.fullName)}</div>
+          </td>
+          <td>
+            <div class="fw-semibold">${u.fullName}</div>
+            <div class="small text-muted">ID: #${String(u.id).padStart(4,'0')}</div>
+          </td>
+          <td><a href="mailto:${u.email}">${u.email}</a></td>
+          <td>${u.role}</td>
+          <td>${badgeForStatus(u.status)}</td>
+          <td>${new Date(u.createdAt).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' })}</td>
+          <td>
+            <div class="d-flex gap-1">
+              <button class="btn btn-light btn-sm" title="Edit User" data-action="edit" data-id="${u.id}"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-error btn-sm" title="Delete User" data-action="delete" data-id="${u.id}"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>`).join('');
+
+    // Info
+    const from = total === 0 ? 0 : start + 1;
+    tableInfo.textContent = `Showing ${from}-${end} of ${total} users`;
+
+    // Pagination
+    const totalPages = Math.max(1, Math.ceil(total / state.perPage));
+    const items = [];
+    items.push(`<li class="page-item ${state.page===1?'disabled':''}"><a class="page-link" href="#" data-page="prev">Previous</a></li>`);
+    const windowSize = 5;
+    let startPage = Math.max(1, state.page - Math.floor(windowSize / 2));
+    let endPage = Math.min(totalPages, startPage + windowSize - 1);
+    if (endPage - startPage + 1 < windowSize) startPage = Math.max(1, endPage - windowSize + 1);
+    for (let p = startPage; p <= endPage; p++) {
+        items.push(`<li class="page-item ${p===state.page?'active':''}"><a class="page-link" href="#" data-page="${p}">${p}</a></li>`);
+    }
+    items.push(`<li class="page-item ${state.page===totalPages?'disabled':''}"><a class="page-link" href="#" data-page="next">Next</a></li>`);
+    pagination.innerHTML = items.join('');
+
+    updateMetrics(filtered);
+    updateSortIndicators();
+}
+
+function updateMetrics(filtered) {
+    const total = filtered ? filtered.length : users.length;
+    const base = filtered || users;
+    const active = base.filter(u => u.status === 'Active').length;
+    const pending = base.filter(u => u.status === 'Pending').length;
+    metricTotalUsers.textContent = String(total);
+    metricActiveUsers.textContent = String(active);
+    metricPendingUsers.textContent = String(pending);
+    metricLastImport.textContent = state.lastImportAt;
+    updateRoleChart(base);
+}
+
+// Sorting UI
+function updateSortIndicators() {
+    document.querySelectorAll('#usersTable thead th.sortable').forEach(th => {
+        const col = th.getAttribute('data-col');
+        const icon = th.querySelector('.sort-indicator');
+        icon.className = 'sort-indicator';
+        if (col === state.sortColumn) {
+            icon.classList.add(state.sortDirection === 'asc' ? 'asc' : 'desc');
+        }
+    });
+}
+
+// Event Listeners
+searchInput.addEventListener('input', debounce((e) => {
+    state.query = e.target.value;
+    state.page = 1;
+    renderTable();
+}, 250));
+
+roleFilter.addEventListener('change', (e) => {
+    state.role = e.target.value || 'All';
+    state.page = 1;
+    renderTable();
+});
+
+statusFilter.addEventListener('change', (e) => {
+    state.status = e.target.value || 'All';
+    state.page = 1;
+    renderTable();
+});
+
+perPageSelect.addEventListener('change', (e) => {
+    state.perPage = parseInt(e.target.value, 10);
+    state.page = 1;
+    renderTable();
+});
+
+document.querySelector('#usersTable thead').addEventListener('click', (e) => {
+    const th = e.target.closest('th.sortable');
+    if (!th) return;
+    const col = th.getAttribute('data-col');
+    if (state.sortColumn === col) {
+        state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        state.sortColumn = col;
+        state.sortDirection = 'asc';
+    }
+    renderTable();
+});
+
+pagination.addEventListener('click', (e) => {
+    if (e.target.tagName !== 'A') return;
+    e.preventDefault();
+    const val = e.target.getAttribute('data-page');
+    const filtered = filterData();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / state.perPage));
+    if (val === 'prev') state.page = Math.max(1, state.page - 1);
+    else if (val === 'next') state.page = Math.min(totalPages, state.page + 1);
+    else state.page = parseInt(val, 10);
+    renderTable();
+});
+
+// Row action buttons
+tbody.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const id = parseInt(btn.getAttribute('data-id'), 10);
+    const action = btn.getAttribute('data-action');
+    if (action === 'edit') openEditModal(id);
+    if (action === 'delete') confirmDelete(id);
+});
+
+// Add user
+addUserBtn.addEventListener('click', () => openCreateModal());
+
+function openCreateModal() {
+    state.editingId = null;
+    userFormModalTitle.textContent = 'Add User';
+    userForm.reset();
+    clearValidation();
+    userFormModal.show();
+}
+
+function openEditModal(id) {
+    const u = users.find(x => x.id === id);
+    if (!u) return;
+    state.editingId = id;
+    userFormModalTitle.textContent = 'Edit User';
+    clearValidation();
+    fullNameInput.value = u.fullName;
+    emailInput.value = u.email;
+    roleSelect.value = u.role;
+    userFormModal.show();
+}
+
+function clearValidation() {
+    [fullNameInput, emailInput, roleSelect].forEach(el => {
+        el.classList.remove('is-invalid');
+        el.classList.remove('is-valid');
+    });
+}
+
+function validateForm() {
+    let ok = true;
+    clearValidation();
+    // Full name: letters/spaces only
+    const nameRegex = /^[A-Za-z\s'.-]{2,}$/;
+    if (!nameRegex.test(fullNameInput.value.trim())) {
+        fullNameInput.classList.add('is-invalid');
+        ok = false;
+    }
+    // Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailVal = emailInput.value.trim();
+    const emailUsed = users.some(u => u.email.toLowerCase() === emailVal.toLowerCase() && u.id !== state.editingId);
+    if (!emailRegex.test(emailVal) || emailUsed) {
+        emailInput.classList.add('is-invalid');
+        ok = false;
+    }
+    // Role
+    if (!roleSelect.value) {
+        roleSelect.classList.add('is-invalid');
+        ok = false;
+    }
+    return ok;
+}
+
+userForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    const payload = {
+        fullName: fullNameInput.value.trim(),
+        email: emailInput.value.trim(),
+        role: roleSelect.value,
+    };
+
+    if (state.editingId == null) {
+        // Create
+        const newId = Math.max(...users.map(u => u.id)) + 1;
+        users.push({
+            id: newId,
+            ...payload,
+            status: 'Active',
+            createdAt: new Date().toISOString().slice(0, 10)
+        });
+        fireToast('User created successfully');
+    } else {
+        // Update
+        const idx = users.findIndex(u => u.id === state.editingId);
+        if (idx > -1) {
+            users[idx].fullName = payload.fullName;
+            users[idx].email = payload.email;
+            users[idx].role = payload.role;
+        }
+        fireToast('User updated successfully');
+    }
+
+    userFormModal.hide();
+    renderTable();
+});
+
+function confirmDelete(id) {
+    const u = users.find(x => x.id === id);
+    if (!u) return;
+    Swal.fire({
+        title: 'Delete user?',
+        text: `Are you sure you want to delete ${u.fullName}? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: getComputedStyle(document.documentElement).getPropertyValue('--color-error') || '#CD2026'
+    }).then(res => {
+        if (res.isConfirmed) {
+            // Simulate server call
+            setTimeout(() => {
+                const idx = users.findIndex(x => x.id === id);
+                if (idx > -1) users.splice(idx, 1);
+                fireToast('User deleted');
+                renderTable();
+            }, 400);
+        }
+    });
+}
+
+function fireToast(message) {
+    toastBody.textContent = message;
+    toast.show();
+}
+
+// Export CSV
+exportCsvBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const filtered = sortData(filterData());
+    const cols = ['User ID', 'Full Name', 'Email', 'Role', 'Account Status', 'Created'];
+    const rows = filtered.map(u => [u.id, u.fullName, u.email, u.role, u.status, u.createdAt]);
+    const csv = [cols.join(','), ...rows.map(r => r.map(v => `"${String(v).replaceAll('"','""')}"`).join(','))].join('\n');
+    const blob = new Blob([csv], {
+        type: 'text/csv;charset=utf-8;'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'users_export.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+// Bulk Import
+bulkImportBtn.addEventListener('click', () => {
+    selectedFileName.textContent = 'None';
+    uploadBtn.disabled = true;
+    importResults.classList.add('d-none');
+    importResults.innerHTML = '';
+    uploadProgressWrap.classList.add('d-none');
+    uploadProgressBar.style.width = '0%';
+    uploadProgressBar.setAttribute('aria-valuenow', '0');
+    fileInput.value = '';
+    bulkModal.show();
+});
+
+document.getElementById('downloadTemplateLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    const sample = 'fullName,email,role\nJane Doe,jane.doe@example.edu,Student\n';
+    const blob = new Blob([sample], {
+        type: 'text/csv;charset=utf-8;'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'user_import_template.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        fileInput.click();
+    }
+});
+dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('dragover');
+});
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    handleSelectedFile(file);
+});
+fileInput.addEventListener('change', (e) => handleSelectedFile(e.target.files[0]));
+
+function handleSelectedFile(file) {
+    if (!file) return;
+    if (file.type !== 'text/csv' && !file.name.toLowerCase().endsWith('.csv')) {
+        Swal.fire('Invalid File', 'Please select a .csv file', 'error');
+        return;
+    }
+    selectedFileName.textContent = file.name;
+    uploadBtn.disabled = false;
+    uploadBtn.onclick = () => processUpload(file);
+}
+
+function processUpload(file) {
+    uploadBtn.disabled = true;
+    importResults.classList.add('d-none');
+    importResults.innerHTML = '';
+    uploadProgressWrap.classList.remove('d-none');
+    let progress = 0;
+    const timer = setInterval(() => {
+        progress += Math.random() * 20 + 10;
+        if (progress >= 100) progress = 100;
+        uploadProgressBar.style.width = progress + '%';
+        uploadProgressBar.setAttribute('aria-valuenow', String(progress));
+        if (progress === 100) {
+            clearInterval(timer);
+            onUploadComplete(file);
+        }
+    }, 300);
+}
+
+function onUploadComplete(file) {
+    // Simulated result: add 2 users, 1 error
+    const added = [{
+        id: Math.max(...users.map(u => u.id)) + 1,
+        fullName: 'Test Import One',
+        email: 'import.one@example.edu',
+        role: 'Student',
+        status: 'Active',
+        createdAt: new Date().toISOString().slice(0, 10)
+    }, {
+        id: Math.max(...users.map(u => u.id)) + 2,
+        fullName: 'Test Import Two',
+        email: 'import.two@example.edu',
+        role: 'Teacher',
+        status: 'Active',
+        createdAt: new Date().toISOString().slice(0, 10)
+    }];
+    users.push(...added);
+    const errors = [{
+        row: 4,
+        reason: 'Email already exists'
+    }];
+
+    const successHtml = `<div class="alert alert-success">Imported ${added.length} users successfully.</div>`;
+    const errorHtml = errors.length ? `<div class="alert alert-warning">${errors.length} row(s) failed: ${errors.map(e=>`Row ${e.row} (${e.reason})`).join('; ')}</div>` : '';
+    importResults.innerHTML = successHtml + errorHtml;
+    importResults.classList.remove('d-none');
+    state.lastImportAt = new Date().toLocaleString();
+    renderTable();
+}
+
+// Chart.js: Roles breakdown
+let rolesChart;
+
+function updateRoleChart(data) {
+    const counts = {
+        Student: 0,
+        Teacher: 0,
+        Staff: 0,
+        Parent: 0,
+        Administrator: 0
+    };
+    data.forEach(u => {
+        if (counts[u.role] !== undefined) counts[u.role]++;
+    });
+    const labels = Object.keys(counts);
+    const values = labels.map(k => counts[k]);
+    const ctx = document.getElementById('rolesChart');
+    const colors = [
+        'rgba(0, 153, 210, 0.7)', // info
+        'rgba(0, 119, 78, 0.7)', // success
+        'rgba(108, 117, 125, 0.7)', // neutral
+        'rgba(255, 165, 0, 0.7)', // warning
+        'rgba(0, 0, 255, 0.7)' // primary
+    ];
+    if (rolesChart) {
+        rolesChart.data.labels = labels;
+        rolesChart.data.datasets[0].data = values;
+        rolesChart.update();
+    } else {
+        rolesChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+    }
+}
+
+// Simulate initial loading state
+function fetchUsers() {
+    loadingOverlay.classList.remove('d-none');
+    setTimeout(() => {
+        loadingOverlay.classList.add('d-none');
+        renderTable();
+    }, 600);
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    // If hash says add -> open modal
+    if (location.hash === '#add') setTimeout(() => openCreateModal(), 300);
+    fetchUsers();
+});
+  </script>
+ </body>
+</html>

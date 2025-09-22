@@ -1,0 +1,40 @@
+/* broadcast_tool.css - Page specific styles for Broadcast Tool */
+/* Layout tweaks to ensure sidebar + main fit nicely */
+@media (min-width: 768px) {
+    .main-panel {
+        padding-top: var(--space-4)
+        }
+    }
+/* Truncate long message preview to 2 lines in history table */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden
+    }
+/* Chart container fixed height within card for responsive Chart.js */
+.card .chart-container {
+    position: relative;
+    height: 220px
+    }
+/* Buttons spacing in action toolbar (composer) */
+#sendBtn, #clearBtn {
+    min-width: 160px
+    }
+/* Improve visible focus for important actions to align with theme */
+/* Table header sorting visual hint on hover */
+#historyTable thead th[data-sort-key]:hover {
+    background-color: var(--neutral-soft)
+    }
+/* Toast border color subtle */
+#liveToast {
+    background: var(--surface-0)
+    }
+/* Filters compact spacing on small screens */
+@media (max-width: 575.98px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px
+        }
+    }

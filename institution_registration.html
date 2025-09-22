@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Institution Registration - Disaster Prep Platform
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Global Theme CSS -->
+  <link href="style.css" rel="stylesheet"/>
+  <!-- Page-specific CSS -->
+  <link href="institution_registration.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <!-- Common Auth & Onboarding Header (kept as provided; links adjusted to relative) -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarAuth" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./login_page.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/112/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Disaster Prep Platform
+     </span>
+    </a>
+    <div class="ms-auto d-flex align-items-center">
+     <div aria-label="Language" class="btn-group me-2" role="group">
+      <button class="btn btn-light btn-sm">
+       EN
+      </button>
+      <button class="btn btn-outline-light btn-sm">
+       HI
+      </button>
+     </div>
+     <button class="btn btn-link text-white disabled me-2" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white disabled me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuAuth">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar/28/28';" src="https://via.placeholder.com/28"/>
+       <span>
+        Guest
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuAuth" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-to-bracket me-2">
+         </i>
+         Login
+        </a>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./institution_registration.html">
+         <i class="fa-solid fa-building-columns me-2">
+         </i>
+         Register Institution
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid">
+   <div class="row g-0">
+    <!-- Left Sidebar (visible md+), per provided component -->
+    <div class="col-md-3 col-lg-3 col-xl-2 d-none d-md-block border-end bg-white">
+     <nav class="sidebar bg-white border-end" id="sidebarAuth" style="width:260px;">
+      <style>
+       /* Keep the given inline styles for inner items exactly as provided */
+            #sidebarAuth .list-group-item { border: 0; border-radius: 0; }
+            #sidebarAuth .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+            #sidebarAuth .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+      </style>
+      <div class="p-3 text-center">
+       <img alt="Logo" class="img-fluid mb-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brand/160/48';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:48px;"/>
+       <h6 class="text-primary fw-bold mb-0">
+        Disaster Prep
+       </h6>
+       <small class="text-muted">
+        Education &amp; Response
+       </small>
+      </div>
+      <div class="px-3">
+       <div class="list-group list-group-flush">
+        <a class="list-group-item list-group-item-action" href="./login_page.html">
+         <i class="fa-solid fa-right-to-bracket me-2">
+         </i>
+         Login
+        </a>
+        <a class="list-group-item list-group-item-action active" href="./institution_registration.html">
+         <i class="fa-solid fa-building-columns me-2">
+         </i>
+         Register Institution
+        </a>
+        <a class="list-group-item list-group-item-action" href="./profile_setup.html">
+         <i class="fa-solid fa-user-gear me-2">
+         </i>
+         Profile Setup
+        </a>
+        <a class="list-group-item list-group-item-action" href="./terms.html">
+         <i class="fa-solid fa-file-contract me-2">
+         </i>
+         Terms
+        </a>
+        <a class="list-group-item list-group-item-action" href="./privacy.html">
+         <i class="fa-solid fa-shield-halved me-2">
+         </i>
+         Privacy
+        </a>
+       </div>
+      </div>
+     </nav>
+    </div>
+    <!-- Main Content -->
+    <main class="col-12 col-md-9 col-lg-9 col-xl-10 p-3 p-lg-4" id="mainContent">
+     <div class="container-max">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="breadcrumb mb-2">
+       <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+         <a href="./login_page.html">
+          Home
+         </a>
+        </li>
+        <li class="breadcrumb-item">
+         <a href="./institution_registration.html">
+          Onboarding
+         </a>
+        </li>
+        <li aria-current="page" class="breadcrumb-item active">
+         Institution Registration
+        </li>
+       </ol>
+      </nav>
+      <!-- Page Header -->
+      <div class="page-header">
+       <div class="d-flex align-items-center gap-2">
+        <h1 class="page-title mb-0">
+         Register Your Institution
+        </h1>
+        <span class="badge-soft info">
+         Step 1 of 2
+        </span>
+       </div>
+       <div aria-label="Help" class="view-switcher" role="group">
+        <div class="option active">
+         <i class="fa-solid fa-circle-info me-1">
+         </i>
+         Help
+        </div>
+        <a class="option" href="./login_page.html">
+         <i class="fa-solid fa-right-to-bracket me-1">
+         </i>
+         Login
+        </a>
+       </div>
+      </div>
+      <!-- System Feedback Area (hidden by default) -->
+      <div class="alert alert-danger d-none" id="globalAlert" role="alert">
+       <i class="fa-solid fa-triangle-exclamation me-2">
+       </i>
+       <span id="globalAlertText">
+        There was an error submitting the form. Please review the errors and try again.
+       </span>
+      </div>
+      <!-- Registration Form Card -->
+      <div class="card shadow-1">
+       <div class="card-header">
+        <div class="title d-flex align-items-center gap-2">
+         <i class="fa-solid fa-building-columns text-primary">
+         </i>
+         <span class="widget-title">
+          Institution Registration Form
+         </span>
+        </div>
+        <div class="text-muted small">
+         Provide accurate information to create your institutional account.
+        </div>
+       </div>
+       <div class="card-body">
+        <form id="institutionForm" novalidate="">
+         <!-- Institution Details Section -->
+         <section class="mb-4">
+          <h2 class="h5 fw-bold mb-3">
+           Institution Details
+          </h2>
+          <div class="row g-3">
+           <div class="col-12">
+            <label class="form-label" for="institutionName">
+             Institution Name
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <input class="form-control" id="institutionName" maxlength="100" name="institutionName" placeholder="e.g., Delhi Public School" required="" type="text"/>
+            <div class="form-text">
+             Enter the official name of your school/college (3–100 characters).
+            </div>
+            <div class="invalid-feedback">
+             Please enter a valid institution name (3–100 characters).
+            </div>
+           </div>
+           <div class="col-12">
+            <label class="form-label" for="institutionAddress">
+             Institution Address
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <textarea class="form-control" id="institutionAddress" name="institutionAddress" placeholder="Enter full address" required="" rows="3"></textarea>
+            <div class="invalid-feedback">
+             Address is required.
+            </div>
+           </div>
+           <div class="col-sm-6">
+            <label class="form-label" for="city">
+             City
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <input class="form-control" id="city" name="city" required="" type="text"/>
+            <div class="invalid-feedback">
+             City is required.
+            </div>
+           </div>
+           <div class="col-sm-6">
+            <label class="form-label" for="state">
+             State / Union Territory
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <select class="form-select" id="state" name="state" required="">
+             <option selected="" value="">
+              Select State / Union Territory
+             </option>
+             <optgroup label="States">
+              <option value="Andhra Pradesh">
+               Andhra Pradesh
+              </option>
+              <option value="Arunachal Pradesh">
+               Arunachal Pradesh
+              </option>
+              <option value="Assam">
+               Assam
+              </option>
+              <option value="Bihar">
+               Bihar
+              </option>
+              <option value="Chhattisgarh">
+               Chhattisgarh
+              </option>
+              <option value="Goa">
+               Goa
+              </option>
+              <option value="Gujarat">
+               Gujarat
+              </option>
+              <option value="Haryana">
+               Haryana
+              </option>
+              <option value="Himachal Pradesh">
+               Himachal Pradesh
+              </option>
+              <option value="Jharkhand">
+               Jharkhand
+              </option>
+              <option value="Karnataka">
+               Karnataka
+              </option>
+              <option value="Kerala">
+               Kerala
+              </option>
+              <option value="Madhya Pradesh">
+               Madhya Pradesh
+              </option>
+              <option value="Maharashtra">
+               Maharashtra
+              </option>
+              <option value="Manipur">
+               Manipur
+              </option>
+              <option value="Meghalaya">
+               Meghalaya
+              </option>
+              <option value="Mizoram">
+               Mizoram
+              </option>
+              <option value="Nagaland">
+               Nagaland
+              </option>
+              <option value="Odisha">
+               Odisha
+              </option>
+              <option value="Punjab">
+               Punjab
+              </option>
+              <option value="Rajasthan">
+               Rajasthan
+              </option>
+              <option value="Sikkim">
+               Sikkim
+              </option>
+              <option value="Tamil Nadu">
+               Tamil Nadu
+              </option>
+              <option value="Telangana">
+               Telangana
+              </option>
+              <option value="Tripura">
+               Tripura
+              </option>
+              <option value="Uttar Pradesh">
+               Uttar Pradesh
+              </option>
+              <option value="Uttarakhand">
+               Uttarakhand
+              </option>
+              <option value="West Bengal">
+               West Bengal
+              </option>
+             </optgroup>
+             <optgroup label="Union Territories">
+              <option value="Andaman and Nicobar Islands">
+               Andaman and Nicobar Islands
+              </option>
+              <option value="Chandigarh">
+               Chandigarh
+              </option>
+              <option value="Dadra and Nagar Haveli and Daman and Diu">
+               Dadra and Nagar Haveli and Daman and Diu
+              </option>
+              <option value="Delhi">
+               Delhi
+              </option>
+              <option value="Jammu and Kashmir">
+               Jammu and Kashmir
+              </option>
+              <option value="Ladakh">
+               Ladakh
+              </option>
+              <option value="Lakshadweep">
+               Lakshadweep
+              </option>
+              <option value="Puducherry">
+               Puducherry
+              </option>
+             </optgroup>
+            </select>
+            <div class="invalid-feedback">
+             Please select a state or union territory.
+            </div>
+           </div>
+           <div class="col-sm-6">
+            <label class="form-label" for="pincode">
+             Pincode
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <input class="form-control" id="pincode" inputmode="numeric" maxlength="6" name="pincode" pattern="^[0-9]{6}$" required="" type="text"/>
+            <div class="form-text">
+             6-digit postal code (numbers only).
+            </div>
+            <div class="invalid-feedback">
+             Enter a valid 6-digit pincode.
+            </div>
+           </div>
+          </div>
+         </section>
+         <hr class="my-4"/>
+         <!-- Administrator Account Section -->
+         <section class="mb-4">
+          <h2 class="h5 fw-bold mb-3">
+           Administrator Account
+          </h2>
+          <div class="row g-3">
+           <div class="col-md-6">
+            <label class="form-label" for="adminName">
+             Administrator's Full Name
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <input class="form-control" id="adminName" name="adminName" required="" type="text"/>
+            <div class="invalid-feedback">
+             Administrator name is required.
+            </div>
+           </div>
+           <div class="col-md-6">
+            <label class="form-label" for="adminPhone">
+             Administrator Phone
+            </label>
+            <input class="form-control" id="adminPhone" inputmode="tel" maxlength="15" name="adminPhone" placeholder="Optional" type="tel"/>
+            <div class="form-text">
+             Include country code if outside India.
+            </div>
+           </div>
+           <div class="col-md-6">
+            <label class="form-label" for="adminEmail">
+             Administrator Email
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <input class="form-control" id="adminEmail" name="adminEmail" placeholder="admin@yourschool.com" required="" type="email"/>
+            <div class="form-text" id="emailHelp">
+             This will be the login username.
+            </div>
+            <div class="invalid-feedback" id="emailInvalid">
+             Please enter a valid, unique email address.
+            </div>
+            <div class="small text-muted mt-1 d-none" id="emailCheckStatus">
+             <i class="fa-solid fa-spinner fa-spin me-1">
+             </i>
+             Checking email availability...
+            </div>
+           </div>
+           <div class="col-md-6">
+           </div>
+           <div class="col-md-6">
+            <label class="form-label" for="password">
+             Create Password
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <div class="input-group">
+             <input aria-describedby="passwordHelp" class="form-control" id="password" name="password" required="" type="password"/>
+             <button class="btn btn-light toggle-visibility-icon" id="togglePassword" title="Show/Hide Password" type="button">
+              <i class="fa-regular fa-eye">
+              </i>
+             </button>
+            </div>
+            <div class="form-text" id="passwordHelp">
+             At least 8 characters, with uppercase, lowercase, number, and special character.
+            </div>
+            <div class="invalid-feedback">
+             Password does not meet complexity requirements.
+            </div>
+            <div class="mt-2">
+             <div class="progress" style="height:8px;">
+              <div class="progress-bar" id="passwordStrengthBar" role="progressbar" style="width: 0%;">
+              </div>
+             </div>
+             <small class="text-muted" id="passwordStrengthText">
+              Strength: -
+             </small>
+            </div>
+           </div>
+           <div class="col-md-6">
+            <label class="form-label" for="confirmPassword">
+             Confirm Password
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <div class="input-group">
+             <input class="form-control" id="confirmPassword" name="confirmPassword" required="" type="password"/>
+             <button class="btn btn-light toggle-visibility-icon" id="toggleConfirmPassword" title="Show/Hide Password" type="button">
+              <i class="fa-regular fa-eye">
+              </i>
+             </button>
+            </div>
+            <div class="invalid-feedback">
+             Passwords must match.
+            </div>
+           </div>
+          </div>
+         </section>
+         <hr class="my-4"/>
+         <!-- Agreement & Submission -->
+         <section class="mb-2">
+          <h2 class="h5 fw-bold mb-3">
+           Agreement
+          </h2>
+          <div class="form-check mb-3">
+           <input class="form-check-input" id="termsCheckbox" required="" type="checkbox" value=""/>
+           <label class="form-check-label" for="termsCheckbox">
+            I agree to the
+            <a href="./terms.html" rel="noopener" target="_blank">
+             Terms and Conditions
+            </a>
+            and
+            <a href="#" id="viewTermsModal">
+             view summary
+            </a>
+            .
+           </label>
+           <div class="invalid-feedback">
+            You must agree to the Terms and Conditions.
+           </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <button class="btn btn-primary submit-button" disabled="" id="submitBtn" type="submit">
+            <span class="btn-label">
+             Register My Institution
+            </span>
+            <span aria-hidden="true" class="spinner-border spinner-border-sm ms-2 d-none" role="status">
+            </span>
+           </button>
+           <a class="btn btn-light" href="./login_page.html">
+            Already have an account? Log In
+           </a>
+          </div>
+         </section>
+        </form>
+       </div>
+      </div>
+      <!-- Helpful Tips Card -->
+      <div class="app-card mt-4">
+       <div class="card-header">
+        <div class="title d-flex align-items-center gap-2">
+         <i class="fa-solid fa-lightbulb text-warning">
+         </i>
+         <span class="widget-title">
+          Tips for Faster Approval
+         </span>
+        </div>
+       </div>
+       <div class="card-body">
+        <ul class="mb-0">
+         <li>
+          Use your official institution email domain.
+         </li>
+         <li>
+          Ensure the address and pincode match your city/state.
+         </li>
+         <li>
+          Keep the administrator phone number reachable during business hours.
+         </li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Mobile Offcanvas Sidebar (as provided; links adjusted to relative) -->
+  <div class="offcanvas offcanvas-start" id="mobileSidebarAuth" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Disaster Prep
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <a class="d-block mb-3" href="./login_page.html">
+     <i class="fa-solid fa-right-to-bracket me-2">
+     </i>
+     Login
+    </a>
+    <a class="d-block mb-3" href="./institution_registration.html">
+     <i class="fa-solid fa-building-columns me-2">
+     </i>
+     Register Institution
+    </a>
+    <a class="d-block mb-3" href="./profile_setup.html">
+     <i class="fa-solid fa-user-gear me-2">
+     </i>
+     Profile Setup
+    </a>
+    <hr/>
+    <a class="d-block mb-2" href="./terms.html">
+     Terms
+    </a>
+    <a class="d-block" href="./privacy.html">
+     Privacy
+    </a>
+   </div>
+  </div>
+  <!-- Common Auth & Onboarding Footer (as provided) -->
+  <footer class="border-top py-3 bg-white mt-4">
+   <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/foot/80/20';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:20px;"/>
+     <span class="text-muted">
+      © 2025 Disaster Prep
+     </span>
+    </div>
+    <div class="d-flex gap-3">
+     <a class="text-muted text-decoration-none" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none" href="./privacy.html">
+      Privacy
+     </a>
+     <a class="text-muted text-decoration-none" href="./help.html">
+      Help
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- Page Script -->
+  <script>
+   // Utility: sanitize input (basic)
+function sanitizeInput(str) {
+    return str.replace(/[<>]/g, "");
+}
+
+// DOM Elements
+const form = document.getElementById('institutionForm');
+const submitBtn = document.getElementById('submitBtn');
+const btnSpinner = submitBtn.querySelector('.spinner-border');
+const institutionName = document.getElementById('institutionName');
+const institutionAddress = document.getElementById('institutionAddress');
+const city = document.getElementById('city');
+const stateSelect = document.getElementById('state');
+const pincode = document.getElementById('pincode');
+const adminName = document.getElementById('adminName');
+const adminPhone = document.getElementById('adminPhone');
+const adminEmail = document.getElementById('adminEmail');
+const emailCheckStatus = document.getElementById('emailCheckStatus');
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirmPassword');
+const termsCheckbox = document.getElementById('termsCheckbox');
+const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+const passwordStrengthText = document.getElementById('passwordStrengthText');
+const globalAlert = document.getElementById('globalAlert');
+const globalAlertText = document.getElementById('globalAlertText');
+
+// Toggle password visibility
+document.getElementById('togglePassword').addEventListener('click', () => {
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    const icon = document.querySelector('#togglePassword i');
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+});
+document.getElementById('toggleConfirmPassword').addEventListener('click', () => {
+    const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmPassword.setAttribute('type', type);
+    const icon = document.querySelector('#toggleConfirmPassword i');
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+});
+
+// Input sanitization on blur for text fields
+[institutionName, institutionAddress, city, adminName].forEach(el => {
+    el.addEventListener('blur', () => {
+        el.value = sanitizeInput(el.value.trim());
+    });
+});
+
+// Pincode: allow only digits, max length 6
+pincode.addEventListener('input', () => {
+    pincode.value = pincode.value.replace(/\D/g, '').slice(0, 6);
+});
+
+// Basic phone filter (optional)
+adminPhone.addEventListener('input', () => {
+    adminPhone.value = adminPhone.value.replace(/[^\d+\-()\s]/g, '').slice(0, 20);
+});
+
+// Email uniqueness check (simulated API)
+const existingEmails = new Set(['admin@dps.edu', 'admin@yourschool.com', 'principal@abcschool.in']);
+let emailCheckTimer;
+adminEmail.addEventListener('blur', () => {
+    const email = adminEmail.value.trim();
+    if (!email) return;
+    emailCheckStatus.classList.remove('d-none');
+    clearTimeout(emailCheckTimer);
+    emailCheckTimer = setTimeout(() => {
+        const isTaken = existingEmails.has(email.toLowerCase());
+        emailCheckStatus.classList.add('d-none');
+        if (isTaken) {
+            adminEmail.setCustomValidity('Email is already registered.');
+            adminEmail.classList.add('is-invalid');
+            document.getElementById('emailInvalid').textContent = 'This email is already registered. Please use another.';
+        } else {
+            adminEmail.setCustomValidity('');
+            adminEmail.classList.remove('is-invalid');
+        }
+        updateSubmitState();
+    }, 800);
+});
+
+// Password strength evaluation
+function evaluatePasswordStrength(pw) {
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[a-z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    return score; // 0..5
+}
+
+function updatePasswordStrength() {
+    const pw = password.value || '';
+    const score = evaluatePasswordStrength(pw);
+    let pct = (score / 5) * 100;
+    let label = 'Weak';
+    let barClass = 'bg-danger';
+    if (score >= 4) {
+        label = 'Strong';
+        barClass = 'bg-success';
+    } else if (score === 3) {
+        label = 'Medium';
+        barClass = 'bg-warning';
+    }
+    passwordStrengthBar.style.width = pct + '%';
+    passwordStrengthBar.className = 'progress-bar ' + barClass;
+    passwordStrengthText.textContent = 'Strength: ' + (pw ? label : '-');
+    // Set validity against requirements
+    const meets = pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw) && /[^A-Za-z0-9]/.test(pw);
+    if (!meets) {
+        password.setCustomValidity('Password requirements not met');
+    } else {
+        password.setCustomValidity('');
+    }
+}
+
+password.addEventListener('input', () => {
+    updatePasswordStrength();
+    validatePasswordMatch();
+    updateSubmitState();
+});
+
+function validatePasswordMatch() {
+    if (confirmPassword.value && confirmPassword.value !== password.value) {
+        confirmPassword.setCustomValidity('Passwords do not match');
+    } else {
+        confirmPassword.setCustomValidity('');
+    }
+}
+
+confirmPassword.addEventListener('input', () => {
+    validatePasswordMatch();
+    updateSubmitState();
+});
+
+// Field validation helpers
+function validateInstitutionName() {
+    const val = institutionName.value.trim();
+    if (val.length < 3 || val.length > 100) {
+        institutionName.setCustomValidity('Invalid');
+    } else {
+        institutionName.setCustomValidity('');
+    }
+}
+
+function validateRequired(el) {
+    if (!el.value || !el.value.trim()) {
+        el.setCustomValidity('Required');
+    } else {
+        el.setCustomValidity('');
+    }
+}
+
+function validatePincode() {
+    const ok = /^[0-9]{6}$/.test(pincode.value);
+    pincode.setCustomValidity(ok ? '' : 'Invalid pincode');
+}
+
+[institutionName, institutionAddress, city].forEach(el => el.addEventListener('input', () => {
+    validateRequired(el);
+    updateSubmitState();
+}));
+institutionName.addEventListener('input', () => {
+    validateInstitutionName();
+    updateSubmitState();
+});
+stateSelect.addEventListener('change', updateSubmitState);
+pincode.addEventListener('input', () => {
+    validatePincode();
+    updateSubmitState();
+});
+adminName.addEventListener('input', () => {
+    validateRequired(adminName);
+    updateSubmitState();
+});
+adminEmail.addEventListener('input', updateSubmitState);
+termsCheckbox.addEventListener('change', updateSubmitState);
+
+function formAllValid() {
+    validateInstitutionName();
+    validateRequired(institutionAddress);
+    validateRequired(city);
+    validatePincode();
+    validateRequired(adminName);
+    validatePasswordMatch();
+    updatePasswordStrength();
+    const stateValid = !!stateSelect.value;
+    if (!stateValid) stateSelect.setCustomValidity('Select a state');
+    else stateSelect.setCustomValidity('');
+    // HTML5 validity check
+    return form.checkValidity();
+}
+
+function updateSubmitState() {
+    const valid = formAllValid() && termsCheckbox.checked;
+    submitBtn.disabled = !valid;
+}
+
+// SweetAlert2: Terms Summary Modal
+document.getElementById('viewTermsModal').addEventListener('click', (e) => {
+    e.preventDefault();
+    Swal.fire({
+        title: 'Terms & Conditions (Summary)',
+        html: `
+          <div class="text-start">
+            <p>By registering your institution, you confirm that you have the authority to act on behalf of the institution and agree to comply with our acceptable use, privacy, and security policies.</p>
+            <ul>
+              <li>Use of the platform must comply with applicable laws and institutional policies.</li>
+              <li>Personal data will be processed as per our <a href='./privacy.html' target='_blank' rel='noopener'>Privacy Policy</a>.</li>
+              <li>We may contact you for verification and onboarding support.</li>
+            </ul>
+          </div>`,
+        icon: 'info',
+        confirmButtonText: 'Close',
+        width: 700
+    });
+});
+
+// Submit handler
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    globalAlert.classList.add('d-none');
+
+    if (!formAllValid() || !termsCheckbox.checked) {
+        form.classList.add('was-validated');
+        globalAlertText.textContent = 'Please correct the highlighted fields and agree to the terms.';
+        globalAlert.classList.remove('d-none');
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        return;
+    }
+
+    // Show loading state
+    submitBtn.disabled = true;
+    btnSpinner.classList.remove('d-none');
+
+    // Simulate API call
+    setTimeout(() => {
+        // Demo: success flow
+        btnSpinner.classList.add('d-none');
+        Swal.fire({
+            title: 'Registration Submitted',
+            text: 'Your institution registration has been submitted. You can log in after approval or verification via email.',
+            icon: 'success',
+            confirmButtonText: 'Go to Login'
+        }).then(() => {
+            window.location.href = './login_page.html';
+        });
+    }, 1200);
+});
+
+// Initialize states on load
+window.addEventListener('DOMContentLoaded', () => {
+    updatePasswordStrength();
+    updateSubmitState();
+});
+  </script>
+ </body>
+</html>

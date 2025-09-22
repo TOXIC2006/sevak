@@ -1,0 +1,87 @@
+/* Chatbot Interface - Page-specific styles */
+:root {
+    /* Ensure brand typography */
+    --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+    }
+/* Layout: ensure chat container uses vertical space well */
+.chat-shell {
+    /* Account for navbar and footer heights (approx) */
+    min-height: calc(100vh - 140px)
+    }
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%
+    }
+/* In-chat header inherits theme look */
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 10px 12px;
+    background: var(--surface-muted);
+    border-bottom: 1px solid var(--border-color)
+    }
+/* Message list spacing tuning */
+#messageList .message-row + .message-row {
+    margin-top: 8px
+    }
+/* Typing indicator dots */
+.typing-indicator {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center
+    }
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 1s infinite ease-in-out
+    }
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s
+    }
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s
+    }
+@keyframes blink {
+    0%, 80%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
+        } 40% {
+        opacity: 1;
+        transform: translateY(-2px);
+        }
+    }
+/* Ensure input bar sticks to bottom of card */
+.message-input-bar {
+    border-top: 1px solid var(--border-color);
+    background: var(--surface-muted)
+    }
+/* Scenario card polish */
+.scenario-form .form-check-input {
+    cursor: pointer
+    }
+.scenario-form .form-check-label {
+    cursor: pointer
+    }
+.scenario-form .btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed
+    }
+/* Resources table sorting affordance */
+#resourcesTable th.sortable {
+    cursor: pointer;
+    user-select: none
+    }
+#resourcesTable th.sortable:hover {
+    color: var(--color-info)
+    }
+/* Responsive tweaks */
+@media (max-width: 575.98px) {
+    .chat-shell {
+        min-height: calc(100vh - 128px)
+        }
+    }

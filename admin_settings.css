@@ -1,0 +1,52 @@
+/* admin_settings.css - Page-specific styles for Institution Settings */
+/* Use Poppins for this page while respecting global theme */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Ensure main content uses available space alongside the fixed-width sidebar */
+@media (min-width: 768px) {
+    #sidebarAdmin + main {
+        min-width: 0
+        }
+    }
+/* Active selection in search results */
+#searchResultsList .list-group-item.active {
+    background-color: var(--primary-soft);
+    color: var(--text-strong);
+    border-color: var(--color-primary)
+    }
+#searchResultsList .list-group-item.active i {
+    color: var(--color-primary)
+    }
+/* Compact card headers on this page */
+.card-header .widget-title {
+    font-weight: 600
+    }
+/* Table row hover emphasis */
+#recipientTable tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02)
+    }
+/* Pagination buttons spacing */
+#recipientPagination .page-link {
+    min-width: 84px;
+    text-align: center
+    }
+/* Buttons within table */
+#recipientTable .btn {
+    padding: 4px 8px
+    }
+/* Form status texts */
+#infoStatus, #passwordStatus {
+    font-weight: 500
+    }
+/* Chart canvas responsive height handling */
+@media (min-width: 992px) {
+    #roleChart {
+        max-height: 260px
+        }
+    }
+/* Align breadcrumb visuals a bit tighter under Poppins */
+.breadcrumb {
+    padding-top: 4px;
+    padding-bottom: 4px
+    }

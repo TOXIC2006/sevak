@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Emergency Dashboard | Emergency Operations Center
+  </title>
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Font Awesome 6 -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+   <!-- Leaflet (Interactive Map) -->
+   <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+   <!-- SweetAlert2 -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+   <!-- Site Theme CSS -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page-specific CSS -->
+   <link href="emergency_dashboard.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body class="bg-surface">
+  <!-- Emergency Operations Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0000FF;">
+   <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none me-2" data-bs-target="#mobileSidebarEmergencyOps" data-bs-toggle="offcanvas" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center" href="./emergency_dashboard.html">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/120/40';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:28px;"/>
+     <span>
+      Emergency Ops
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-search text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" id="globalSearchInput" placeholder="Search users or alerts..." type="search"/>
+     </div>
+    </form>
+    <div class="ms-auto d-flex align-items-center">
+     <a class="btn btn-light btn-sm me-2" href="./broadcast_tool.html">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Send Broadcast
+     </a>
+     <button class="btn btn-outline-light btn-sm me-2" id="btnConcludeEmergencyHeader">
+      <i class="fa-solid fa-flag-checkered me-1">
+      </i>
+      Conclude Emergency
+     </button>
+     <button class="btn btn-link text-white me-2" id="btnSimulateAlert" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+     </button>
+     <button class="btn btn-link text-white me-2" title="Messages">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <a aria-expanded="false" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileMenuEmergency">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar/28/28';" src="https://via.placeholder.com/28"/>
+       <span>
+        Admin User
+       </span>
+      </a>
+      <ul aria-labelledby="profileMenuEmergency" class="dropdown-menu dropdown-menu-end">
+       <li>
+        <h6 class="dropdown-header">
+         Role: Admin
+        </h6>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./admin_settings.html">
+         <i class="fa-solid fa-screwdriver-wrench me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <!-- Actions Toolbar (Sticky) -->
+  <div class="actions-toolbar border-bottom">
+   <div class="container-fluid d-flex align-items-center justify-content-between py-2">
+    <div class="d-flex align-items-center gap-2">
+     <span class="badge-soft warning">
+      <i class="fa-solid fa-triangle-exclamation me-1">
+      </i>
+      Live Emergency
+     </span>
+     <span class="text-muted small">
+      Incident: Active | Updated
+      <span id="lastUpdated">
+       just now
+      </span>
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <button class="btn btn-primary btn-sm" id="btnSendBroadcast">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Send Broadcast
+     </button>
+     <button class="btn btn-danger btn-sm" id="btnConcludeEmergency">
+      <i class="fa-solid fa-flag-checkered me-1">
+      </i>
+      Conclude Emergency
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="d-flex min-vh-100">
+   <!-- Emergency Operations Sidebar (Administrators & Designated Staff) -->
+   <nav class="sidebar bg-white border-end d-none d-md-block" id="sidebarEmergencyOps" style="width:260px;">
+    <style>
+     #sidebarEmergencyOps .list-group-item { border: 0; border-radius: 0; }
+        #sidebarEmergencyOps .list-group-item:hover { background-color: #f2f6ff; color: #0000FF; }
+        #sidebarEmergencyOps .list-group-item.active { background-color: #e8f0ff; color: #0000FF; font-weight: 600; border-left: 3px solid #0000FF; }
+        #sidebarEmergencyOps .profile-box { background:#fff8f8; border:1px solid #ffe3e3; }
+    </style>
+    <div class="p-3 text-center border-bottom">
+     <img alt="Logo" class="img-fluid" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo2/120/40';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="max-height:38px;"/>
+    </div>
+    <div class="p-3">
+     <div class="profile-box rounded p-3 mb-3">
+      <div class="d-flex align-items-center">
+       <img alt="avatar" class="rounded-circle me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/avatar2/40/40';" src="https://via.placeholder.com/40"/>
+       <div>
+        <div class="fw-semibold">
+         Admin User
+        </div>
+        <small class="text-muted">
+         Emergency Ops
+        </small>
+       </div>
+      </div>
+     </div>
+     <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action active" href="./emergency_dashboard.html">
+       <i class="fa-solid fa-signal me-2">
+       </i>
+       Live Emergency Dashboard
+      </a>
+      <a class="list-group-item list-group-item-action" href="./emergency_dashboard.html#map">
+       <i class="fa-solid fa-map-location-dot me-2">
+       </i>
+       Live Map
+      </a>
+      <a class="list-group-item list-group-item-action" href="./emergency_dashboard.html#status">
+       <i class="fa-solid fa-list-check me-2">
+       </i>
+       Safety Status List
+      </a>
+      <a class="list-group-item list-group-item-action" href="./broadcast_tool.html">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Send Broadcast
+      </a>
+      <a class="list-group-item list-group-item-action" href="./emergency_history.html">
+       <i class="fa-solid fa-clock-rotate-left me-2">
+       </i>
+       Past Events
+      </a>
+     </div>
+    </div>
+   </nav>
+   <!-- Main Content -->
+   <main class="flex-grow-1">
+    <div class="container-fluid py-3 py-lg-4">
+     <!-- Page Header -->
+     <div class="page-header">
+      <div class="d-flex align-items-center gap-2">
+       <h1 class="page-title mb-0">
+        Live Emergency Dashboard
+       </h1>
+       <span class="badge-soft error">
+        <i class="fa-solid fa-siren-on me-1">
+        </i>
+        SOS Active
+       </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <div class="view-switcher" title="Map/Table View">
+        <div class="option active" id="optMapView">
+         <i class="fa-solid fa-map">
+         </i>
+        </div>
+        <div class="option" id="optTableView">
+         <i class="fa-solid fa-table">
+         </i>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Safety Status Summary -->
+     <section aria-labelledby="status-summary">
+      <h2 class="visually-hidden" id="status-summary">
+       Safety Status Summary
+      </h2>
+      <div class="row g-3 g-lg-4">
+       <div class="col-12 col-sm-6 col-lg-4">
+        <div class="metric-card status-card clickable" data-status="Safe">
+         <div class="d-flex align-items-center justify-content-between">
+          <span class="metric-title">
+           Safe
+          </span>
+          <span class="badge-soft success">
+           <i class="fa-solid fa-shield-heart">
+           </i>
+          </span>
+         </div>
+         <div class="d-flex align-items-end justify-content-between">
+          <div class="metric-value" id="countSafe">
+           1,248
+          </div>
+          <div class="text-muted">
+           84%
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="col-12 col-sm-6 col-lg-4">
+        <div class="metric-card status-card clickable" data-status="Need Help">
+         <div class="d-flex align-items-center justify-content-between">
+          <span class="metric-title">
+           Need Help
+          </span>
+          <span class="badge-soft warning">
+           <i class="fa-solid fa-triangle-exclamation">
+           </i>
+          </span>
+         </div>
+         <div class="d-flex align-items-end justify-content-between">
+          <div class="metric-value" id="countNeedHelp">
+           122
+          </div>
+          <div class="text-muted">
+           8%
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="col-12 col-sm-6 col-lg-4">
+        <div class="metric-card status-card clickable" data-status="Not Reported">
+         <div class="d-flex align-items-center justify-content-between">
+          <span class="metric-title">
+           Not Reported
+          </span>
+          <span class="badge-soft info">
+           <i class="fa-solid fa-circle-question">
+           </i>
+          </span>
+         </div>
+         <div class="d-flex align-items-end justify-content-between">
+          <div class="metric-value" id="countNotReported">
+           112
+          </div>
+          <div class="text-muted">
+           8%
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- Map + Alerts/Chart Row -->
+     <section class="mt-4" id="map">
+      <div class="row g-3 g-lg-4">
+       <div class="col-12 col-lg-8">
+        <div class="card h-100">
+         <div class="card-header">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-map-location-dot text-primary">
+           </i>
+           <span class="widget-title">
+            Live Emergency Map
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <div class="dropdown">
+            <button class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+             <i class="fa-solid fa-layer-group me-1">
+             </i>
+             Layers
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+             <li>
+              <button class="dropdown-item" data-layer="streets">
+               Streets
+              </button>
+             </li>
+             <li>
+              <button class="dropdown-item" data-layer="satellite">
+               Satellite
+              </button>
+             </li>
+            </ul>
+           </div>
+           <button class="btn btn-light btn-sm" id="btnFitBounds">
+            <i class="fa-solid fa-maximize me-1">
+            </i>
+            Fit
+           </button>
+          </div>
+         </div>
+         <div class="card-body p-0 position-relative">
+          <div aria-label="Live Map showing SOS and Need Help markers" id="emergencyMap">
+          </div>
+          <div class="map-loading-overlay" id="mapLoading">
+           <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">
+             Loading...
+            </span>
+           </div>
+          </div>
+         </div>
+         <div class="card-footer small text-muted">
+          Legend:
+          <span class="legend-dot sos me-1">
+          </span>
+          SOS
+          <span class="legend-dot needhelp me-1">
+          </span>
+          Need Help
+         </div>
+        </div>
+       </div>
+       <div class="col-12 col-lg-4">
+        <div class="card mb-3">
+         <div class="card-header">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-bolt text-warning">
+           </i>
+           <span class="widget-title">
+            Recent Alerts
+           </span>
+          </div>
+         </div>
+         <div class="card-body">
+          <ul class="list-unstyled mb-0 small" id="recentAlerts">
+           <li class="mb-2">
+            [12:02:11] SOS - Science Building - J. Carter
+           </li>
+           <li class="mb-2">
+            [12:01:47] Need Help - Library - A. Singh
+           </li>
+           <li class="mb-2">
+            [12:00:30] SOS - Parking Lot - D. Morales
+           </li>
+           <li class="mb-2">
+            [11:58:04] Need Help - Main Hall - K. Chen
+           </li>
+          </ul>
+         </div>
+        </div>
+        <div class="card">
+         <div class="card-header">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-chart-line text-info">
+           </i>
+           <span class="widget-title">
+            Active Alerts (Last 30 min)
+           </span>
+          </div>
+         </div>
+         <div class="card-body">
+          <canvas aria-label="Line chart of alerts over time" height="160" id="alertsChart">
+          </canvas>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- Detailed User Status List -->
+     <section class="mt-4" id="status">
+      <div class="card">
+       <div class="card-header flex-wrap">
+        <div class="title d-flex align-items-center gap-2">
+         <i class="fa-solid fa-list-check text-primary">
+         </i>
+         <span class="widget-title">
+          Detailed User Status List
+         </span>
+        </div>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+         <div class="input-group" style="max-width:260px;">
+          <span class="input-group-text bg-white">
+           <i class="fa-solid fa-magnifying-glass">
+           </i>
+          </span>
+          <input class="form-control" id="filterName" placeholder="Search by name..." type="text">
+          </input>
+         </div>
+         <select class="form-select" id="filterStatus" style="max-width:200px;">
+          <option selected="" value="All">
+           All Statuses
+          </option>
+          <option value="Safe">
+           Safe
+          </option>
+          <option value="Need Help">
+           Need Help
+          </option>
+          <option value="Not Reported">
+           Not Reported
+          </option>
+         </select>
+         <button class="btn btn-light" id="btnResetFilters">
+          <i class="fa-solid fa-rotate">
+          </i>
+         </button>
+        </div>
+       </div>
+       <div class="card-body p-0">
+        <div class="table-responsive">
+         <table class="table table-theme table-hover mb-0" id="usersTable">
+          <thead>
+           <tr>
+            <th data-sort="name" role="button">
+             Name
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th data-sort="role" role="button">
+             Role
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th data-sort="status" role="button">
+             Status
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th>
+             Last Known Location
+            </th>
+            <th class="text-end">
+             Actions
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr data-lat="37.7749" data-lng="-122.4194" data-name="Jordan Carter" data-role="Teacher" data-status="SOS">
+            <td>
+             Jordan Carter
+            </td>
+            <td>
+             Teacher
+            </td>
+            <td>
+             <span class="badge bg-danger">
+              SOS
+             </span>
+            </td>
+            <td>
+             Science Building (12:02:11)
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" title="Locate on Map">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="37.7790" data-lng="-122.4183" data-name="Amrita Singh" data-role="Student" data-status="Need Help">
+            <td>
+             Amrita Singh
+            </td>
+            <td>
+             Student
+            </td>
+            <td>
+             <span class="badge bg-warning text-dark">
+              Need Help
+             </span>
+            </td>
+            <td>
+             Library (12:01:47)
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" title="Locate on Map">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="37.7689" data-lng="-122.4292" data-name="Diego Morales" data-role="Staff" data-status="SOS">
+            <td>
+             Diego Morales
+            </td>
+            <td>
+             Staff
+            </td>
+            <td>
+             <span class="badge bg-danger">
+              SOS
+             </span>
+            </td>
+            <td>
+             Parking Lot C (12:00:30)
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" title="Locate on Map">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="37.7721" data-lng="-122.4147" data-name="Kai Chen" data-role="Student" data-status="Need Help">
+            <td>
+             Kai Chen
+            </td>
+            <td>
+             Student
+            </td>
+            <td>
+             <span class="badge bg-warning text-dark">
+              Need Help
+             </span>
+            </td>
+            <td>
+             Main Hall (11:58:04)
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" title="Locate on Map">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="" data-lng="" data-name="Priya Patel" data-role="Teacher" data-status="Safe">
+            <td>
+             Priya Patel
+            </td>
+            <td>
+             Teacher
+            </td>
+            <td>
+             <span class="badge bg-success">
+              Safe
+             </span>
+            </td>
+            <td>
+             —
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" disabled="" title="No location">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="" data-lng="" data-name="Omar Haddad" data-role="Staff" data-status="Not Reported">
+            <td>
+             Omar Haddad
+            </td>
+            <td>
+             Staff
+            </td>
+            <td>
+             <span class="badge bg-secondary">
+              Not Reported
+             </span>
+            </td>
+            <td>
+             —
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" disabled="" title="No location">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="37.7701" data-lng="-122.4235" data-name="Lina Park" data-role="Student" data-status="Safe">
+            <td>
+             Lina Park
+            </td>
+            <td>
+             Student
+            </td>
+            <td>
+             <span class="badge bg-success">
+              Safe
+             </span>
+            </td>
+            <td>
+             Gym (11:55:10)
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" title="Locate on Map">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+           <tr data-lat="37.7755" data-lng="-122.4098" data-name="Marcus Lee" data-role="Teacher" data-status="Need Help">
+            <td>
+             Marcus Lee
+            </td>
+            <td>
+             Teacher
+            </td>
+            <td>
+             <span class="badge bg-warning text-dark">
+              Need Help
+             </span>
+            </td>
+            <td>
+             Arts Center (11:47:02)
+            </td>
+            <td class="text-end">
+             <button class="btn btn-sm btn-light btn-locate" title="Locate on Map">
+              <i class="fa-solid fa-location-crosshairs">
+              </i>
+             </button>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+       <div class="card-footer d-flex align-items-center justify-content-between">
+        <small class="text-muted">
+         Showing 1–7 of 2,063 users
+        </small>
+        <nav aria-label="User list pagination">
+         <ul class="pagination pagination-sm mb-0">
+          <li class="page-item disabled">
+           <a class="page-link" href="#">
+            Prev
+           </a>
+          </li>
+          <li class="page-item active">
+           <a class="page-link" href="#">
+            1
+           </a>
+          </li>
+          <li class="page-item">
+           <a class="page-link" href="#">
+            2
+           </a>
+          </li>
+          <li class="page-item">
+           <a class="page-link" href="#">
+            3
+           </a>
+          </li>
+          <li class="page-item">
+           <a class="page-link" href="#">
+            Next
+           </a>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <!-- Mobile Offcanvas Sidebar -->
+  <div class="offcanvas offcanvas-start" id="mobileSidebarEmergencyOps" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Emergency Ops
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <a class="d-block mb-3" href="./emergency_dashboard.html">
+     <i class="fa-solid fa-signal me-2">
+     </i>
+     Live Emergency Dashboard
+    </a>
+    <a class="d-block mb-3" href="./broadcast_tool.html">
+     <i class="fa-solid fa-bullhorn me-2">
+     </i>
+     Send Broadcast
+    </a>
+    <a class="d-block" href="./emergency_history.html">
+     <i class="fa-solid fa-clock-rotate-left me-2">
+     </i>
+     Past Events
+    </a>
+   </div>
+  </div>
+  <!-- Emergency Operations Footer -->
+  <footer class="border-top py-2 bg-white">
+   <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+     <img alt="Logo" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo3/90/18';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68cee9cfd2b8dfc3b739505b/logos/logo_600b3cc6-083e-4e25-928a-3f997e2061d9.png" style="height:18px;"/>
+     <small class="text-muted">
+      Emergency Operations Center
+     </small>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="text-muted text-decoration-none small me-3" href="./terms.html">
+      Terms
+     </a>
+     <a class="text-muted text-decoration-none small me-3" href="./privacy.html">
+      Privacy
+     </a>
+     <button class="btn btn-outline-danger btn-sm" id="btnConcludeEmergencyFooter">
+      Conclude Emergency
+     </button>
+    </div>
+   </div>
+  </footer>
+  <!-- Toasts -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1060;">
+   <div id="toastContainer">
+   </div>
+  </div>
+  <!-- Scripts: Bootstrap, Leaflet, Chart.js, Day.js, SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.11/dayjs.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <script>
+   // Typography preference (Poppins)
+document.documentElement.style.setProperty('--font-sans', "Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial");
+
+// Utility: Toast
+function showToast(message, type = 'info') {
+    const id = 't' + Date.now();
+    const bg = type === 'error' ? 'bg-danger text-white' : type === 'success' ? 'bg-success text-white' : type === 'warning' ? 'bg-warning' : 'bg-primary text-white';
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center border-0';
+    toast.id = id;
+    toast.role = 'alert';
+    toast.ariaLive = 'assertive';
+    toast.ariaAtomic = 'true';
+    toast.innerHTML = `
+        <div class="d-flex ${bg} rounded">
+          <div class="toast-body">${message}</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>`;
+    document.getElementById('toastContainer').appendChild(toast);
+    const bsToast = new bootstrap.Toast(toast, {
+        delay: 4000
+    });
+    bsToast.show();
+}
+
+// SweetAlert2: Conclude Emergency confirmation
+function bindConcludeButtons() {
+    const ids = ['btnConcludeEmergency', 'btnConcludeEmergencyHeader', 'btnConcludeEmergencyFooter'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Conclude Emergency?',
+                text: 'This will end real-time tracking and archive the event. An "All Clear" may be sent to all users.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, conclude',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Mock API call
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: 'Emergency Concluded',
+                            icon: 'success',
+                            timer: 1800,
+                            showConfirmButton: false
+                        });
+                    }, 600);
+                }
+            });
+        });
+    });
+}
+
+// Send Broadcast button
+function bindBroadcastButtons() {
+    const btn = document.getElementById('btnSendBroadcast');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Open Broadcast Tool?',
+                text: 'You will be redirected to the broadcast composition tool.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Proceed',
+            }).then(res => {
+                if (res.isConfirmed) window.location.href = './broadcast_tool.html';
+            });
+        });
+    }
+}
+
+// Map Initialization (Leaflet)
+let map, tilesStreets, tilesSatellite, activeLayer, markersLayer, markersIndex = {};
+const sampleMarkers = [{
+    id: 'u1',
+    name: 'Jordan Carter',
+    role: 'Teacher',
+    status: 'SOS',
+    coords: [37.7749, -122.4194],
+    ts: dayjs().format('HH:mm:ss')
+}, {
+    id: 'u2',
+    name: 'Amrita Singh',
+    role: 'Student',
+    status: 'Need Help',
+    coords: [37.7790, -122.4183],
+    ts: dayjs().subtract(1, 'minute').format('HH:mm:ss')
+}, {
+    id: 'u3',
+    name: 'Diego Morales',
+    role: 'Staff',
+    status: 'SOS',
+    coords: [37.7689, -122.4292],
+    ts: dayjs().subtract(2, 'minute').format('HH:mm:ss')
+}, {
+    id: 'u4',
+    name: 'Kai Chen',
+    role: 'Student',
+    status: 'Need Help',
+    coords: [37.7721, -122.4147],
+    ts: dayjs().subtract(4, 'minute').format('HH:mm:ss')
+}, {
+    id: 'u5',
+    name: 'Lina Park',
+    role: 'Student',
+    status: 'Safe',
+    coords: [37.7701, -122.4235],
+    ts: dayjs().subtract(7, 'minute').format('HH:mm:ss')
+}, ];
+
+function createDivIcon(status) {
+    const cls = status === 'SOS' ? 'marker-sos' : status === 'Need Help' ? 'marker-needhelp' : 'marker-safe';
+    const icon = L.divIcon({
+        className: 'custom-div-icon ' + cls,
+        html: `<div class="marker-pin"><i class="${status==='SOS'?'fa-solid fa-siren-on':'fa-solid fa-triangle-exclamation'}"></i></div>`,
+        iconSize: [30, 42],
+        iconAnchor: [15, 42]
+    });
+    return icon;
+}
+
+function addOrUpdateMarker(u) {
+    const popupHtml = `
+        <div class="small">
+          <div class="fw-semibold">${u.name} <span class="ms-2 badge ${u.status==='SOS'?'bg-danger':u.status==='Need Help'?'bg-warning text-dark':'bg-success'}">${u.status}</span></div>
+          <div class="text-muted">${u.role}</div>
+          <div class="mt-1">Time: ${u.ts}</div>
+        </div>`;
+    if (markersIndex[u.id]) {
+        markersIndex[u.id].setLatLng(u.coords).setIcon(createDivIcon(u.status)).bindPopup(popupHtml);
+    } else {
+        const m = L.marker(u.coords, {
+                icon: createDivIcon(u.status)
+            })
+            .bindPopup(popupHtml)
+            .on('click', () => {
+                selectedMarker = u.id;
+            });
+        markersLayer.addLayer(m);
+        markersIndex[u.id] = m;
+    }
+}
+
+let selectedMarker = null;
+
+function initMap() {
+    map = L.map('emergencyMap', {
+        zoomControl: true
+    }).setView([37.7749, -122.4194], 14);
+    tilesStreets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    });
+    tilesSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    tilesStreets.addTo(map);
+    activeLayer = 'streets';
+
+    markersLayer = L.layerGroup().addTo(map);
+
+    // Add initial markers
+    sampleMarkers.forEach(addOrUpdateMarker);
+
+    map.on('moveend zoomend', () => {
+        document.getElementById('lastUpdated').textContent = 'just now';
+    });
+
+    // Loading overlay
+    const mapLoading = document.getElementById('mapLoading');
+    map.once('load', () => mapLoading.classList.add('d-none'));
+    // Trigger tile events
+    setTimeout(() => map.invalidateSize(), 300);
+
+    // Fit bounds to current markers
+    fitToMarkers();
+}
+
+function switchLayer(layerKey) {
+    if (layerKey === activeLayer) return;
+    if (layerKey === 'streets') {
+        map.removeLayer(tilesSatellite);
+        tilesStreets.addTo(map);
+        activeLayer = 'streets';
+    } else {
+        map.removeLayer(tilesStreets);
+        tilesSatellite.addTo(map);
+        activeLayer = 'satellite';
+    }
+}
+
+function fitToMarkers() {
+    const group = L.featureGroup(Object.values(markersIndex));
+    if (Object.keys(markersIndex).length) {
+        map.fitBounds(group.getBounds().pad(0.2));
+    }
+}
+
+// Simulate incoming alerts
+function simulateAlert() {
+    const bounds = map.getBounds();
+    const sw = bounds.getSouthWest();
+    const ne = bounds.getNorthEast();
+    const lat = Math.random() * (ne.lat - sw.lat) + sw.lat;
+    const lng = Math.random() * (ne.lng - sw.lng) + sw.lng;
+    const id = 'sim' + Date.now();
+    const statuses = ['SOS', 'Need Help'];
+    const status = statuses[Math.random() < 0.6 ? 0 : 1];
+    const u = {
+        id,
+        name: 'Unidentified',
+        role: '—',
+        status,
+        coords: [lat, lng],
+        ts: dayjs().format('HH:mm:ss')
+    };
+    addOrUpdateMarker(u);
+    // Recent alerts list update
+    const list = document.getElementById('recentAlerts');
+    const li = document.createElement('li');
+    li.className = 'mb-2';
+    li.textContent = `[${u.ts}] ${u.status} - Near (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+    list.prepend(li);
+    // Toast
+    showToast(`${u.status} received at ${u.ts}`, status === 'SOS' ? 'error' : 'warning');
+}
+
+// Chart.js Alerts line chart
+function initChart() {
+    const ctx = document.getElementById('alertsChart');
+    const labels = Array.from({
+        length: 12
+    }, (_, i) => dayjs().subtract((11 - i) * 2, 'minute').format('HH:mm'));
+    const dataSOS = labels.map(() => Math.floor(Math.random() * 4));
+    const dataNH = labels.map(() => Math.floor(Math.random() * 3));
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'SOS',
+                data: dataSOS,
+                borderColor: '#CD2026',
+                backgroundColor: 'rgba(205,32,38,0.15)',
+                tension: 0.3
+            }, {
+                label: 'Need Help',
+                data: dataNH,
+                borderColor: '#FFA500',
+                backgroundColor: 'rgba(255,165,0,0.15)',
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Table filtering & sorting
+function initTableInteractions() {
+    const filterName = document.getElementById('filterName');
+    const filterStatus = document.getElementById('filterStatus');
+    const table = document.getElementById('usersTable');
+    const tbody = table.querySelector('tbody');
+
+    function applyFilter() {
+        const term = filterName.value.trim().toLowerCase();
+        const status = filterStatus.value;
+        Array.from(tbody.rows).forEach(row => {
+            const name = row.dataset.name.toLowerCase();
+            const rowStatus = row.dataset.status;
+            const matchName = !term || name.includes(term);
+            const matchStatus = status === 'All' || rowStatus === status;
+            row.style.display = (matchName && matchStatus) ? '' : 'none';
+        });
+    }
+
+    filterName.addEventListener('input', applyFilter);
+    filterStatus.addEventListener('change', applyFilter);
+    document.getElementById('btnResetFilters').addEventListener('click', () => {
+        filterName.value = '';
+        filterStatus.value = 'All';
+        applyFilter();
+    });
+
+    // Sorting
+    const headers = table.querySelectorAll('thead th[data-sort]');
+    const sortState = {};
+    headers.forEach(h => {
+        h.addEventListener('click', () => {
+            const key = h.dataset.sort; // name | role | status
+            sortState[key] = sortState[key] === 'asc' ? 'desc' : 'asc';
+            const rows = Array.from(tbody.rows);
+            rows.sort((a, b) => {
+                const va = a.dataset[key].toLowerCase();
+                const vb = b.dataset[key].toLowerCase();
+                if (va < vb) return sortState[key] === 'asc' ? -1 : 1;
+                if (va > vb) return sortState[key] === 'asc' ? 1 : -1;
+                return 0;
+            });
+            rows.forEach(r => tbody.appendChild(r));
+        });
+    });
+
+    // Locate on map buttons
+    tbody.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-locate');
+        if (!btn) return;
+        const row = btn.closest('tr');
+        const lat = parseFloat(row.dataset.lat);
+        const lng = parseFloat(row.dataset.lng);
+        if (!isNaN(lat) && !isNaN(lng)) {
+            map.setView([lat, lng], 17);
+            // Try to find existing marker at location
+            let found = null;
+            for (const id in markersIndex) {
+                const m = markersIndex[id];
+                const pos = m.getLatLng();
+                if (Math.abs(pos.lat - lat) < 0.0005 && Math.abs(pos.lng - lng) < 0.0005) {
+                    found = m;
+                    break;
+                }
+            }
+            if (found) found.openPopup();
+        }
+    });
+
+    // Clicking summary cards applies filter
+    document.querySelectorAll('.status-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const status = card.dataset.status;
+            if (status === 'Safe' || status === 'Need Help' || status === 'Not Reported') {
+                filterStatus.value = status;
+                applyFilter();
+                document.getElementById('usersTable').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Global search in header
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    if (globalSearchInput) {
+        globalSearchInput.addEventListener('input', () => {
+            filterName.value = globalSearchInput.value;
+            applyFilter();
+        });
+    }
+}
+
+// View switcher (Map/Table)
+function initViewSwitcher() {
+    const optMap = document.getElementById('optMapView');
+    const optTable = document.getElementById('optTableView');
+    const mapSection = document.getElementById('map');
+    const statusSection = document.getElementById('status');
+    optMap.addEventListener('click', () => {
+        optMap.classList.add('active');
+        optTable.classList.remove('active');
+        mapSection.style.display = '';
+        statusSection.style.display = '';
+        setTimeout(() => map.invalidateSize(), 200);
+    });
+    optTable.addEventListener('click', () => {
+        optTable.classList.add('active');
+        optMap.classList.remove('active');
+        mapSection.style.display = 'none';
+        statusSection.style.display = '';
+    });
+}
+
+// Bind layer switch menu
+function bindLayerMenu() {
+    document.querySelectorAll('[data-layer]').forEach(btn => {
+        btn.addEventListener('click', () => switchLayer(btn.dataset.layer));
+    });
+    const fitBtn = document.getElementById('btnFitBounds');
+    if (fitBtn) fitBtn.addEventListener('click', fitToMarkers);
+}
+
+// Simulate Alerts via bell icon
+function bindSimulateAlert() {
+    const btn = document.getElementById('btnSimulateAlert');
+    if (btn) btn.addEventListener('click', simulateAlert);
+}
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', () => {
+    bindConcludeButtons();
+    bindBroadcastButtons();
+    initMap();
+    bindLayerMenu();
+    initChart();
+    initTableInteractions();
+    initViewSwitcher();
+    bindSimulateAlert();
+});
+  </script>
+ </body>
+</html>
